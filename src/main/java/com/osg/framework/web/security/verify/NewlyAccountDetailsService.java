@@ -22,6 +22,8 @@ public class NewlyAccountDetailsService implements UserDetailsService {
 		VerifyObject verifyObject = verifyAccountRepository
 				.getAccountByName(userName);
 		logger.debug("Load Verify Object --->>{}", verifyObject);
+
+
 		if (verifyObject == null) {
 			logger.error("User :{} don't found!");
 			throw new UsernameNotFoundException("User " + userName
