@@ -1,0 +1,10 @@
+一、开发环境搭建
+1.Maven环境准备，mvn命令
+
+2.工程根目录下运行：
+mvn eclipse:eclipse -Dwtpversion=1.0
+
+3.导入wtp工程
+
+二、打包war
+mvn package -Dmaven.test.skip=true
