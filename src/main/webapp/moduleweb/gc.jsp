@@ -1,0 +1,5 @@
+
+<%
+	System.gc();
+%>
+GC OK!

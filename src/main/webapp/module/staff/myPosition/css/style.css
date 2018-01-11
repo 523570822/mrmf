@@ -1,0 +1,66 @@
+/*reset start*/
+html,body{font-size: 14px; font-family: sans-serif;}
+html,body,div,span,applet,object,iframe,
+h1,h2,h3,h4,h5,h6,
+p,blockquote,pre,a,abbr,acronym,address,
+big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,
+sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,
+form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,
+article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,
+output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font:inherit;vertical-align:baseline}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}
+body{line-height:1}ol,ul{list-style:none}
+blockquote,q{quotes:none}
+blockquote:before,
+blockquote:after,
+q:before,q:after{content:'';content:none}
+table{border-collapse:collapse;border-spacing:0}
+button{border:none;outline: none; }
+.clear{zoom: 1;}
+.clear::after{content: ""; display: block; overflow: hidden; clear: both; height: 0;}
+/*reset end*/
+
+/*common start*/
+.col-1{width: 10%; height: 100%; float: left;}
+.col-2{width: 20%; height: 100%; float: left;}
+.col-3{width: 30%; height: 100%; float: left;}
+.col-4{width: 40%; height: 100%; float: left;}
+.col-5{width: 50%; height: 100%; float: left;}
+.col-6{width: 60%; height: 100%; float: left;}
+.col-7{width: 70%; height: 100%; float: left;}
+.col-8{width: 80%; height: 100%; float: left;}
+.col-9{width: 90%; height: 100%; float: left;}
+.col-10{width: 100%; height: 100%; float: left;}
+/*common end*/
+
+/*calendar start*/
+.calendar-nav{padding: 0 4%; width: 99%; height: 3.14rem; line-height: 3.14rem; border-bottom: 1px solid #dcdcdc; position: fixed; left: 0; top: 0; z-index: 999; background: #fff;}
+.calendar-nav h4{text-align: center; color: #31262d; font-size: 1.1rem;}
+.calendar-nav .back{background: url("../images/icon_back.png") no-repeat left center/0.57rem 1rem;}
+.calendar-nav div:last-child{text-align: right; font-size: 1rem; color: #676165;}
+
+.calendar-box{margin: 3.14rem 0 9.07rem;}
+
+.calendar{padding: 1rem;}
+.calendar .month{color: #676165; font-size: 1.21rem;}
+.calendar .week{height: 2.29rem; line-height: 2.29rem; border-bottom: 1px solid #dcdcdc; display:-webkit-box; display:-moz-box; display:flex; display:-ms-flexbox; display: -webkit-flex; -webkit-box-pack: center;-moz-box-pack: center;-ms-flex-pack: center;-webkit-justify-content: center;justify-content: center;}
+.calendar .week li{flex: 1; text-align: center; font-size: 0.85rem; color: #676165;}
+.calendar .day{width: 100%; text-align: center;}
+.calendar .day li{width: 14.2857%; float: left; margin-top: 0.85rem; height: 2.57rem; line-height: 2.57rem; font-size: 1.1rem; color: #989597; position: relative;}
+.calendar .day li[check = nor] i{width: 100%; height: 100%; display: block; position: absolute; left: 0; bottom: 0; background: url("../images/icon_check_nor.png") no-repeat center/1.2rem; z-index: 998;}
+.calendar .day .active-circle{background: url("../images/bg_date_circle.png") no-repeat center/contain; color: #fff;}
+.calendar .day .active-left{background: url("../images/bg_date_left.png") no-repeat center/contain; color: #fff;}
+.calendar .day .active-center{background: url("../images/bg_date.png") no-repeat center/contain; color: #fff;}
+.calendar .day .active-right{background: url("../images/bg_date_right.png") no-repeat center/contain; color: #fff;}
+
+
+footer{width: 100%;  border-top: 1px solid #eee; position: fixed; z-index: 999; left: 0; bottom: 0; background: #fff;}
+footer ul{padding: 0 1rem; height: 5.57rem;}
+footer ul li:first-child div{float: right; height: 100%; padding-right: 1.4rem;}
+footer ul li:last-child div{float: left; height: 100%; padding-left: 1.4rem;}
+footer ul li:nth-of-type(2){line-height: 5.57rem; text-align: center; color: #676165; font-size: 0.86rem;}
+footer ul li div{font-size: 1.2rem; text-align: center; font-weight: bold;}
+footer ul li div p:first-child{padding-top: 1.3rem;}
+footer ul li div p:last-child{padding-top: 0.67rem;}
+footer button{width: 100%; height: 3.5rem; line-height: 3.5rem; background: #bbbbbb; color: #fff; font-size: 1.2rem;}
+/*calendar end*/

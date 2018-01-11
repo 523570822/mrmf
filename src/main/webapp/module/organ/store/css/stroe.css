@@ -1,0 +1,4 @@
+.nosel_message h4{border-bottom: 0;color:#22242a;}
+.sel_message h4{border-bottom: 1px solid #f4370b;color:#f4370b;}
+.sel_earn>label{border-bottom: 1px solid #f4370b;color:#f4370b;}
+.nosel_ear>label{border-bottom: 0;color:#22242a;}

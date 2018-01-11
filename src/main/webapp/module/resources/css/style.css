@@ -1,0 +1,182 @@
+﻿/*
+    **create 2016.03 v1.0
+*/
+@charset "utf-8";
+/*common start*/
+*{margin:0px; padding:0px; border:0px;}
+html{font-family: "Microsoft YaHei";font-size:14px;color:#22242a;}
+a{outline: 0; text-decoration:none;}
+button,input,optgroup,select,textarea {color: inherit;font: inherit;}
+button,html input[type=button],input[type=reset],input[type=submit] {-webkit-appearance: button; cursor: pointer}
+button{border:none;}
+ul{list-style-type:none;}
+input,textarea{-webkit-tap-highlight-color: rgba(0,0,0,0);background: rgba(0,0,0,0);border:none;outline: none;}
+.clear_both{clear: both;}
+h2,h4{font-weight: normal;}
+
+
+/*布局*/
+.col-1{float:left;width:10%;}
+.col-2{float:left;width:20%;}
+.col-3{float:left;width:30%;}
+.col-4{float:left;width:40%;}
+.col-5{float:left;width:50%;}
+.col-6{float:left;width:60%;}
+.col-7{float:left;width:70%;}
+.col-8{float:left;width:80%;}
+.col-9{float:left;width:90%;}
+.col-10{float:left;width:100%;}
+
+
+
+/*字号 设置 */
+.font-34{font-size:1.2rem;}
+.font-30{font-size:1.1rem;}
+/*背景色*/
+.bg_orange{background: #f4370b;}
+.bg_gray{background: #f8f8f8;}
+/*common end*/
+
+/*login start*/
+.login_title{font-size:1.2rem;text-align: center;margin-top:0.875rem;}
+.logo>div{width:7.6rem;heigth:7.6rem;margin:0 auto;margin-top:3.3rem;}
+.logo>div>img{width:100%;height:100%;}
+.login_txt,.login_password{width:80%;height:3.15rem;margin:1rem auto;background: #f8f8f8;border:1px solid #e0e0e0;border-radius: 3px;background-position: 0.8rem center;background-repeat: no-repeat;background-size: 1.5rem;}
+.login_txt{background-image: url("../images/icon_account_login.png");}
+.login_password{background-image: url("../images/icon_password.png");}
+.login_txt>input,.login_password>input{width:85%;padding-left:15%;height:3.15rem;}
+.login_btn button{width:80%;height:3.15rem;color:#fff;border-radius: 3px;}
+.login_btn{text-align: center;margin-top:2.1rem;}
+.login_content{margin-top:4.8rem;}
+.forget_txt{text-align: center;font-size: 1rem;margin-top:1.25rem;}
+.forget_txt>a,.no_id>a{color:#666666;}
+.no_id{text-align: center;font-size: 1rem;margin-top:6rem;}
+.no_id span{color:#f4370b; }
+/*login end*/
+
+/*register start*/
+.register_nav{width: 100%;height:3.2rem;background: #fff;position: relative;}
+.register_nav .back{position: absolute;width:1rem;height:1rem;top:1rem;left:1rem;background: url("../images/icon_back.png")center no-repeat;background-size: 1rem;}
+.register_nav h4{height:3.2rem;line-height:3.2rem;text-align: center;}
+.register_form{background: #fff;margin-top:0.7rem;font-size: 1.1rem;}
+.register_form input{width:100%;}
+.register_form ul{margin-left:1rem;padding:0.1rem 0;}
+.register_form ul li{border-bottom: 1px solid #ddd;overflow: hidden;}
+.register_form ul li div{height:3.6rem;line-height:3.6rem;}
+.register_form ul li:last-child{border:none;}
+.ma_btn{width:5.4rem;height:2rem;line-height:2rem;border:1px solid #282828;background: none;border-radius: 3px;font-size:0.9rem;}
+.register_btn button{width:80%;height:3.2rem;color:#fff;border-radius: 3px;}
+.register_btn{text-align: center;margin-top:2.2rem;}
+.statement{text-align: center;margin-top:2rem;}
+.statement a{color:#00a0e9;}
+/*register end*/
+
+/* enquiryprice start */
+.enquiryprice_nav { width:100%; height:3.2rem;background: #ffffff;position: relative;}
+.enquiryprice_nav h4{height:3.2rem;line-height:3.2rem;text-align: center;}
+.enquiryprice_form_item{ background: #fff;  margin-top:0.7rem; font-size: 1rem; height: 3.4rem; line-height: 3.4rem; font-size: 1rem; text-align: center;}
+.enquiryprice_form_item_text_name { text-align: left; position: relative; left: 0.65rem }
+.enquiryprice_form_item_text_value { text-align: left; }
+.enquiryprice_form_item label{
+    float: left;
+    color:#888888;  }
+.next{ height:1rem;background: url("../images/img/icon_arrow.png")center no-repeat;  position: relative; right: 0.1rem; margin-top: -0.5rem; top: 50%; }
+.form_item_summarize{ background: #fff;  margin-top:0.7rem; font-size: 1rem; height: 14rem; line-height: 3.4rem; font-size: 1rem; text-align: center;}
+.form_item_summarize_name{ height: 3rem; border-bottom: 1px solid #ddd; text-align: left; width:95%; margin:0 auto; }
+.form_area{ width:95%; height: 100%;  color:#888888; }
+.form_item_pic{ background: #fff;  margin-top:0.7rem; font-size: 1rem; height: 10rem; line-height: 3.4rem; font-size: 1rem; text-align: center;}
+.btn_add {  width: 95%;  height: 100%; }
+.btn_add input{  height:4.3rem; width:4.3rem;  background: #00ff00;  opacity: 0; }
+.btn_add ul {  list-style:none; }
+.btn_add li {  float:left;  height:4.3rem; width:4.3rem;  margin-left: 1.3rem;  }
+.pic_first {  background: url("../images/enquiryprice/btn_add_picture.png")center no-repeat;  background-size: 4.2rem;
+     height:4.3rem; width:4.3rem;  margin-left: 1.1rem;  margin-top:1.1rem; }
+
+.btn_send{  margin-top:3.4rem;  background: #ffffff;  height: 3.5rem;
+     text-align: center; }
+.btn_send>button { font-size:1.15rem; background:#ff0000;  color: #ffffff; width:24.64rem;
+     height: 2.6rem; border-radius:0.5rem; margin-top:0.4rem;}
+
+.function_nav{  position:fixed;left:0rem;bottom: 0rem;height:5rem;  background: #ffffff;  }
+.function_nav>ul{  list-style:none;margin-top: 0.8rem;}
+.function_nav li{  float:left;  margin-left:4.5rem; }
+.function_nav img{  height:2.2rem;  width:2.2rem;}
+.function_nav div {  text-align:center; }
+#function_item_first {
+    margin-left:2rem;
+}
+/* enquiryprice end */
+
+
+/* appointment start */
+.appointment_div{  margin-top:0.7rem;  width:100%;  height: 5.71rem;  background: #ffffff;  float: left;  }
+.appointment_price{ text-align: center; width: 7.1rem; height:4rem; line-height:4rem; border-right:1px solid #dddddd;  margin-top: 0.85rem; float:left;  }
+
+.price_font_small { color:#f4370b; font-size: 1rem;  }
+.price_font_big { color:#f4370b;  font-size:1.43rem; }
+.person_div {  height:4rem;  width: 73%;  float: left; margin-top: 0.85rem; }
+.person{  width:50%;  height:100%; float: left; }
+.person_img_div{  margin-left: 1rem;  }
+.person_img {  border-radius:0.9rem; width:1.72rem; height:1.72rem; }
+.person_font{  font-size: 1.14rem;  margin-left: 0.71rem;  color: #22242a; }
+.listroles{ list-style: none; margin-left: 1rem; margin-top: 0.5rem;}
+.listroles li{ margin-left:0.1rem; float: left;}
+.listroles li img{ width:1.07rem; height: 1.07rem;  }
+.position_div {  height:4rem; width:50%;float:left;  }
+.position_div img {  width:0.86rem;  height:0.86rem; float:right; margin-top: 0.7rem; }
+.position_div_span {  font-size: 0.86rem;  margin-left: 0.36rem;  float:right;  margin-right: 1.1rem;  margin-top: 0.7rem;  color: #666666;  }
+.attention{  float:right;margin-right: 1.1rem;margin-top:0.8rem; color:#666666;  }
+.attention_num{ color: #22242a; }
+.price_state{  float: left; width: 100%;  height: 10rem; background:#ffffff; margin-top: 0.72rem;  }
+.price_state_title{ width:90%;  margin: 0rem auto;  font-size: 1rem;  height: 2.4rem;  border-bottom: 1px solid #dddddd;}
+.price_state_content{ margin-top: 1.2rem; color: #666666; font-size: 1rem;}
+.price_detail { width: 90%;  margin:1rem auto;font-size: 1rem;  color: #22242a; }
+.appointment_time_div{  width:100%;  height: 3.43rem;  margin-top: 1.1rem;  background: #ffffff;  float: left; }
+.appointment_time_name{  text-align: right;  color: #666666;  font-size:1rem;  line-height: 3.43rem;  height: 3.43rem; }
+.appointment_time_value{  color:#bbbbbb;  font-size: 1rem;  line-height: 3.43rem;  height: 3.43rem;  }
+.appointment_placeholder{  margin-left:1.43rem; }
+.btn_bottom {  position:fixed;left:0rem;bottom: 0rem; background: #ffffff;  height: 3.5rem; text-align: center; }
+.btn_bottom button{  width:24.64rem; background:#ff0000;  color:white;  height:2.56rem;  margin-top:0.47rem;
+    border-radius: 0.4rem;  font-size:1.14rem; }
+/* appointment end */
+
+/* enquiring start */
+.enquiring_nav{width: 100%;height:3.2rem;background: #fff; }
+.enquiring_nav h4{ margin: 0 auto; height:3.2rem;line-height:3.2rem;text-align: center; width:94%;}
+.cancel{ backgrond:#00ff00; float:right; color:red;  font-size:1.2rem;  padding-right:0;}
+.sort_div{   height: 3.14rem; width:100%;  line-height: 3.14rem; }
+.sort_div>ul{    height: 3.14rem; width:100%;  }
+.sort_div li{  float:left;  width:33.33%;height:100%;text-align: center;  font-size:1rem; }
+.sort_background {  float: left;  width:100%;  height: 5.71rem;  background:#ffffff;  }
+.sort_appointment_div{ margin-left: 1rem; border-bottom:1px solid #ddd; width:95%;  height: 5.71rem;  background: #ffffff;  float: left;  }
+.sort_appointment_price{ text-align: center; width: 6rem; height:4rem; line-height:4rem; border-right:1px solid #dddddd;  margin-top: 0.85rem; float:left;  }
+.enquiring_time {  float: left;  height:100%;  width:100%;  background: #ffffff;  line-height: 5.71rem;  text-align: center;  font-size:1rem; }
+
+/* enquiring end */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

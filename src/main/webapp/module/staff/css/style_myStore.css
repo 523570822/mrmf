@@ -1,0 +1,199 @@
+@CHARSET "UTF-8";
+*{margin:0px; padding:0px; border:0px;}
+html{font-family: "Microsoft YaHei";font-size:14px;color:#22242a;}
+body {text-align:center}
+a{outline: 0; text-decoration:none;}
+button,input,optgroup,select,textarea {color: inherit;font: inherit;}
+button,html input[type=button],input[type=reset],input[type=submit] {-webkit-appearance: button; cursor: pointer}
+button{border:none;}
+ul{list-style-type:none;}
+input,textarea{-webkit-tap-highlight-color: rgba(0,0,0,0);background: rgba(0,0,0,0);border:none;outline: none;}
+.clear_both{clear: both;}
+h2,h4{font-weight: normal;}
+.nav{width: 100%;height:3.2rem;position: relative;background: #fff;}
+.nav2{width: 100%;height:6.1rem;position: relative;background: #fff;border-top:0.7rem solid #f8f8f8;overflow:hidden; }
+.nav h4{height:3.2rem;line-height:3.2rem;text-align: center;}
+.nav .back{position: absolute;width:1rem;height:1rem;top:1rem;left:1rem;background: url("../images/img/icon_back.png")center no-repeat;background-size: 1rem;}
+.next{height:1.5rem;background: url("../images/img/icon_arrow.png")right no-repeat;background-size: 2rem;}
+.font-34{font-size:1.2rem;}
+.font-30{font-size:1.07rem;}
+.font-32{font-size:1.14rem;}
+.font-28{font-size:1rem; color: #22242a;}
+.font-26{font-size:0.9rem; }
+.mine_content{padding:0;background: #fff; position: relative;}
+.clear{clear: both;}
+.col-1{float:left;width:10%;min-height:1rem;}
+.col-2{float:left;width:20%;min-height:1rem;}
+.col-3{float:left;width:30%;min-height:1rem;}
+.col-4{float:left;width:40%;min-height:1rem;}
+.col-5{float:left;width:50%;min-height:1rem;}
+.col-6{float:left;width:60%;min-height:1rem;}
+.col-7{float:left;width:70%;min-height:1rem;}
+.col-8{float:left;width:80%;min-height:1rem;}
+.col-9{float:left;width:90%;min-height:1rem;}
+.mine_content .col-2{margin-top: 0.9rem;margin:0.9rem;margin-right:1.5rem;text-align: left;position: relative;height: 4.6rem;}
+.mine_content .col-6{text-align: left;height: 3.1rem;margin-top: 2.5rem;white-space: nowrap;text-overflow: ellipsis;position: relative;overflow: hidden;width: 40%;}
+.mine_content .col-2{text-align: right;}
+.mine_content div{text-align: center; background:#ffffff;}
+.mine_content li {height: 7rem;}
+.mine_content img{height:4.6rem; width:6rem; }
+.bottom{width: 100%;background: #fff;height: 3.5rem;position:fixed;bottom:0;border-top: 1px solid #ebebeb; }
+.button{width:90%;background:#f4370b;color: #fff;border-radius: 3px;margin-top:1px;height: 2.5rem;}
+.register_btn{text-align: center;margin-top:2.2rem;}
+.color_red{color: #f4370b;}
+/*店铺管理*/
+.search{width: 100%; height: 3.3rem;background:#f8f8f8;padding:1.1rem 0;float: left;text-align: center; }
+.search i{width: 1.2rem;height: 1.2rem;display: block;}
+.search .sort_fun li{width: 48%;float: left;}
+
+.search .sort_fun_m li{width: 47%;float: left;}
+.sort_fun li:FIRST-CHILD{border-right: 1px solid #bbb;}
+.sort_fun_m li:FIRST-CHILD{border-right: 1px solid #bbb;}
+.search .col-1{float:left;width:9%;min-height:1rem;position: relative;text-align: left;border-right:1px solid #e0e0e0; }
+.text-indent{text-indent: 4.1rem;}
+.col-1 .search-down {background: url("../images/img/icon_aorrw_down.png")center no-repeat;background-size:1.2rem;}
+.search .col-4{float:left;width:40%;min-height:1rem;position: relative;text-align:left; }
+.search .font-30{letter-spacing:2px;}
+.search .col-5{float:left;width:50%;min-height:1rem;position: relative;text-align: center;}
+.store_content{padding:0;position: absolute;top:6.7rem;width: 100%; }
+.store_content .nav{width: 100%;height:6.1rem;position: relative;background: #fff;}
+.store_content ul li{height:6rem;margin-bottom: 0.7rem;float: left;width: 100%; }
+.store_content .col-7{min-height:1rem;height: 6rem;background: #fff;overflow: hidden;}
+.store_content .col-3{min-height:1rem;height: 6rem;background: #fff;text-align: right;overflow: hidden;}
+.store_content img{width:6.4rem;height:4.8rem;padding-top: 0.8rem;padding-right: 1.1rem;  }
+.div1{margin-top: 1.2rem;margin-left:1.1rem;text-align: left;color: #22242a;height: 1.5rem; 
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; }
+.div2{margin-top: 1.1rem;margin-left:1.1rem;text-align: left;color: #666666;height: 1.5rem;white-space: nowrap;text-overflow:ellipsis;overflow: hidden; }
+/*店铺信息*/
+.store_content2{padding:0; }
+.li1{width: 100%;height:17.1rem;margin: 0 }
+.li1 img{width: 100%;height: 17.1rem;padding: 0}
+.li2{padding: 1.1rem;height:1.5rem;}
+.li2 h4{float: left;}
+.h5{float: right;border: 1px solid #2bc92f;color: #2bc92f;}
+.li3{padding-left: 1.1rem;padding-bottom: 1.1rem;border-bottom: 1px solid #eaeaea;height: 1.4rem;}
+.store_content2 .col-5 div{float: left;padding: 0.1rem;border: 1px solid #22242a;font-size: 0.9rem;overflow: hidden;}
+.li3 img{width: 1.2rem;height: 1.2rem;}
+.store_content2 .col-4{width: 45.5%;margin-right: 1rem;}
+.store_content2 .col-4 div{float: right;padding: 0.2rem;}
+.li4{padding: 0.2rem;border-bottom: 1px solid #eaeaea;height: 2.3rem;}
+.li4 h4{width: 55%;position: relative;float: left;text-align: left;padding-left:0.7rem;}
+.li4 .div{float:left;width: 45%;height:1.1rem;position:relative;text-align: center;padding: 0.5rem;color: #666;}
+.li4 img{width:1.2rem;height: 1.2rem;}
+.li4 .col-7{text-align: left;}
+.li4 .col-3{padding: 0.5rem 0;width: 33.3%;}
+.li4 input{opacity: 0;}
+.li4 span{padding-bottom: 0.35rem;}
+.district {
+	float: left;
+	width: 30%;
+	background: #f9f9f9;
+	height: 19.7rem;
+}
+.district>ul>li {
+	height: 3.5rem;
+	font-size: 1.14rem;
+	width: 100%;
+}
+.dis {
+	height: 3.5rem;
+	padding: 1rem 0;
+	float: left;
+	width: 90%;
+	margin-left: 1rem;
+	border-bottom: 1px solid #bbb;
+}
+.choosed{background: #fff;}
+.region {
+	float: left;
+	width: 70%;
+	height: 19.7rem;
+}
+.region>ul>li {
+	padding: 1rem 0;
+	border-bottom: 1px solid #bbb;
+	height: 3.5rem;
+	font-size: 1.14rem;
+	float: left;
+	width: 90%;
+}
+/*弹出层*/
+.hidebackground {
+	display:none;
+	width: 100%;
+	height:100%;
+	top: 6.5rem;left: 0;
+	position: absolute;
+	z-index: 99;
+	-moz-opacity: 0.5;
+	opacity:0.5;
+	filter: alpha(opacity=80);
+	background: #a7a7a7;
+}
+.showArea {
+	display:none;
+	width:22.9rem;
+	height: 19.7rem;
+	z-index: 100;
+	top: 6.5rem;
+	left: 0;
+	width: 100%;
+	background: #fff;
+	position: absolute;
+}
+.area_m{
+    height:23rem;
+    width:100%;
+    background : #ffffff;
+    overflow: hidden;
+    position:absolute;
+    display: none;
+    top: 6.5rem;
+}
+.area_m{
+    height:23rem;
+    width:100%;
+    background : #ffffff;
+    overflow: hidden;
+    position:absolute;
+    display: none;
+}
+/*区域滚动样式 start*/
+#wrapper_area{ position: absolute; z-index: 1;top: 0;bottom: 0px;left: 0;width: 35%; background: #f9f9f9;overflow: hidden;  }
+#wrapper2_area { position: absolute; z-index: 1;top: 0rem;bottom: 0px;right: 0;width: 65%; background: #fff;overflow: hidden;  }
+#scroller1,#scroller2 {
+    position: absolute;  z-index: 1;  -webkit-tap-highlight-color: rgba(0,0,0,0);  width: 100%;
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    -o-text-size-adjust: none;
+    text-size-adjust: none;
+}
+.se_active>i{
+    position:absolute;
+    background:url('../images/img/icon_choiced.png') center no-repeat;
+    background-size:1rem;
+    height:1rem;
+    width:1rem;
+    top:50%;
+    display: block;
+    margin-top:-0.5rem;
+    right:1.07rem;
+}
+.select_nav {  height:auto;  position:fixed;  width: 100%;  display: none;  z-index:100;  top:0;  }
+.com_back_bg {  height:100%;  width:100%;  position:fixed;  top:0;left:0;  background: rgba(0,0,0,0.4);  z-index:20;  display: none;  }
+#scroller2 li { position:relative; height: 3.2rem;line-height:3.2rem;border-bottom: 1px dotted #ddd;font-size: 1rem;text-align: center;}
+#scroller1 li {  height: 3.2rem;line-height:3.2rem;border-bottom: 1px dotted #ddd;;font-size: 1rem;text-align: center;}
+.area_state .active{background: #fff;}

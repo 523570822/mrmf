@@ -1,0 +1,14 @@
+/* 清浮动 */
+.clear{zoom: 1;}
+.clear:after{content: "";overflow: hidden; clear: both; display: block;}
+
+/* .mark-bg{width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 99; background: rgba(0,0,0,.4);}
+ .mark-bg .coupon-model{width: 90%; height: 20rem; background: #d7d7d7; position: absolute; left: 0; right: 0; top: 50%; margin:-10rem auto 0; overflow-y: auto;}*/
+.mark-bg .coupon-model ul li{list-style-type: none; padding: 0 1rem; height: 8rem; margin-bottom: 1rem; background: #fff;}
+.mark-bg .coupon-model ul li .coupon-top{border-bottom: 1px solid #ddd; height: 6rem;}
+.mark-bg .coupon-model ul li .coupon-top .coupon-name h4{font-size: 1.1rem; padding-top: 1.6rem;}
+.mark-bg .coupon-model ul li .coupon-top .coupon-name p{font-size: 0.85rem; padding-top: 0.8rem;}
+.mark-bg .coupon-model ul li .coupon-top .coupon-price{text-align: center;}
+.mark-bg .coupon-model ul li .coupon-top .coupon-price p{height: 6rem; line-height: 6rem;}
+.mark-bg .coupon-model ul li .coupon-top .coupon-price span{font-size: 40px;}
+.mark-bg .coupon-model ul li .coupon-bottom{height: 2rem; line-height: 2rem; font-size: 0.85rem; color: #666;}

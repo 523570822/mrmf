@@ -1,0 +1,47 @@
+@CHARSET "UTF-8";
+*{margin:0px; padding:0px; border:0px;}
+html{font-family: "Microsoft YaHei";font-size:14px;color:#22242a;}
+body {text-align:center}
+a{outline: 0; text-decoration:none;}
+button,input,optgroup,select,textarea {color: inherit;font: inherit;}
+button,html input[type=button],input[type=reset],input[type=submit] {-webkit-appearance: button; cursor: pointer}
+button{border:none;}
+ul{list-style-type:none;}
+input,textarea{-webkit-tap-highlight-color: rgba(0,0,0,0);background: rgba(0,0,0,0);border:none;outline: none;}
+.clear_both{clear: both;}
+h2,h4{font-weight: normal;}
+.font-34{font-size:1.2rem;}
+.font-30{font-size:1.07rem;}
+.font-32{font-size:1.14rem;}
+.font-28{font-size:1rem;}
+.nav{width: 100%;height:3.5rem;position: relative;background: #fff;}
+.nav h4{height:3.5rem;line-height:3.2rem;text-align: center;}
+.nav .back2{float:left;padding-left:1.1rem;padding-top:1.1rem;width:30%;text-align: left;}
+.i0{float:right;font-style:normal;width:30%;font-size:1rem;color:#f4380b;padding-right:0.8rem;padding-top:1.1rem;text-align:center;}
+.next{height:1.5rem;text-align:right;background: url("../../images/img/icon_arrow.png")center no-repeat;background-size: 1.6rem;}
+.col-1{float:left;width:10%;min-height:1rem;}
+.col-2{float:left;width:20%;min-height:1rem;position: relative;}
+.col-3{float:left;width:30%;min-height:1rem;position: relative;}
+.col-5{float:left;width:50%;min-height:1rem;}
+.col-6{float:left;width:60%;min-height:1rem;}
+.col-7{float:left;width:70%;min-height:1rem; position: relative;text-align: center;}
+.col-8{float:left;width:80%;min-height:1rem; position: relative;text-align: center;}
+.schedule{width: 100%;}
+.li0{height:1.5rem;padding: 1.1rem 0;}
+.li1{height: 3.2rem;padding: 0.2rem;background-color: #fff;border-bottom: 1rem solid #f8f8f8; }
+.check{width: 12.36%;float: left;padding:0.25rem;color: #555555;}
+.li1 input{filter: alpha(opacity=0);-moz-opacity: 0;opacity: 0;position: absolute;}
+.li1 span{font-size:0.8rem;position: relative;}
+.li2{background-color: #fff;height:1.5rem;padding:1rem 0;}
+.li2 div{height: 1.5rem;margin-left: 1rem;color: #838383;}
+.li2 .col-2{text-align: left;}
+.li2 .font-30{font-size: 1rem;}
+.li3{padding: 1rem 0;text-align: left;padding-left: 1rem;font-size: 1rem;color: #838383;}
+.li4{background: #fff;}
+table{ border-collapse:collapse;}
+.li4 table th,table td{border: 1px solid #ebebeb;}
+.time{float: left;padding: 1.3rem ;text-align: center;}
+.time input{opacity: 0;}
+.li5{text-align:center;padding-top: 1rem;font-size: 1.2rem;color: #666;margin-bottom: 3.2rem;}
+/*设置繁忙时间*/
+.li6{height:1.5rem;padding:1rem 0;padding-left:1.1rem;background-color: #fff;border-bottom: 1px solid #e9e9e9; }

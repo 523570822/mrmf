@@ -1,0 +1,64 @@
+@CHARSET "UTF-8";
+*{margin:0px; padding:0px; border:0px;}
+html{font-family: "Microsoft YaHei";font-size:14px;color:#22242a;}
+body {text-align:center}
+a{outline: 0; text-decoration:none;}
+button,input,optgroup,select,textarea {color: inherit;font: inherit;}
+button,html input[type=button],input[type=reset],input[type=submit] {-webkit-appearance: button; cursor: pointer}
+button{border:none;}
+ul{list-style-type:none;}
+input,textarea{-webkit-tap-highlight-color: rgba(0,0,0,0);background: rgba(0,0,0,0);border:none;outline: none;}
+.clear_both{clear: both;}
+h2,h4{font-weight: normal;}
+.font-34{font-size:1.2rem;}
+.font-30{font-size:1.07rem;}
+.font-32{font-size:1.14rem;}
+.font-28{font-size:1rem;}
+.col-1{float:left;width:10%;min-height:1rem;}
+.col-2{float:left;width:20%;min-height:1rem;position: relative;}
+.col-3{float:left;width:30%;min-height:1rem;position: relative;}
+.col-6{float:left;width:60%;min-height:1rem;}
+.col-7{float:left;width:70%;min-height:1rem; position: relative;}
+.nav{width: 100%;height:3.2rem;position: relative;background: #fff;}
+.nav h4{height:3.2rem;line-height:3.2rem;text-align: center;}
+.nav .back{position: absolute;width:1rem;height:1rem;top:1rem;left:1rem;background: url("../../images/icon_back.png")center no-repeat;background-size: 1rem;text-align: right;}
+.next{height:1.5rem;background: url("../../images/img/icon_arrow.png")center no-repeat;background-size: 2rem;}
+.example_content{padding:0; position: relative;}
+.inner{float:left;width:42%;padding:0.3rem;margin-left:1.1rem;margin-top: 0.7rem;background: #fff;text-align:left;position: relative; }
+.inner img{width:100%;height: 100%; }
+.inner h4{font-size: 1.1rem;width: 49%;}
+.inner div h4{float: left;position: relative;}
+.inner i{float: right;width:49%;color: #666666;font-size: 0.4rem;font-style: normal;text-align: right;}
+.bottom{width: 100%;background: #fff;height: 3.5rem;position:fixed;bottom:0; }
+.button{width:90%;background:#f4370b;color: #fff;border-radius: 3px;margin-top:1px;height: 2.5rem;}
+/*添加案例*/
+.addexample_content{padding:0; position: relative;}
+.addexample_content li{padding:1.1rem 0;border-bottom: 2px solid #f8f8f8;background: #fff; overflow: hidden;}
+.addexample_content li .font-30{color: #666666;font-size: 1.1rem;}
+.addexample_content li .font-32{width:55%;color: #22242a;font-weight: bold;padding-left:1.4rem;}
+.addexample_content .col-2{float: left;padding-left:1.1rem;text-align: left;position: relative;overflow: hidden;}
+.addexample_content .col-7{float: left;text-align: left;position: relative;overflow: hidden;}
+.addexample_content .col-1{float:right;position: relative;overflow: hidden;}
+li input{font-size: 1.1rem;float: left;width: 100%;padding-left: 1.1rem;}
+.textarea{width: 100%;height: 8.8rem;text-align: left;font-size:1.1rem;color:#22242a;padding: 1.1rem;back}
+.file{width:4.3rem;height: 4.3rem;margin-bottom:0.8rem;float: left;margin-left: 1.1rem;  }
+ul .li{border-bottom: 1.1rem solid #f8f8f8;}
+.bottom{width: 100%;background: #fff;height: 3.5rem;position:fixed;bottom:0; }
+.button{width:90%;background:#f4370b;color: #fff;border-radius: 3px;margin-top:0.5rem;height: 2.5rem;}
+.show{width:22.9rem;height: 10.7rem;border-radius:5px;   }
+.addPicture{background:url(../../images/img/btn_add_picture.png)center no-repeat;background-size:4.3rem;  }
+/*案例详情*/
+.nav .back2{float:left;padding-left:1.1rem;padding-top:1.1rem;width:15%;text-align: left;}
+.example_content{padding:0; position: relative;}
+.example_content img{width:100%;height:auto;}
+.detail{width: 100%;}
+.font-34-1{font-size:1.2rem;position: relative;  }
+.detail ul{;padding: 1.1rem ;}
+.detail h4{text-align: left;font-weight: bold;position: relative;}
+.detail h5{position: relative;text-align: left;color: #666666;}
+.detail .col-7{width:48%; text-align: right;float: right;padding: 1rem 0;border-bottom: 1px solid #f8f8f8}
+.detail .col-2{width:50%;text-align: left;padding: 1rem 0;border-bottom: 1px solid #f8f8f8}
+.i0{float:right;font-style:normal;width:15%;font-size:1rem;color:#f4380b;padding-right:1.1rem;padding-top:1.1rem;text-align:center;}
+.i1{font-style: normal;font-size:1.2rem; }
+.i2{font-style: normal;font-size: 0.9rem;}
+.i3{font-style: normal;border: 1px solid #555555;color: #555555;}

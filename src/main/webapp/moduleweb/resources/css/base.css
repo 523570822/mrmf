@@ -1,0 +1,29 @@
+/* 遮罩 */
+.swfMask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 500000000;
+    background: #000;
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+    text-align: center;
+}
+.swfMask p {
+    position: absolute;
+    top: 300px;
+    display: inline-block;
+    height: 24px;
+    line-height: 24px;
+    font-size: 18px;
+    color: #fff;
+    margin: -12px 0 0 -80px;
+    padding-left: 22px;
+    /*background: url(../css/img/load.gif) center left no-repeat;*/
+    *display: inline;
+    *zoom: 1;
+}
+.swfMask p span {
+    margin-left: 10px;
+    cursor: pointer;
+}

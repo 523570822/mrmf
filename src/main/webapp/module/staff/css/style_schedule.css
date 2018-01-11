@@ -1,0 +1,41 @@
+@CHARSET "UTF-8";
+/*common start*/
+*{margin:0px; padding:0px; border:0px;}
+html{font-family: "Microsoft YaHei";font-size:14px;color:#22242a;}
+body {text-align:center}
+a{outline: 0; text-decoration:none;}
+button,input,optgroup,select,textarea {color: inherit;font: inherit;}
+button,html input[type=button],input[type=reset],input[type=submit] {-webkit-appearance: button; cursor: pointer}
+button{border:none;}
+ul{list-style-type:none;}
+input,textarea{-webkit-tap-highlight-color: rgba(0,0,0,0);background: rgba(0,0,0,0);border:none;outline: none;}
+.clear_both{clear: both;}
+h2,h4{font-weight: normal;}
+/*字号 设置 */
+.font-28{font-size:1rem;}
+.font-30{font-size:1.07rem;}
+.font-32{font-size:1.14rem;}
+.font-34{font-size:1.2rem;}
+.font-36{font-size:1.29rem;}
+/*布局*/
+.col-1{float:left;width:10%;min-height:1rem;}
+.col-2{float:left;width:20%;min-height:1rem;}
+.col-3{float:left;width:30%;min-height:1rem;}
+.col-5{float:left;width:50%;min-height:1rem;}
+.col-6{float:left;width:60%;min-height:1rem;}
+.col-7{float:left;width:70%;min-height:1rem;}
+.col-8{float:left;width:80%;min-height:1rem;}
+.next{height:1.5rem;background: url("../images/img/icon_arrow.png")right no-repeat;background-size:1.8rem;}
+.organ {
+	width: 100%;
+	float: left;
+	height: 1.5rem;
+	float: left;
+	padding:1rem 0;
+	padding-left: 1rem;
+	background: #fff;
+	margin-top: 0.5rem;
+}
+.organ .col-6{text-align: left;width: 50%;}
+.organ .col-1{float: right;margin-right: 1rem;}
+.organ .col-2{text-align: left;}
