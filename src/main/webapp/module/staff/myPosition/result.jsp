@@ -59,7 +59,7 @@
             window.location.href="${ctxPath}/w/staffMy/myStationDetail?organId="+organId+"&staffId="+staffId+"&positionOrderId="+positionOrderId;
         });
         $("#backIndex").click(function () {//跳转首页
-            window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa60e8354c2a33648&redirect_uri=http%3a%2f%2frxmao.cn%2fmrmf%2fw%2fstaff%2fwxlogin.do&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect"
+            window.location.href="http://localhost/w/staff/wxlogin"
         });
     })
 </script>

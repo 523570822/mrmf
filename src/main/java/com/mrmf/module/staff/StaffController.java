@@ -87,8 +87,8 @@ public class StaffController {
 		HttpSession session=request.getSession(true);//
 		Map<String,Object> userInfo=(Map<String,Object>)session.getAttribute("staffInfo");
 		if(userInfo==null){
-			Map<String,Object> token=wxgetInfo.getAccess_token(code,"staff");
-			userInfo=wxgetInfo.getUserInfo(token);
+	//		Map<String,Object> token=wxgetInfo.getAccess_token(code,"staff");
+		//	userInfo=wxgetInfo.getUserInfo(token);
 			ReturnStatus status=null;
 			session.setAttribute("staffInfo", userInfo);
 			String oppenid="";
@@ -103,6 +103,8 @@ public class StaffController {
 					unionid=userInfo.get("unionid").toString();
 				}
 				status = weCommonService.isExist(oppenid, unionid, "staff");
+			}else {
+				status= new ReturnStatus(false,"该微信号第一次关注");
 			}
 			if (status.isSuccess()) {
 

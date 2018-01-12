@@ -1220,8 +1220,8 @@ public class HomeController {
 			logger.info("已经存在userInfo:"+userInfo);
 			if(userInfo==null){
                 logger.info("不存在userInfo:"+userInfo);
-                Map<String,Object> user_token=wxgetInfo.getAccess_token(code,"user");
-                userInfo=wxgetInfo.getUserInfo(user_token);
+               // Map<String,Object> user_token=wxgetInfo.getAccess_token(code,"user");
+             //   userInfo=wxgetInfo.getUserInfo(user_token);
                 logger.info("userInfo:"+userInfo);
                 ReturnStatus status=null;
                 String oppenid="";
@@ -1237,7 +1237,9 @@ public class HomeController {
                         unionid=userInfo.get("unionid").toString();
                     }
                     status=weCommonService.isExist(oppenid, unionid, "user");
-                }
+                }else{
+					status=new ReturnStatus(false,"该微信号第一次关注");
+				}
                 if(status.isSuccess()){
                     System.out.println("0000000000state______________________________________________"+state);
                     User user=weUserService.queryUserByOpenId(oppenid);
@@ -1352,6 +1354,159 @@ public class HomeController {
 		}
 		return mv;
 	}
+
+	/**
+	 *
+	 * 微信访问主页的控制类
+	 */
+	@RequestMapping(value = "/userLogin.do", method = RequestMethod.GET)
+	public ModelAndView userLogin(String code,String state,HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		ModelAndView mv = null;
+		try {
+			mv = new ModelAndView();
+			HttpSession session=request.getSession(true);
+			Map<String,Object> userInfo=(Map<String,Object>)session.getAttribute("userInfo");
+			logger.info("已经存在userInfo:"+userInfo);
+			if(userInfo==null){
+				logger.info("不存在userInfo:"+userInfo);
+				// Map<String,Object> user_token=wxgetInfo.getAccess_token(code,"user");
+				//   userInfo=wxgetInfo.getUserInfo(user_token);
+				logger.info("userInfo:"+userInfo);
+				ReturnStatus status=null;
+				String oppenid="";
+				String unionid="";
+				session.setAttribute("userInfo", userInfo);
+				if(userInfo!=null)
+				{
+					if(userInfo.get("openid")!=null){
+						oppenid=userInfo.get("openid").toString();
+						session.setAttribute("openid", oppenid);
+					}
+					if(userInfo.get("unionid")!=null){
+						unionid=userInfo.get("unionid").toString();
+					}
+					status=weCommonService.isExist(oppenid, unionid, "user");
+				}else{
+					status=new ReturnStatus(false,"该微信号第一次关注");
+				}
+				if(status.isSuccess()){
+					System.out.println("0000000000state______________________________________________"+state);
+					User user=weUserService.queryUserByOpenId(oppenid);
+					GpsPoint gpsPoint=new GpsPoint();
+					double longitude;
+					double latitude;
+					Object lo=session.getAttribute("longitude");
+					Object la=session.getAttribute("latitude");
+					if(lo!=null){
+						longitude=Double.parseDouble(lo.toString());
+						gpsPoint.setLongitude(longitude);
+					}
+					if(la!=null){
+						latitude=Double.parseDouble(la.toString());
+						gpsPoint.setLongitude(latitude);
+					}
+					request.setAttribute("user", user);
+					session.setAttribute("user", user);
+					session.setAttribute("userId", user.get_id());
+					session.setAttribute("city", "北京市");
+					session.setAttribute("cityId", "1667920738524089172");
+					userInfo.put("gpsPoint", gpsPoint);
+					if(user!=null&&"".equals(user.getAvatar())&&userInfo.get("headimgurl") != null && !userInfo.get("headimgurl").equals("")){
+						InputStream in = weCommonService.returnBitMap((String)userInfo.get("headimgurl"));
+						String imgName = weCommonService.downImg(in,request);
+						String url=request.getSession().getServletContext().getRealPath("")+"/module/resources/down/"+imgName;
+						File imgFile=new File(url);
+						InputStream inFile=new FileInputStream(imgFile);
+						String ossId = Entity.getLongUUID() + FileNameUtil.getSuffix(imgName);
+						String etag = OSSFileUtil.upload(inFile, imgFile.length(), ossId, OSSFileUtil.pubBucketName);
+						in.close();
+						inFile.close();
+						userMyService.updateImg(user.get_id(),ossId);
+					}
+					userMyService.updateUser(user.get_id(),userInfo);
+				}else{
+					GpsPoint gpsPoint=new GpsPoint();
+					double longitude;
+					double latitude;
+					session.setAttribute("city", "北京市");
+					session.setAttribute("cityId", "1667920738524089172");
+					Object lo=session.getAttribute("longitude");
+					Object la=session.getAttribute("latitude");
+					if(lo!=null){
+						longitude=Double.parseDouble(lo.toString());
+						gpsPoint.setLongitude(longitude);
+					}
+					if(la!=null){
+						latitude=Double.parseDouble(la.toString());
+						gpsPoint.setLongitude(latitude);
+					}
+					userInfo.put("gpsPoint", gpsPoint);
+					if(userInfo.get("headimgurl") != null && !userInfo.get("headimgurl").equals("")) {
+						InputStream in = weCommonService.returnBitMap((String)userInfo.get("headimgurl"));
+						String imgName = weCommonService.downImg(in,request);
+						String url=request.getSession().getServletContext().getRealPath("")+"/module/resources/down/"+imgName;
+						File imgFile=new File(url);
+						InputStream inFile=new FileInputStream(imgFile);
+						String ossId = Entity.getLongUUID() + FileNameUtil.getSuffix(imgName);
+						String etag = OSSFileUtil.upload(inFile, imgFile.length(), ossId, OSSFileUtil.pubBucketName);
+						in.close();
+						inFile.close();
+						userInfo.put("headimgurl", ossId);
+					}
+					if(!StringUtils.isEmpty(state) && !state.equals("123")) {
+						String accountID = "";
+						String accountType = "";
+						String[] states = state.split("_");
+						if (states != null && states.length > 1){
+							accountID = states[1];
+							accountType = states[0];
+						}
+						userInfo.put("accountType",accountType);
+						userInfo.put("invitor", accountID);
+						userInfo.put("inviteDate", new Date());
+					}
+					status=weCommonService.saveUser(userInfo);
+					if(status.isSuccess()){
+						User user=weUserService.queryUserByOpenId(oppenid);
+						logger.info("最终的user:"+user);
+						request.setAttribute("user", user);
+						session.setAttribute("user", user);
+						session.setAttribute("userId", user.get_id());
+						couponGrantService.grantCouponByuserUuidAndType(user.get_id(),"关注",-1,"");
+						userMyService.updateUser(user.get_id(),userInfo);
+					}
+				}
+			}else {
+				String oppenid = "";
+				if(userInfo.get("openid")!=null){
+					oppenid=userInfo.get("openid").toString();
+					session.setAttribute("openid", oppenid);
+				}
+				User user = weUserService.queryUserByOpenId(oppenid);
+				logger.info("最终的user:" + user);
+				request.setAttribute("user", user);
+				session.setAttribute("user", user);
+				session.setAttribute("userId", user.get_id());
+				userMyService.updateUser(user.get_id(),userInfo);
+			}
+			logger.info("最终的userInfo:"+userInfo);
+			String oppenid=userInfo.get("openid").toString();
+			User user = weUserService.queryUserByOpenId(oppenid);
+			userMyService.updateUser(user.get_id(),userInfo);
+			Map<String, Object> sign = redisService.getWechatPositioningMessage(Configure.DOMAIN_URL + request.getRequestURI() + "?" + request.getQueryString(),"user");
+			mv.addObject("sign", sign);
+			List<WeCarousel> weCarousels = weUserService.findCarousels();
+			mv.addObject("weCarousels", weCarousels);
+			mv.setViewName("user/userhome/home_page");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mv;
+	}
+
+
+
 	/**
 	 * 发送验证码
 	 * @param phone

@@ -12,7 +12,7 @@
 					<div class="ibox-content">
 						<form id="searchForm" method="get" class="form-horizontal">
 							<div class="form-group">
-								<label class="col-sm-2 control-label">账号名称</label>
+								<label class="col-sm-2 control-label">账号名称1</label>
 								<div class="col-sm-3">
 									<input id="regex:accountName" name="regex:accountName"
 										type="text" class="form-control">
