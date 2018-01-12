@@ -1759,16 +1759,22 @@ public class HomeController {
 	 */
 	@RequestMapping(value ="/getCodeByPhone", method = RequestMethod.POST)
 	@ResponseBody
-	public String getCodeByPhone(HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object>  getCodeByPhone(HttpServletRequest request, HttpServletResponse response) {
 		//'phone':phone,'type':'user'
 		String phone =String.valueOf(request.getParameter("phone"));
 		String type = String.valueOf(request.getParameter("type"));
-		
+		Map<String, Object> map = new HashMap<String, Object>();
 		if(weCommonService.verifycode(phone, type).isSuccess()) {
-			return "获取验证码成功！";
+			map.put("code","0");
+			map.put("message","获取验证码成功！");
+			map.put("data","");
 		}else {
-			return "获取验证码失败！";
+			map.put("code","1");
+			map.put("message","获取验证码失敗！");
+			map.put("data","");
 		}
+		return map;
+
 	}
 
 	//TODO 预约技师时候的手机号验证

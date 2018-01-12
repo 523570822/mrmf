@@ -42,7 +42,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -51,10 +50,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 /**
  * 用户我的相关
  */
@@ -620,13 +617,27 @@ public class UserMyController {
 	 */
 	@RequestMapping(value ="/getCodeByPhone", method = RequestMethod.POST)
 	@ResponseBody
-	public String getCodeByPhone(HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object> getCodeByPhone(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+
 		String phone =String.valueOf(request.getParameter("phone"));
 		if(accountService.verifycode(phone).isSuccess()) {
-			return "获取验证码成功！";
+
+			map.put("code","0");
+			map.put("message","获取验证码成功！");
+			map.put("data","");
+
+
+
 		}else {
-			return "获取验证码失败！";
+
+			map.put("code","1");
+			map.put("message","获取验证码失败！");
+			map.put("data","");
+
 		}
+		return map;
 	}
 	/**
 	 * 验证手机号和验证码
@@ -653,7 +664,7 @@ public class UserMyController {
 				return "验证失败";
 			}
 		}
-		
+
 		if(phone.equals(user.getPhone())) {
 			if(accountService.verify(phone, code).isSuccess()) {
 				return "绑定成功";

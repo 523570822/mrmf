@@ -13,12 +13,12 @@
 </style>
 <script src="${ctxPath}/moduleweb/login/login.js" type="text/javascript"></script>
 <script type="text/javascript">
-	function prt() {
+/*	function prt() {
 		if (!("print" in document.getElementById("jatoolsPrinter"))) {
 			layer
 					.alert("请安装打印控件（若未自动弹出，请点<a href=\"${ctxPath}/setup.exe\">此处下载</a>安装），并设置浏览器安全属性：<br>菜单[工具]-->Internet选项-->安全-->受信任的站点-->[站点]按钮，添加站点http://rxmao.cn<br><font color=\"red\">注意：不按此操作打印功能将不可用!!!仅支持IE内核浏览器</font>");
 		}
-	}
+	}*/
 	$().ready(function() {
 		<c:if test="${needVerify }">
 		var intervalId, timepass;
