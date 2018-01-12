@@ -84,7 +84,7 @@ public class HomeController {
 	 * 访问主页的控制类
 	 */
 	@RequestMapping(value = "/toHomePage", method = RequestMethod.GET)
-	public ModelAndView toHome(@RequestParam(required = false)String msg, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView toHome(@RequestParam(required = false)String msg, HttpServletRequest request, HttpServletResponse response)  {
 		ModelAndView mv = new ModelAndView();
 		String url = Configure.DOMAIN_URL + request.getRequestURI();
 		if (msg != null) {
@@ -103,10 +103,10 @@ public class HomeController {
 
 	/**
 	 *	跳转到搜索案例界面
-	 * @throws BaseException
+	 *
 	 */
 	@RequestMapping(value ="/toQueryStaff", method = RequestMethod.GET)
-	public ModelAndView toQueryStaff(HttpServletRequest request, HttpServletResponse response) throws BaseException{
+	public ModelAndView toQueryStaff(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		HttpSession session = request.getSession(true);
 		String userId = request.getParameter("userId");
@@ -133,9 +133,9 @@ public class HomeController {
 	 */
 	@RequestMapping(value ="/queryStaff", method = RequestMethod.POST)
 	@ResponseBody
-	public FlipInfo<Staff> queryStaffByName(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public FlipInfo<Staff> queryStaffByName(HttpServletRequest request, HttpServletResponse response) {
 
-		FlipInfo<Staff> fpi = new FlipInfo<Staff>();
+		FlipInfo<Staff> fpi = new FlipInfo<>();
 		String page1 = request.getParameter("page");
 		int page = Integer.parseInt(request.getParameter("page"));
 		fpi.setPage(page);
@@ -1361,7 +1361,7 @@ public class HomeController {
 	@RequestMapping(value = "/userRegist.do", method = RequestMethod.POST)
 	public  Map<String, Object> userRegist(String phone,String code,String mail,String password,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
-		mail="11";
+
 		try {
 
 			HttpSession session=request.getSession(true);
