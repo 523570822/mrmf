@@ -2,15 +2,18 @@
 <bean:beans xmlns:bean="http://www.springframework.org/schema/beans"
 			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c="http://www.springframework.org/schema/c"
 			xmlns="http://www.springframework.org/schema/security"
-			xmlns:task="http://www.springframework.org/schema/task"
+
 			xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/security
-		http://www.springframework.org/schema/security/spring-security-3.1.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+		http://www.springframework.org/schema/security/spring-security-3.1.xsd
+
+">
 
 	<global-method-security secured-annotations="enabled" />
 
 	<http pattern="/index.jsp" security="none" />
+	<http pattern="/face.jsp" security="none" />
 	<http pattern="/**/potisionProtocol.jsp" security="none" />
 	<http pattern="/**/*.js" security="none" />
 	<http pattern="/**/*.jpg" security="none" />
@@ -38,12 +41,12 @@
 
 	<bean:bean id="userDetailService"
 			   class="com.osg.framework.web.security.verify.NewlyAccountDetailsService">
-		<bean:property name="verifyAccountRepository" ref="verifyAccountRepository"></bean:property>
+		<!--<bean:property name="verifyAccountRepository" ref="verifyAccountRepository"></bean:property>-->
 	</bean:bean>
 
 	<bean:bean name="verifyAccountRepository"
 			   class="com.osg.framework.web.security.verify.VerifyAccountRepositoryImpl">
-		<bean:property name="accountService" ref="accountService"></bean:property>
+	<!--	<bean:property name="accountService" ref="accountService"></bean:property>-->
 	</bean:bean>
 
 	<authentication-manager id="restAuthenticationManager">
