@@ -1,0 +1,2 @@
+APP用户端接口：
+1. 用户验证码接口"/w/home/getCodeByPhone",{'phone':phone,'type':'user'}
