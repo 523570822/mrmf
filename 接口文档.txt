@@ -1,6 +1,8 @@
+返回规范
 
-
-
+{code : ""状态码 0成功  其他失败
+ message:""状态码意义
+    data : {}返回数据}
 
 APP用户端接口：
 1. 用户验证码接口"/w/home/getCodeByPhone",{'phone':phone,'type':'user'}
