@@ -2,48 +2,10 @@ package com.mrmf.service.wecommon;
 
 import com.mrmf.entity.*;
 import com.mrmf.entity.organPisition.TimeCreate;
-import com.mrmf.service.redis.RedisService;
-import it.sauronsoftware.base64.Base64;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletRequest;
-
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
 import com.mrmf.entity.user.Bigsort;
 import com.mrmf.entity.user.Usercard;
 import com.mrmf.service.account.AccountService;
+import com.mrmf.service.redis.RedisService;
 import com.mrmf.service.staff.StaffService;
 import com.osg.entity.Entity;
 import com.osg.entity.FlipInfo;
@@ -53,6 +15,24 @@ import com.osg.framework.BaseException;
 import com.osg.framework.mongodb.EMongoTemplate;
 import com.osg.framework.util.PositionUtil;
 import com.osg.framework.util.StringUtils;
+import it.sauronsoftware.base64.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 @Service("weCommonService")
 public class WeCommonServiceImpl implements WeComonService{
 	public static final String KEY = "";
@@ -642,6 +622,11 @@ public class WeCommonServiceImpl implements WeComonService{
 		if(!StringUtils.isEmpty(invitor)) {
 			user.setInvitor(invitor);
 		}
+		//1
+		String phone = String.valueOf(userInfo.get("phone"));
+		if(!StringUtils.isEmpty(phone)) {
+			user.setPhone(phone);
+		}
 		Date inviteDate =(Date)userInfo.get("inviteDate");
 		if(inviteDate != null) {
 			user.setInviteDate(inviteDate);
@@ -657,10 +642,12 @@ public class WeCommonServiceImpl implements WeComonService{
 		account.setIdIfNew();
 		account.setCreateTimeIfNew();
 		String openId=(String)userInfo.get("openid");
+		String password=(String)userInfo.get("password");
 		if(!StringUtils.isEmpty(openId)){
 			account.setAccountName(openId);
 		}
-		account.setAccountPwd(passwordEncoder.encodePassword(openId, null));
+
+		account.setAccountPwd(passwordEncoder.encodePassword(password, null));//
 		account.setAccountType("user"); // 员工类型
 		String unionId=(String)userInfo.get("unionid");
 		if(!StringUtils.isEmpty(unionId)){

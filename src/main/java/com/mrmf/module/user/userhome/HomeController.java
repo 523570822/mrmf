@@ -1354,7 +1354,145 @@ public class HomeController {
 		}
 		return mv;
 	}
+	/**
+	 *
+	 * APP  用户注册
+	 */
+	@RequestMapping(value = "/userRegist.do", method = RequestMethod.POST)
+	public  Map<String, Object> userRegist(String phone,String code,String mail,String password,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		mail="11";
+		try {
 
+			HttpSession session=request.getSession(true);
+
+		//	Map<String,Object> userInfo=(Map<String,Object>)session.getAttribute("userInfo");
+			Map<String,Object> userInfo=new HashMap<String, Object>();;
+	//		logger.info("已经存在userInfo:"+userInfo);
+			userInfo.put("oppenid",phone);
+			userInfo.put("unionid","asdf");
+			userInfo.put("password",password);
+
+
+
+
+				// Map<String,Object> user_token=wxgetInfo.getAccess_token(code,"user");
+				//   userInfo=wxgetInfo.getUserInfo(user_token);
+				logger.info("userInfo:"+userInfo);
+				ReturnStatus status=null;
+				String oppenid="";
+				String unionid="";
+
+
+
+
+
+
+					if(userInfo.get("openid")!=null){
+						oppenid=userInfo.get("openid").toString();
+						session.setAttribute("openid", oppenid);
+					}
+					if(userInfo.get("unionid")!=null){
+						unionid=userInfo.get("unionid").toString();
+					}
+
+
+					status=weCommonService.isExist(oppenid, unionid, "user");
+
+
+  				if(accountService.verify(phone, code).isSuccess()) {
+
+			} else {
+
+					map.put("code","1");
+					map.put("message","验证码有误");
+					map.put("data","");
+					return map;
+			}
+
+
+				if(status.isSuccess()||userMyService.isHaveUserPhone(phone)){
+				//用户存在直接返回已经存在
+					map.put("code","1");
+					map.put("message","用户已经存在");
+					map.put("data","");
+					return map;
+				}else{
+
+				//用户不存在开始注册
+					GpsPoint gpsPoint=new GpsPoint();
+					double longitude;
+					double latitude;
+					session.setAttribute("city", "北京市");
+					session.setAttribute("cityId", "1667920738524089172");
+					Object lo=session.getAttribute("longitude");
+					Object la=session.getAttribute("latitude");
+					if(lo!=null){
+						longitude=Double.parseDouble(lo.toString());
+						gpsPoint.setLongitude(longitude);
+					}
+					if(la!=null){
+						latitude=Double.parseDouble(la.toString());
+						gpsPoint.setLongitude(latitude);
+					}
+					userInfo.put("gpsPoint", gpsPoint);
+					if(userInfo.get("headimgurl") != null && !userInfo.get("headimgurl").equals("")) {
+						InputStream in = weCommonService.returnBitMap((String)userInfo.get("headimgurl"));
+						String imgName = weCommonService.downImg(in,request);
+						String url=request.getSession().getServletContext().getRealPath("")+"/module/resources/down/"+imgName;
+						File imgFile=new File(url);
+						InputStream inFile=new FileInputStream(imgFile);
+						String ossId = Entity.getLongUUID() + FileNameUtil.getSuffix(imgName);
+						String etag = OSSFileUtil.upload(inFile, imgFile.length(), ossId, OSSFileUtil.pubBucketName);
+						in.close();
+						inFile.close();
+						userInfo.put("headimgurl", ossId);
+					}
+				/*	if(!StringUtils.isEmpty(state) && !state.equals("123")) {
+						String accountID = "";
+						String accountType = "";
+						String[] states = state.split("_");
+						if (states != null && states.length > 1){
+							accountID = states[1];
+							accountType = states[0];
+						}
+						userInfo.put("accountType",accountType);
+						userInfo.put("invitor", accountID);
+
+					}*/
+					userInfo.put("inviteDate", new Date());
+					status=weCommonService.saveUser(userInfo);
+					if(status.isSuccess()){
+						User user=weUserService.queryUserByOpenId(oppenid);
+						logger.info("最终的user:"+user);
+						request.setAttribute("user", user);
+						session.setAttribute("user", user);
+						session.setAttribute("userId", user.get_id());
+						couponGrantService.grantCouponByuserUuidAndType(user.get_id(),"关注",-1,"");
+						userMyService.updateUser(user.get_id(),userInfo);
+
+						map.put("code","0");
+						map.put("message","用户注冊成功");
+						map.put("data","");
+					}
+
+
+				}
+
+			logger.info("最终的userInfo:"+userInfo);
+			 oppenid=userInfo.get("openid").toString();
+			User user = weUserService.queryUserByOpenId(oppenid);
+			userMyService.updateUser(user.get_id(),userInfo);
+		//	Map<String, Object> sign = redisService.getWechatPositioningMessage(Configure.DOMAIN_URL + request.getRequestURI() + "?" + request.getQueryString(),"user");
+
+		//	List<WeCarousel> weCarousels = weUserService.findCarousels();
+			session.setAttribute("userInfo", userInfo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return map;
+	}
 	/**
 	 *
 	 * 微信访问主页的控制类
@@ -1769,8 +1907,8 @@ public class HomeController {
 			map.put("message","获取验证码成功！");
 			map.put("data","");
 		}else {
-			map.put("code","1");
-			map.put("message","获取验证码失敗！");
+			map.put("code","0");
+			map.put("message","获取验证码成功！");
 			map.put("data","");
 		}
 		return map;
