@@ -1,73 +1,139 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <bean:beans xmlns:bean="http://www.springframework.org/schema/beans"
+
 			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c="http://www.springframework.org/schema/c"
+
 			xmlns="http://www.springframework.org/schema/security"
 
-			xsi:schemaLocation="http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-		http://www.springframework.org/schema/security
-		http://www.springframework.org/schema/security/spring-security-3.1.xsd
+			xmlns:task="http://www.springframework.org/schema/task"
 
-">
+			xsi:schemaLocation="http://www.springframework.org/schema/beans
+
+ 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+
+ 		http://www.springframework.org/schema/security
+
+ 		http://www.springframework.org/schema/security/spring-security-3.1.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+
 
 	<global-method-security secured-annotations="enabled" />
 
+
+
 	<http pattern="/index.jsp" security="none" />
-	<http pattern="/face.jsp" security="none" />
+
 	<http pattern="/**/potisionProtocol.jsp" security="none" />
+
 	<http pattern="/**/*.js" security="none" />
+
 	<http pattern="/**/*.jpg" security="none" />
+
 	<http pattern="/**/*.png" security="none" />
+
 	<http pattern="/**/*.gif" security="none" />
+
 	<http pattern="/**/*.css" security="none" />
+
 	<http pattern="/**/*.ico" security="none" />
+
 	<http pattern="/**/*.map" security="none" />
+
 	<http pattern="/**/*.cab" security="none" />
+
 	<http pattern="/**/*.exe" security="none" />
+
 	<http pattern="/**/*.txt" security="none" />
+
 	<http pattern="/**/*.mp4" security="none" />
+
 	<http pattern="/w/**" security="none" />
+
 	<http pattern="/shopVip/sendVerifyCode.do" security="none" />
+
 	<http pattern="/shopVip/verify.do" security="none" />
+
 	<http realm="Protected API" use-expressions="true" create-session="stateless"
+
 		  entry-point-ref="unauthorizedEntryPoint" authentication-manager-ref="restAuthenticationManager">
+
 		<custom-filter ref="restAuthenticationFilter" position="FORM_LOGIN_FILTER" />
+
 		<intercept-url pattern="/security/**" access="isFullyAuthenticated()" />
+
 		<intercept-url pattern="/*" access="permitAll" />
+
 	</http>
 
+
+
 	<bean:bean id="unauthorizedEntryPoint"
+
 			   class="com.osg.framework.web.security.auth.UnauthorizedEntryPoint" />
 
+
+
 	<bean:bean id="userDetailService"
+
 			   class="com.osg.framework.web.security.verify.NewlyAccountDetailsService">
-		<!--<bean:property name="verifyAccountRepository" ref="verifyAccountRepository"></bean:property>-->
+
+		<bean:property name="verifyAccountRepository" ref="verifyAccountRepository"></bean:property>
+
 	</bean:bean>
+
+
 
 	<bean:bean name="verifyAccountRepository"
+
 			   class="com.osg.framework.web.security.verify.VerifyAccountRepositoryImpl">
-	<!--	<bean:property name="accountService" ref="accountService"></bean:property>-->
+
+		<bean:property name="accountService" ref="accountService"></bean:property>
+
 	</bean:bean>
+
+
 
 	<authentication-manager id="restAuthenticationManager">
+
 		<authentication-provider user-service-ref="userDetailService" />
+
 	</authentication-manager>
 
+
+
 	<bean:bean id="tokenManager"
+
 			   class="com.osg.framework.web.security.token.TokenManagerCache">
+
 		<bean:property name="cacheManager" ref="cacheManager" />
+
 	</bean:bean>
+
+
 
 	<bean:bean id="authenticationService"
+
 			   class="com.osg.framework.web.security.auth.AuthenticationServiceDefault"
+
 			   c:authenticationManager-ref="restAuthenticationManager"
+
 			   c:tokenManager-ref="tokenManager" />
 
+
+
 	<bean:bean id="restAuthenticationFilter"
+
 			   class="com.osg.framework.web.security.TokenAuthenticationFilter"
+
 			   c:authenticationService-ref="authenticationService"
+
 			   c:tokenManager-ref="tokenManager" c:passwordEncoder-ref="passwordEncoder"
+
 			   c:loginLink="/login" c:logoutLink="/logout" c:refreshLink="/refreshToken">
+
 		<bean:property name="cacheManager" ref="cacheManager" />
+
 	</bean:bean>
+
 </bean:beans>
