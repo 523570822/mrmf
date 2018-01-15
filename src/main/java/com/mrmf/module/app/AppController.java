@@ -41,7 +41,7 @@ import java.util.Map;
  * @author yangshaodong
  */
 @Controller
-@RequestMapping("/App")
+@RequestMapping("/app")
 public class AppController {
 	@Autowired 
 	private WeUserService weUserService;
