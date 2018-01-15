@@ -9,7 +9,7 @@
 APP用户端接口：
 1. 用户验证码接口"/w/home/getCodeByPhone",{"phone":phone,"type":"user"}//{"phone":"15620512895","type":"user"}
 
-2.用户注册 /w/home/userRegist.do,
+2.用户注册 /w/home/userRegistdo,
  {
  "phone":"",
  "code":"",

@@ -53,21 +53,21 @@ import java.util.*;
 @Controller
 @RequestMapping("/home")
 public class HomeController {
-	@Autowired 
+	@Autowired
 	private WeUserService weUserService;
 	@Autowired
 	private StaffService staffService;
-	@Autowired 
+	@Autowired
 	private WeComonService weCommonService;
-	@Autowired 
+	@Autowired
 	private WxgetInfo wxgetInfo;
 	@Autowired
 	private UserMyService userMyService;
 	@Autowired
 	private AccountService accountService;
-	@Autowired 
+	@Autowired
 	private RedisService redisService;
-	@Autowired 
+	@Autowired
 	private WeOrganService weOrganService;
 	@Autowired
 	private StaffMyService staffMyService;
@@ -80,7 +80,7 @@ public class HomeController {
 
 	private static Logger logger = Logger.getLogger(HomeController.class);
 	/**
-	 * 
+	 *
 	 * 访问主页的控制类
 	 */
 	@RequestMapping(value = "/toHomePage", method = RequestMethod.GET)
@@ -135,7 +135,7 @@ public class HomeController {
 	@ResponseBody
 	public FlipInfo<Staff> queryStaffByName(HttpServletRequest request, HttpServletResponse response) {
 
-		FlipInfo<Staff> fpi = new FlipInfo<>();
+		FlipInfo<Staff> fpi = new FlipInfo<Staff>();
 		String page1 = request.getParameter("page");
 		int page = Integer.parseInt(request.getParameter("page"));
 		fpi.setPage(page);
@@ -174,7 +174,7 @@ public class HomeController {
 		//findOldLocation(longitude,latitude,request);
 		String type = request.getParameter("type");
 		if(type !=null) {
-		    type = new String(URLDecoder.decode(type,"utf-8"));
+			type = new String(URLDecoder.decode(type,"utf-8"));
 		}
 		String homeType = request.getParameter("homeType");
 		if(homeType !=null) {
@@ -212,7 +212,7 @@ public class HomeController {
 	@RequestMapping(value = "/typeProgramList", method = RequestMethod.POST)
 	@ResponseBody
 	public FlipInfo<WeStaffCase> typeProgramList(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
+
 		HttpSession session = request.getSession();
 		String city =  String.valueOf(session.getAttribute("city"));
 		double longitude =  Double.parseDouble(String.valueOf(session.getAttribute("longitude")));
@@ -223,7 +223,7 @@ public class HomeController {
 		int page = 1;
 		String tempPage = request.getParameter("page");
 		if(tempPage != null && !tempPage.equals("")) {
-		    page = Integer.parseInt(tempPage);
+			page = Integer.parseInt(tempPage);
 		}
 		FlipInfo<WeStaffCase> fpiWeStaffCases = new FlipInfo<WeStaffCase>();
 		fpiWeStaffCases.setPage(page);
@@ -231,8 +231,8 @@ public class HomeController {
 		fpiWeStaffCases = weUserService.queryTypeProgramALL(fpiWeStaffCases, type, hotOrder,priceOrder,longitude,latitude,city);
 		return fpiWeStaffCases;
 	}
-	
-	
+
+
 	/**
 	 *  经典案例列表的类
 	 */
@@ -261,37 +261,37 @@ public class HomeController {
 		int page = 1;
 		String tempPage = request.getParameter("page");
 		if(tempPage != null && !tempPage.equals("")) {
-		    page = Integer.parseInt(tempPage);
+			page = Integer.parseInt(tempPage);
 		}FlipInfo<WeStaffCase> fpiWeStaffCases = new FlipInfo<WeStaffCase>();
 		fpiWeStaffCases.setPage(page);
 		fpiWeStaffCases.setSize(50);
 		fpiWeStaffCases = weUserService.queryBeautyALL(fpiWeStaffCases, type, hotOrder,priceOrder,longitude,latitude,city,priceCount,typeList);
 		return fpiWeStaffCases;
 	}
-	/** 
+	/**
 	 *	跳转到搜索案例界面
-	 * @throws BaseException 
+	 * @throws BaseException
 	 */
 	@RequestMapping(value ="/toQueryCase", method = RequestMethod.GET)
-    public ModelAndView toCaseByName(HttpServletRequest request, HttpServletResponse response) throws BaseException{
-	    ModelAndView mv = new ModelAndView();
-	    String homeType = request.getParameter("homeType");
-	   if(!StringUtils.isEmpty(homeType)) {
-	    	try {
-	    		homeType =URLDecoder.decode(homeType, "utf-8");
+	public ModelAndView toCaseByName(HttpServletRequest request, HttpServletResponse response) throws BaseException{
+		ModelAndView mv = new ModelAndView();
+		String homeType = request.getParameter("homeType");
+		if(!StringUtils.isEmpty(homeType)) {
+			try {
+				homeType =URLDecoder.decode(homeType, "utf-8");
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-	    	HttpSession session = request.getSession(true);
+			HttpSession session = request.getSession(true);
 			session.setAttribute("homeType",homeType);
-	    } else {
-	    	throw new BaseException("homeType,这个不能为空！！");
-	    }
+		} else {
+			throw new BaseException("homeType,这个不能为空！！");
+		}
 		mv.setViewName("user/userhome/search_case");
-	    return mv;
-    }
-	
-	/** 
+		return mv;
+	}
+
+	/**
 	 *  搜索案例  通过案例的title
 	 */
 	@RequestMapping(value ="/queryCase", method = RequestMethod.POST)
@@ -307,8 +307,8 @@ public class HomeController {
 		fpiWeStaffCases= weUserService.queryBeautyCase(fpiWeStaffCases,title,homeType);
 		return fpiWeStaffCases;
 	}
-	
-	
+
+
 	/**
 	 * 案例详情页面toCaseDes
 	 */
@@ -335,7 +335,7 @@ public class HomeController {
 			homeType = URLDecoder.decode(homeType,"utf-8");
 			session.setAttribute("homeType", homeType);
 		}
-		
+
 //		if(user.getFavorCaseIds()!=null) {
 //			List<String> caseIds =user.getFavorCaseIds();
 //			if(caseIds.contains(caseId)) {
@@ -347,21 +347,21 @@ public class HomeController {
 //			mv.addObject("collect", "收藏");
 //		}
 		WeStaffCase weStaffCase =weCommonService.queryWeStaffCaseById(caseId);
-	    Staff staff = weUserService.queryStaffById(weStaffCase.getStaffId());
-	    staffMyService.setWeStaffCalendar(staff.get_id());
-	    int evaluateCount=0;
-	    if(staff.getEvaluateCount() == null || staff.getEvaluateCount()==0) {
-	    	evaluateCount = 1;
-	    } else {
-	    	evaluateCount = staff.getEvaluateCount();
-	    }
-	    int count = (int)Math.ceil(staff.getZanCount()/evaluateCount);
-	    if(count >= 5) {
-	    	count =  5;
-	    }
-	    
-	    boolean isService  = weUserService.findStaffServiceTime(weStaffCase.getStaffId());
-	    Organ organ = weUserService.findOrganById(staff.getOrganId());
+		Staff staff = weUserService.queryStaffById(weStaffCase.getStaffId());
+		staffMyService.setWeStaffCalendar(staff.get_id());
+		int evaluateCount=0;
+		if(staff.getEvaluateCount() == null || staff.getEvaluateCount()==0) {
+			evaluateCount = 1;
+		} else {
+			evaluateCount = staff.getEvaluateCount();
+		}
+		int count = (int)Math.ceil(staff.getZanCount()/evaluateCount);
+		if(count >= 5) {
+			count =  5;
+		}
+
+		boolean isService  = weUserService.findStaffServiceTime(weStaffCase.getStaffId());
+		Organ organ = weUserService.findOrganById(staff.getOrganId());
 		mv.addObject("weStaffCase", weStaffCase);
 		mv.addObject("organ", organ);
 		mv.addObject("staff", staff);
@@ -371,7 +371,7 @@ public class HomeController {
 		mv.setViewName("user/userhome/case_des");
 		return mv;
 	}
-	
+
 	/**
 	 * 返回评论的列表 -->案例技师
 	 * @param staffId
@@ -399,23 +399,23 @@ public class HomeController {
 	 * @return
 	 */
 	@RequestMapping(value ="/toComment", method = RequestMethod.GET)
-	public ModelAndView queryComment(@RequestParam(required = true)String staffId,HttpServletRequest request, 
-			HttpServletResponse response) {
+	public ModelAndView queryComment(@RequestParam(required = true)String staffId,HttpServletRequest request,
+									 HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("staffId", staffId);
-		mv.setViewName("user/userhome/user_comment");	
+		mv.setViewName("user/userhome/user_comment");
 		return mv;
 	}
 	/**
 	 * 预约信息
 	 */
 	@RequestMapping(value ="/appointInfo", method = RequestMethod.GET)
-	public ModelAndView appointInfo(@RequestParam(required = true)String caseId,HttpServletRequest request, 
-			HttpServletResponse response) {
+	public ModelAndView appointInfo(@RequestParam(required = true)String caseId,HttpServletRequest request,
+									HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		WeStaffCase weStaffCase = weUserService.queryCaseById(caseId);
 		mv.addObject("weStaffCase", weStaffCase);
-		
+
 		String type = request.getParameter("type");
 		String organId = request.getParameter("organId");
 		String cityId = request.getParameter("cityId");
@@ -431,7 +431,7 @@ public class HomeController {
 		HttpSession session = request.getSession();
 		User userSession = (User)session.getAttribute("user");
 		request.setAttribute("userId", userSession.get_id());
-		
+
 		if(weStaffCase != null) {
 			Staff staff = weUserService.queryStaffById(weStaffCase.getStaffId());
 			mv.addObject("weStaffCase", weStaffCase);
@@ -440,7 +440,7 @@ public class HomeController {
 				mv.addObject("appointCase", "ok");
 			}
 		}
-		
+
 		mv.setViewName("user/userhome/appoint_info");
 		return mv;
 	}
@@ -452,19 +452,19 @@ public class HomeController {
 	 * @return
 	 */
 	@RequestMapping(value ="/toAppointTime", method = RequestMethod.GET)
-	public ModelAndView toAppointTime(@RequestParam(required = true)String staffId,@RequestParam(required = true)String caseId,HttpServletRequest request, 
-			HttpServletResponse response) {
+	public ModelAndView toAppointTime(@RequestParam(required = true)String staffId,@RequestParam(required = true)String caseId,HttpServletRequest request,
+									  HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		List<WeekDay> weekDays=weCommonService.queryScheduleTitle();
 		int day=weekDays.get(0).getDaytime();
 		int day7=weekDays.get(6).getDaytime();
 		List<WeStaffCalendar> weStaffCalendars= staffService.findWeStaffSchedule(staffId,day,day7);
-		
+
 		if (weStaffCalendars !=null) {
 			for(WeStaffCalendar weStaffCalendar :weStaffCalendars) {
 				Organ organ=staffService.getOrgan(weStaffCalendar.getOrganId());
 				if(organ!=null){
-				weStaffCalendar.setOrganName(organ.getName());
+					weStaffCalendar.setOrganName(organ.getName());
 				}else{
 					weStaffCalendar.setOrganName("任性猫");
 				}
@@ -472,10 +472,10 @@ public class HomeController {
 				weStaffCalendar.setMonthDay(monthDay);
 				String week = WeekDay.getWeekByDate(weStaffCalendar.getDay(), day);
 				weStaffCalendar.setWeek(week);
-				
+
 			}
 		}
-	
+
 		String type = request.getParameter("type");
 		String organId = request.getParameter("organId");
 		String cityId = request.getParameter("cityId");
@@ -491,7 +491,7 @@ public class HomeController {
 		HttpSession session = request.getSession();
 		User userSession = (User)session.getAttribute("user");
 		request.setAttribute("userId", userSession.get_id());
-		
+
 		request.setAttribute("staffId", staffId);
 		request.setAttribute("weStaffCalendars", weStaffCalendars);
 		request.setAttribute("day", day);
@@ -499,7 +499,7 @@ public class HomeController {
 		mv.setViewName("user/userhome/appoint_time");
 		return mv;
 	}
-	
+
 	/**
 	 * 去选择预约时间和 店铺
 	 * @param request
@@ -507,8 +507,8 @@ public class HomeController {
 	 * @return
 	 */
 	@RequestMapping(value ="/toAppointTimeByStaff", method = RequestMethod.POST)
-	public ModelAndView toAppointTimeByStaff(HttpServletRequest request, 
-			HttpServletResponse response) {
+	public ModelAndView toAppointTimeByStaff(HttpServletRequest request,
+											 HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		String staffId=request.getParameter("staffId");
 		String type=request.getParameter("type");
@@ -545,7 +545,7 @@ public class HomeController {
 		mv.setViewName("user/userhome/appoint_time");
 		return mv;
 	}
-	
+
 	/**
 	 * 选择好时间以后 返回预约信息界面
 	 * @param request
@@ -554,8 +554,8 @@ public class HomeController {
 	 */
 	//reAppoint
 	@RequestMapping(value ="/reAppointStaff", method = RequestMethod.POST)
-	public ModelAndView reAppointStaff(HttpServletRequest request, 
-			HttpServletResponse response) {
+	public ModelAndView reAppointStaff(HttpServletRequest request,
+									   HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		String type=request.getParameter("type");
 		String day=request.getParameter("day");
@@ -589,7 +589,7 @@ public class HomeController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value ="/reAppointByType", method = RequestMethod.POST) 
+	@RequestMapping(value ="/reAppointByType", method = RequestMethod.POST)
 	public ModelAndView reAppointByType(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		String appointTime = request.getParameter("appointTime");
@@ -612,7 +612,7 @@ public class HomeController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value ="/toSelectType", method = RequestMethod.POST) 
+	@RequestMapping(value ="/toSelectType", method = RequestMethod.POST)
 	public ModelAndView toSelectType(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		String appointTime = request.getParameter("appointTime");
@@ -645,13 +645,13 @@ public class HomeController {
 	 */
 	@RequestMapping(value ="/saveCollect", method = RequestMethod.POST)
 	@ResponseBody
-	public String saveCollect(@RequestParam String caseId,HttpServletRequest request, 
-			HttpServletResponse response) {
-			HttpSession session = request.getSession();
-			User user = (User)session.getAttribute("user");
-			weCommonService.saveUserFavor(caseId, "1", user.get_id(), "1");
-			WeStaffCase weStaffCase = weCommonService.queryWeStaffCaseById(caseId);
-			return weStaffCase.getFollowCount()+"";
+	public String saveCollect(@RequestParam String caseId,HttpServletRequest request,
+							  HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
+		weCommonService.saveUserFavor(caseId, "1", user.get_id(), "1");
+		WeStaffCase weStaffCase = weCommonService.queryWeStaffCaseById(caseId);
+		return weStaffCase.getFollowCount()+"";
 	}
 	/**
 	 * 取消收藏
@@ -662,15 +662,15 @@ public class HomeController {
 	 */
 	@RequestMapping(value ="/cancelCollect", method = RequestMethod.POST)
 	@ResponseBody
-	public String cancelCollect(@RequestParam String caseId,HttpServletRequest request, 
-		HttpServletResponse response) {
+	public String cancelCollect(@RequestParam String caseId,HttpServletRequest request,
+								HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		weCommonService.saveUserFavor(caseId, "1", user.get_id(), "2");
 		WeStaffCase weStaffCase = weCommonService.queryWeStaffCaseById(caseId);
 		return weStaffCase.getFollowCount()+"";
 	}
-	
+
 	/**
 	 * 用户  -->收藏技师
 	 * @param staffId 技师的Id
@@ -680,13 +680,13 @@ public class HomeController {
 	 */
 	@RequestMapping(value ="/collectStaff", method = RequestMethod.POST)
 	@ResponseBody
-	public String collectStaff(@RequestParam String staffId,HttpServletRequest request, 
-			HttpServletResponse response) {
-			HttpSession session = request.getSession();
-			User user = (User)session.getAttribute("user");
-			weCommonService.saveUserFavor(staffId, "2", user.get_id(), "1");
-			Staff staff = weUserService.queryStaffById(staffId);
-			return staff.getFollowCount()+"";
+	public String collectStaff(@RequestParam String staffId,HttpServletRequest request,
+							   HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("user");
+		weCommonService.saveUserFavor(staffId, "2", user.get_id(), "1");
+		Staff staff = weUserService.queryStaffById(staffId);
+		return staff.getFollowCount()+"";
 	}
 	/**
 	 * 取消收藏
@@ -696,15 +696,15 @@ public class HomeController {
 	 */
 	@RequestMapping(value ="/canColStaff", method = RequestMethod.POST)
 	@ResponseBody
-	public String canColStaff(@RequestParam String staffId,HttpServletRequest request, 
-		HttpServletResponse response) {
+	public String canColStaff(@RequestParam String staffId,HttpServletRequest request,
+							  HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		weCommonService.saveUserFavor(staffId, "2", user.get_id(), "2");
 		Staff staff = weUserService.queryStaffById(staffId);
 		return staff.getFollowCount()+"";
 	}
-	
+
 	/**
 	 * 查询某天的日常安排
 	 * @param request
@@ -719,7 +719,7 @@ public class HomeController {
 		if(day != null &&!day.equals("") && staffId != null &&!staffId.equals("")&& organId != null && !organId.equals("")) {
 			WeStaffCalendar weStaffCalendar = staffService.findScheduleTime(day, staffId, organId);
 			return weStaffCalendar;
-		} 
+		}
 		return null;
 	}
 	/**
@@ -730,8 +730,8 @@ public class HomeController {
 	 */
 	//reAppoint
 	@RequestMapping(value ="/reAppoint", method = RequestMethod.POST)
-	public ModelAndView toAppointTime(HttpServletRequest request, 
-			HttpServletResponse response) {
+	public ModelAndView toAppointTime(HttpServletRequest request,
+									  HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		String type = request.getParameter("type");
 		String organId = request.getParameter("organId");
@@ -774,7 +774,7 @@ public class HomeController {
 		mv.setViewName("user/userhome/appoint_info");
 		return mv;
 	}
-	
+
 	/**
 	 *  去美丽之星界面
 	 * @param request
@@ -782,8 +782,8 @@ public class HomeController {
 	 * @return
 	 */
 	@RequestMapping(value ="/toBeautyStar", method = RequestMethod.GET)
-	public ModelAndView beautyStar(HttpServletRequest request, 
-			HttpServletResponse response) {
+	public ModelAndView beautyStar(HttpServletRequest request,
+								   HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		String sort = request.getParameter("sort");
 		/*获取上次的地理位置*/
@@ -798,14 +798,14 @@ public class HomeController {
 	 * 获取技师列表
 	 * @param request
 	 * @param response
-	 * @return  
+	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping("/staffList")
 	@ResponseBody
 	public FlipInfo<Staff> staffList(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		FlipInfo<Staff> fpi = new FlipInfo<Staff>();
-	    int page = Integer.parseInt(request.getParameter("page"));
+		int page = Integer.parseInt(request.getParameter("page"));
 		fpi.setPage(page);
 		String longitude = request.getParameter("longitude");
 		String latitude = request.getParameter("latitude");
@@ -841,17 +841,17 @@ public class HomeController {
 			}
 			if(distance!= null&& !distance.equals("")) {
 				fpi = weUserService.queryStaffByUser(query,longitude1, latitude1, maxDistance1,fpi);
-       		} 
-			
- 			if(price!= null&&!price.equals("") && count == 0) {
- 				fpi.setSortField("startPrice");   //价格排序
- 				fpi.setSortOrder("ASC");
- 				fpi = weUserService.queryStaffALL(query, fpi,longitude1, latitude1);
-    		} else if(price!= null&&!price.equals("") && count == 1) {
- 				fpi.setSortField("startPrice");   //价格排序
- 				fpi.setSortOrder("DESC");
- 				fpi = weUserService.queryStaffALL(query, fpi,longitude1, latitude1);
-        	}
+			}
+
+			if(price!= null&&!price.equals("") && count == 0) {
+				fpi.setSortField("startPrice");   //价格排序
+				fpi.setSortOrder("ASC");
+				fpi = weUserService.queryStaffALL(query, fpi,longitude1, latitude1);
+			} else if(price!= null&&!price.equals("") && count == 1) {
+				fpi.setSortField("startPrice");   //价格排序
+				fpi.setSortOrder("DESC");
+				fpi = weUserService.queryStaffALL(query, fpi,longitude1, latitude1);
+			}
 			if(followCount!= null&&!followCount.equals("")) {
 				fpi.setSortField("followCount"); //热度排序
 				fpi.setSortOrder("DESC");
@@ -887,8 +887,8 @@ public class HomeController {
 	 */
 	@RequestMapping(value ="/staffDetail", method = RequestMethod.GET)
 	public ModelAndView beautyStar(@RequestParam(required =true)String staffId,
-			HttpServletRequest request, 
-			HttpServletResponse response) {
+								   HttpServletRequest request,
+								   HttpServletResponse response) {
 		System.out.println("技师详情de User_______________________________________");
 		ModelAndView mv = new ModelAndView();
 		HttpSession session = request.getSession();
@@ -925,9 +925,9 @@ public class HomeController {
 			} else {
 				mv.addObject("collect", "收藏");
 			}
-	    } else {
-	    	mv.addObject("collect", "收藏");
-	    }
+		} else {
+			mv.addObject("collect", "收藏");
+		}
 		Staff staff = weUserService.queryStaffByIdAndDistance(staffId, longitude, latitude);
 		boolean isService = false;
 		if(staff != null){
@@ -943,7 +943,7 @@ public class HomeController {
 
 		/*boolean isHaveWeStaffCase = weUserService.isHaveWeStaffCase(staffId);
 	    mv.addObject("isHaveWeStaffCase", isHaveWeStaffCase);*/
-	    mv.addObject("isService", isService);
+		mv.addObject("isService", isService);
 		mv.addObject("staff", staff);
 		mv.addObject("type", type);
 		mv.addObject("organId", organId);
@@ -952,7 +952,7 @@ public class HomeController {
 		mv.setViewName("user/userhome/staff_detail");
 		return mv;
 	}
-	
+
 	/**
 	 *  去美丽之星详情界面2
 	 * @param request
@@ -961,8 +961,8 @@ public class HomeController {
 	 */
 	@RequestMapping(value ="/staffDetail2", method = RequestMethod.GET)
 	public ModelAndView beautyStar2(@RequestParam(required =true)String staffId,
-			HttpServletRequest request, 
-			HttpServletResponse response) {
+									HttpServletRequest request,
+									HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		HttpSession session = request.getSession();
 		User userSession = (User)session.getAttribute("user");
@@ -1000,7 +1000,7 @@ public class HomeController {
 		boolean isService  = weUserService.findStaffServiceTime(staff.get_id());
 		/*boolean isHaveWeStaffCase = weUserService.isHaveWeStaffCase(staffId);
 	    mv.addObject("isHaveWeStaffCase", isHaveWeStaffCase);*/
-	    mv.addObject("isService", isService);
+		mv.addObject("isService", isService);
 		mv.addObject("staff", staff);
 		mv.setViewName("user/userhome/staff_detail2");
 		return mv;
@@ -1013,8 +1013,8 @@ public class HomeController {
 	 * @return
 	 */
 	@RequestMapping(value ="/goOrganMap", method = RequestMethod.GET)
-	public ModelAndView goOrganMap(@RequestParam(required =true) String organId,HttpServletRequest request, 
-			HttpServletResponse response) {
+	public ModelAndView goOrganMap(@RequestParam(required =true) String organId,HttpServletRequest request,
+								   HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		HttpSession session = request.getSession();
 		double longitude =Double.parseDouble(session.getAttribute("longitude").toString());
@@ -1036,8 +1036,8 @@ public class HomeController {
 	 */
 	@RequestMapping(value ="/queryCases", method = RequestMethod.POST)
 	@ResponseBody
-	public FlipInfo<WeStaffCase> queryCases(@RequestParam(required =true)String staffId,@RequestParam(required =true)int page,HttpServletRequest request, 
-			HttpServletResponse response) {
+	public FlipInfo<WeStaffCase> queryCases(@RequestParam(required =true)String staffId,@RequestParam(required =true)int page,HttpServletRequest request,
+											HttpServletResponse response) {
 		FlipInfo<WeStaffCase> weStaffCases = new FlipInfo<WeStaffCase>();
 		weStaffCases.setPage(page);
 		weStaffCases = weUserService.queryCaseByStaffId(staffId,weStaffCases);
@@ -1068,57 +1068,57 @@ public class HomeController {
 			String userId = userSession.get_id();
 			if(phone !=null && !phone.equals("")) {
 				WeOrganOrder weOrganOrder = new WeOrganOrder();
-			    weOrganOrder.setIdIfNew();
-			    if(staffId != null && !staffId.equals("")) {
-			    	weOrganOrder.setStaffId(staffId);
-			    }
-			    if(organId != null && !organId.equals("")) {
-			    	weOrganOrder.setOrganId(organId);
-			    	organ=userMyService.getOrganById(organId);
-			    }
-			    if(appointTime != null && !appointTime.equals("")){
-			    	weOrganOrder.setOrderTime(appointTime);
-			    	try {
+				weOrganOrder.setIdIfNew();
+				if(staffId != null && !staffId.equals("")) {
+					weOrganOrder.setStaffId(staffId);
+				}
+				if(organId != null && !organId.equals("")) {
+					weOrganOrder.setOrganId(organId);
+					organ=userMyService.getOrganById(organId);
+				}
+				if(appointTime != null && !appointTime.equals("")){
+					weOrganOrder.setOrderTime(appointTime);
+					try {
 						Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(appointTime);
 						time=new SimpleDateFormat("yyyy 年 MM 月 dd 日 HH:mm").format(date);
 					} catch (ParseException e) {
 						e.printStackTrace();
 					}
-			    }
-			    if(caseId != null && !caseId.equals("")) {
-			    	weOrganOrder.setOrderService(caseId);
-			    }
-			    if(userId != null && !userId.equals("")) {
-			    	weOrganOrder.setUserId(userId);
-			    }
-			    if(title != null && !title.equals("")){
-			    	weOrganOrder.setTitle(title);
-			    }
-			    weOrganOrder.setOrderPrice(orderPrice);
-			    weOrganOrder.setState(1);
-			    weOrganOrder.setType(2);
-			    weOrganOrder.setNewCreate();
-		    	weUserService.addAppoint(weOrganOrder);
-		    	//预约成功以后给客户的消息
-		    	Map<String,Object> userInfo = (Map)session.getAttribute("userInfo");
-		    	WxTemplate tempToUser = redisService.getWxTemplate("喵，请耐心等待，您的预约正在确认中。", weOrganOrder.get_id(),weOrganOrder.getTitle() , time, organ.getAddress(),weOrganOrder.getOrderPrice()+"元起", "喵，您的预约信息已成功推送给技师，请等待技师确认。");
-		    	redisService.send_template_message(userInfo.get("openid").toString(), "user", Configure.USER_APPOINT_SUCCESS, tempToUser);
-		    	
-		    	// 预约成功以后给技师的消息
-		    	Account account = accountService.getAccountByEntityID(staffId, "staff");
+				}
+				if(caseId != null && !caseId.equals("")) {
+					weOrganOrder.setOrderService(caseId);
+				}
+				if(userId != null && !userId.equals("")) {
+					weOrganOrder.setUserId(userId);
+				}
+				if(title != null && !title.equals("")){
+					weOrganOrder.setTitle(title);
+				}
+				weOrganOrder.setOrderPrice(orderPrice);
+				weOrganOrder.setState(1);
+				weOrganOrder.setType(2);
+				weOrganOrder.setNewCreate();
+				weUserService.addAppoint(weOrganOrder);
+				//预约成功以后给客户的消息
+				Map<String,Object> userInfo = (Map)session.getAttribute("userInfo");
+				WxTemplate tempToUser = redisService.getWxTemplate("喵，请耐心等待，您的预约正在确认中。", weOrganOrder.get_id(),weOrganOrder.getTitle() , time, organ.getAddress(),weOrganOrder.getOrderPrice()+"元起", "喵，您的预约信息已成功推送给技师，请等待技师确认。");
+				redisService.send_template_message(userInfo.get("openid").toString(), "user", Configure.USER_APPOINT_SUCCESS, tempToUser);
+
+				// 预约成功以后给技师的消息
+				Account account = accountService.getAccountByEntityID(staffId, "staff");
 				//技师通知
-		        WxTemplate tempToStaff = redisService.getWxTemplate("喵，有新的客户预约啦~~",user.getNick(),user.getPhone(), appointTime, weStaffCase.getType(),null, "喵小妹提醒您：请根据您的繁忙程度进行确认。");
-		       
-		        redisService.send_template_urlmessage(Configure.DOMAIN_URL+"/mrmf/w/staffMy/messageToOrderDetail?staffId="+staffId+"&orderId="+weOrganOrder.get_id(),account.getAccountName(),"staff", Configure.APPOINT_STAFF_REMIND, tempToStaff);
-		    	System.out.println(Configure.DOMAIN_URL+"/mrmf/w/staffMy/messageToOrderDetail?staffId="+staffId+"&orderId="+weOrganOrder.get_id());
-		        response.getWriter().print(weOrganOrder.get_id());
+				WxTemplate tempToStaff = redisService.getWxTemplate("喵，有新的客户预约啦~~",user.getNick(),user.getPhone(), appointTime, weStaffCase.getType(),null, "喵小妹提醒您：请根据您的繁忙程度进行确认。");
+
+				redisService.send_template_urlmessage(Configure.DOMAIN_URL+"/mrmf/w/staffMy/messageToOrderDetail?staffId="+staffId+"&orderId="+weOrganOrder.get_id(),account.getAccountName(),"staff", Configure.APPOINT_STAFF_REMIND, tempToStaff);
+				System.out.println(Configure.DOMAIN_URL+"/mrmf/w/staffMy/messageToOrderDetail?staffId="+staffId+"&orderId="+weOrganOrder.get_id());
+				response.getWriter().print(weOrganOrder.get_id());
 			} else {
 				response.getWriter().print("nophone");
 			}
-		    
+
 		} catch (Exception e) {
 			try {
-				
+
 				response.getWriter().print("failure");
 			} catch (IOException e1) {
 				e1.printStackTrace();
@@ -1137,7 +1137,7 @@ public class HomeController {
 	 */
 	@RequestMapping(value="/commitApStaff",method= RequestMethod.POST)
 	public void commitApStaff(HttpServletRequest request,HttpServletResponse response) {
-		 try {
+		try {
 			String staffId =  request.getParameter("staffId");
 			String organId =  request.getParameter("organId");
 			String appointTime =  request.getParameter("appointTime");
@@ -1152,49 +1152,49 @@ public class HomeController {
 			if(phone !=null && !phone.equals("")) {
 				Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(appointTime);
 				String time=new SimpleDateFormat("yyyy 年 MM 月 dd 日 HH:mm").format(date);
-			    WeOrganOrder weOrganOrder = new WeOrganOrder();
-			    weOrganOrder.setNewId();
-			    weOrganOrder.setNewCreate();
-			    if(staffId != null && !staffId.equals("")) {
-			    	weOrganOrder.setStaffId(staffId);
-			    }
-			    if(organId != null && !organId.equals("")) {
-			    	weOrganOrder.setOrganId(organId);
-			    }
-			    if(appointTime != null && !appointTime.equals("")){
-			    	weOrganOrder.setOrderTime(appointTime);
-			    }
-			    if(type != null && !type.equals("")) {
-			    	weOrganOrder.setTitle(type);
-			    }
-			    if(userId != null && !userId.equals("")) {
-			    	weOrganOrder.setUserId(userId);
-			    }
-			    weOrganOrder.setOrderPrice(orderPrice);
-			    Organ organ=userMyService.getOrganById(organId);
-			    weOrganOrder.setState(1);
-			    weOrganOrder.setType(2);
-			    ReturnStatus status=weUserService.verifyOrder(weOrganOrder);
-			    if (status.isSuccess()) {
-			    	weUserService.addAppoint(weOrganOrder);
-			    	//预约成功以后给客户的消息
-			    	Map<String,Object> userInfo = (Map)session.getAttribute("userInfo");
-			    	WxTemplate tempToUser = redisService.getWxTemplate("喵，请耐心等待，您的预约正在确认中。", weOrganOrder.get_id(),weOrganOrder.getTitle() , time, organ.getAddress(),weOrganOrder.getOrderPrice()+"元起", "喵，您的预约信息已成功推送给技师，请等待技师确认。");
-			    	redisService.send_template_message(userInfo.get("openid").toString(), "user", Configure.USER_APPOINT_SUCCESS, tempToUser);
-			    	// 预约成功以后给技师的消息
-			    	Account account = accountService.getAccountByEntityID(staffId, "staff");
-			    	//技师通知
-			    	WxTemplate tempToStaff = redisService.getWxTemplate("喵，有新的客户预约啦~~",user.getNick(),user.getPhone(), appointTime,type,null, "喵小妹提醒您：请根据您的繁忙程度进行确认。");
-			    	
-			    	redisService.send_template_urlmessage(Configure.DOMAIN_URL+"/mrmf/w/staffMy/messageToOrderDetail?staffId="+staffId+"&orderId="+weOrganOrder.get_id(),account.getAccountName(),"staff", Configure.APPOINT_STAFF_REMIND, tempToStaff);
-			    	System.out.println(Configure.DOMAIN_URL+"/mrmf/w/staffMy/messageToOrderDetail?staffId="+staffId+"&orderId="+weOrganOrder.get_id());
-			    	response.getWriter().print(weOrganOrder.get_id()); 
+				WeOrganOrder weOrganOrder = new WeOrganOrder();
+				weOrganOrder.setNewId();
+				weOrganOrder.setNewCreate();
+				if(staffId != null && !staffId.equals("")) {
+					weOrganOrder.setStaffId(staffId);
+				}
+				if(organId != null && !organId.equals("")) {
+					weOrganOrder.setOrganId(organId);
+				}
+				if(appointTime != null && !appointTime.equals("")){
+					weOrganOrder.setOrderTime(appointTime);
+				}
+				if(type != null && !type.equals("")) {
+					weOrganOrder.setTitle(type);
+				}
+				if(userId != null && !userId.equals("")) {
+					weOrganOrder.setUserId(userId);
+				}
+				weOrganOrder.setOrderPrice(orderPrice);
+				Organ organ=userMyService.getOrganById(organId);
+				weOrganOrder.setState(1);
+				weOrganOrder.setType(2);
+				ReturnStatus status=weUserService.verifyOrder(weOrganOrder);
+				if (status.isSuccess()) {
+					weUserService.addAppoint(weOrganOrder);
+					//预约成功以后给客户的消息
+					Map<String,Object> userInfo = (Map)session.getAttribute("userInfo");
+					WxTemplate tempToUser = redisService.getWxTemplate("喵，请耐心等待，您的预约正在确认中。", weOrganOrder.get_id(),weOrganOrder.getTitle() , time, organ.getAddress(),weOrganOrder.getOrderPrice()+"元起", "喵，您的预约信息已成功推送给技师，请等待技师确认。");
+					redisService.send_template_message(userInfo.get("openid").toString(), "user", Configure.USER_APPOINT_SUCCESS, tempToUser);
+					// 预约成功以后给技师的消息
+					Account account = accountService.getAccountByEntityID(staffId, "staff");
+					//技师通知
+					WxTemplate tempToStaff = redisService.getWxTemplate("喵，有新的客户预约啦~~",user.getNick(),user.getPhone(), appointTime,type,null, "喵小妹提醒您：请根据您的繁忙程度进行确认。");
+
+					redisService.send_template_urlmessage(Configure.DOMAIN_URL+"/mrmf/w/staffMy/messageToOrderDetail?staffId="+staffId+"&orderId="+weOrganOrder.get_id(),account.getAccountName(),"staff", Configure.APPOINT_STAFF_REMIND, tempToStaff);
+					System.out.println(Configure.DOMAIN_URL+"/mrmf/w/staffMy/messageToOrderDetail?staffId="+staffId+"&orderId="+weOrganOrder.get_id());
+					response.getWriter().print(weOrganOrder.get_id());
 				}else {
 					response.getWriter().print("repeat");
 				}
-		    } else {
-		    	response.getWriter().print("nophone"); 
-		    }
+			} else {
+				response.getWriter().print("nophone");
+			}
 		} catch (Exception e) {
 			try {
 				response.getWriter().print("failure");
@@ -1203,10 +1203,10 @@ public class HomeController {
 			}
 		}
 	}
-	
+
 
 	/**
-	 * 
+	 *
 	 * 微信访问主页的控制类
 	 */
 	@RequestMapping(value = "/userIndex.do", method = RequestMethod.GET)
@@ -1219,175 +1219,16 @@ public class HomeController {
 			Map<String,Object> userInfo=(Map<String,Object>)session.getAttribute("userInfo");
 			logger.info("已经存在userInfo:"+userInfo);
 			if(userInfo==null){
-                logger.info("不存在userInfo:"+userInfo);
-               // Map<String,Object> user_token=wxgetInfo.getAccess_token(code,"user");
-             //   userInfo=wxgetInfo.getUserInfo(user_token);
-                logger.info("userInfo:"+userInfo);
-                ReturnStatus status=null;
-                String oppenid="";
-                String unionid="";
-                session.setAttribute("userInfo", userInfo);
-                if(userInfo!=null)
-                {
-                    if(userInfo.get("openid")!=null){
-                        oppenid=userInfo.get("openid").toString();
-                        session.setAttribute("openid", oppenid);
-                    }
-                    if(userInfo.get("unionid")!=null){
-                        unionid=userInfo.get("unionid").toString();
-                    }
-                    status=weCommonService.isExist(oppenid, unionid, "user");
-                }else{
-					status=new ReturnStatus(false,"该微信号第一次关注");
-				}
-                if(status.isSuccess()){
-                    System.out.println("0000000000state______________________________________________"+state);
-                    User user=weUserService.queryUserByOpenId(oppenid);
-                    GpsPoint gpsPoint=new GpsPoint();
-                    double longitude;
-                    double latitude;
-                    Object lo=session.getAttribute("longitude");
-                    Object la=session.getAttribute("latitude");
-                    if(lo!=null){
-                        longitude=Double.parseDouble(lo.toString());
-                        gpsPoint.setLongitude(longitude);
-                    }
-                    if(la!=null){
-                        latitude=Double.parseDouble(la.toString());
-                        gpsPoint.setLongitude(latitude);
-                    }
-                    request.setAttribute("user", user);
-                    session.setAttribute("user", user);
-                    session.setAttribute("userId", user.get_id());
-                    session.setAttribute("city", "北京市");
-                    session.setAttribute("cityId", "1667920738524089172");
-                    userInfo.put("gpsPoint", gpsPoint);
-                    if(user!=null&&"".equals(user.getAvatar())&&userInfo.get("headimgurl") != null && !userInfo.get("headimgurl").equals("")){
-                        InputStream in = weCommonService.returnBitMap((String)userInfo.get("headimgurl"));
-                        String imgName = weCommonService.downImg(in,request);
-                        String url=request.getSession().getServletContext().getRealPath("")+"/module/resources/down/"+imgName;
-                        File imgFile=new File(url);
-                        InputStream inFile=new FileInputStream(imgFile);
-                        String ossId = Entity.getLongUUID() + FileNameUtil.getSuffix(imgName);
-                        String etag = OSSFileUtil.upload(inFile, imgFile.length(), ossId, OSSFileUtil.pubBucketName);
-                        in.close();
-                        inFile.close();
-                        userMyService.updateImg(user.get_id(),ossId);
-                    }
-                    userMyService.updateUser(user.get_id(),userInfo);
-                }else{
-                    GpsPoint gpsPoint=new GpsPoint();
-                    double longitude;
-                    double latitude;
-                    session.setAttribute("city", "北京市");
-                    session.setAttribute("cityId", "1667920738524089172");
-                    Object lo=session.getAttribute("longitude");
-                    Object la=session.getAttribute("latitude");
-                    if(lo!=null){
-                        longitude=Double.parseDouble(lo.toString());
-                        gpsPoint.setLongitude(longitude);
-                    }
-                    if(la!=null){
-                        latitude=Double.parseDouble(la.toString());
-                        gpsPoint.setLongitude(latitude);
-                    }
-                    userInfo.put("gpsPoint", gpsPoint);
-                    if(userInfo.get("headimgurl") != null && !userInfo.get("headimgurl").equals("")) {
-                        InputStream in = weCommonService.returnBitMap((String)userInfo.get("headimgurl"));
-                        String imgName = weCommonService.downImg(in,request);
-                        String url=request.getSession().getServletContext().getRealPath("")+"/module/resources/down/"+imgName;
-                        File imgFile=new File(url);
-                        InputStream inFile=new FileInputStream(imgFile);
-                        String ossId = Entity.getLongUUID() + FileNameUtil.getSuffix(imgName);
-                        String etag = OSSFileUtil.upload(inFile, imgFile.length(), ossId, OSSFileUtil.pubBucketName);
-                        in.close();
-                        inFile.close();
-                        userInfo.put("headimgurl", ossId);
-                    }
-                    if(!StringUtils.isEmpty(state) && !state.equals("123")) {
-                        String accountID = "";
-                        String accountType = "";
-                        String[] states = state.split("_");
-                        if (states != null && states.length > 1){
-                            accountID = states[1];
-                            accountType = states[0];
-                        }
-                        userInfo.put("accountType",accountType);
-                        userInfo.put("invitor", accountID);
-                        userInfo.put("inviteDate", new Date());
-                    }
-                    status=weCommonService.saveUser(userInfo);
-                    if(status.isSuccess()){
-                        User user=weUserService.queryUserByOpenId(oppenid);
-                        logger.info("最终的user:"+user);
-                        request.setAttribute("user", user);
-                        session.setAttribute("user", user);
-                        session.setAttribute("userId", user.get_id());
-                        couponGrantService.grantCouponByuserUuidAndType(user.get_id(),"关注",-1,"");
-                        userMyService.updateUser(user.get_id(),userInfo);
-                    }
-                }
-            }else {
-                String oppenid = "";
-                if(userInfo.get("openid")!=null){
-                    oppenid=userInfo.get("openid").toString();
-                    session.setAttribute("openid", oppenid);
-                }
-                User user = weUserService.queryUserByOpenId(oppenid);
-                logger.info("最终的user:" + user);
-                request.setAttribute("user", user);
-                session.setAttribute("user", user);
-                session.setAttribute("userId", user.get_id());
-                userMyService.updateUser(user.get_id(),userInfo);
-            }
-			logger.info("最终的userInfo:"+userInfo);
-			String oppenid=userInfo.get("openid").toString();
-			User user = weUserService.queryUserByOpenId(oppenid);
-			userMyService.updateUser(user.get_id(),userInfo);
-			Map<String, Object> sign = redisService.getWechatPositioningMessage(Configure.DOMAIN_URL + request.getRequestURI() + "?" + request.getQueryString(),"user");
-			mv.addObject("sign", sign);
-			List<WeCarousel> weCarousels = weUserService.findCarousels();
-			mv.addObject("weCarousels", weCarousels);
-			mv.setViewName("user/userhome/home_page");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return mv;
-	}
-	/**
-	 *
-	 * APP  用户注册
-	 */
-	@RequestMapping(value = "/userRegist.do", method = RequestMethod.POST)
-	public  Map<String, Object> userRegist(String phone,String code,String mail,String password,HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		try {
-
-			HttpSession session=request.getSession(true);
-
-		//	Map<String,Object> userInfo=(Map<String,Object>)session.getAttribute("userInfo");
-			Map<String,Object> userInfo=new HashMap<String, Object>();;
-	//		logger.info("已经存在userInfo:"+userInfo);
-			userInfo.put("oppenid",phone);
-			userInfo.put("unionid","asdf");
-			userInfo.put("password",password);
-
-
-
-
+				logger.info("不存在userInfo:"+userInfo);
 				// Map<String,Object> user_token=wxgetInfo.getAccess_token(code,"user");
 				//   userInfo=wxgetInfo.getUserInfo(user_token);
 				logger.info("userInfo:"+userInfo);
 				ReturnStatus status=null;
 				String oppenid="";
 				String unionid="";
-
-
-
-
-
-
+				session.setAttribute("userInfo", userInfo);
+				if(userInfo!=null)
+				{
 					if(userInfo.get("openid")!=null){
 						oppenid=userInfo.get("openid").toString();
 						session.setAttribute("openid", oppenid);
@@ -1395,31 +1236,46 @@ public class HomeController {
 					if(userInfo.get("unionid")!=null){
 						unionid=userInfo.get("unionid").toString();
 					}
-
-
 					status=weCommonService.isExist(oppenid, unionid, "user");
-
-
-  				if(accountService.verify(phone, code).isSuccess()) {
-
-			} else {
-
-					map.put("code","1");
-					map.put("message","验证码有误");
-					map.put("data","");
-					return map;
-			}
-
-
-				if(status.isSuccess()||userMyService.isHaveUserPhone(phone)){
-				//用户存在直接返回已经存在
-					map.put("code","1");
-					map.put("message","用户已经存在");
-					map.put("data","");
-					return map;
 				}else{
-
-				//用户不存在开始注册
+					status=new ReturnStatus(false,"该微信号第一次关注");
+				}
+				if(status.isSuccess()){
+					System.out.println("0000000000state______________________________________________"+state);
+					User user=weUserService.queryUserByOpenId(oppenid);
+					GpsPoint gpsPoint=new GpsPoint();
+					double longitude;
+					double latitude;
+					Object lo=session.getAttribute("longitude");
+					Object la=session.getAttribute("latitude");
+					if(lo!=null){
+						longitude=Double.parseDouble(lo.toString());
+						gpsPoint.setLongitude(longitude);
+					}
+					if(la!=null){
+						latitude=Double.parseDouble(la.toString());
+						gpsPoint.setLongitude(latitude);
+					}
+					request.setAttribute("user", user);
+					session.setAttribute("user", user);
+					session.setAttribute("userId", user.get_id());
+					session.setAttribute("city", "北京市");
+					session.setAttribute("cityId", "1667920738524089172");
+					userInfo.put("gpsPoint", gpsPoint);
+					if(user!=null&&"".equals(user.getAvatar())&&userInfo.get("headimgurl") != null && !userInfo.get("headimgurl").equals("")){
+						InputStream in = weCommonService.returnBitMap((String)userInfo.get("headimgurl"));
+						String imgName = weCommonService.downImg(in,request);
+						String url=request.getSession().getServletContext().getRealPath("")+"/module/resources/down/"+imgName;
+						File imgFile=new File(url);
+						InputStream inFile=new FileInputStream(imgFile);
+						String ossId = Entity.getLongUUID() + FileNameUtil.getSuffix(imgName);
+						String etag = OSSFileUtil.upload(inFile, imgFile.length(), ossId, OSSFileUtil.pubBucketName);
+						in.close();
+						inFile.close();
+						userMyService.updateImg(user.get_id(),ossId);
+					}
+					userMyService.updateUser(user.get_id(),userInfo);
+				}else{
 					GpsPoint gpsPoint=new GpsPoint();
 					double longitude;
 					double latitude;
@@ -1448,6 +1304,150 @@ public class HomeController {
 						inFile.close();
 						userInfo.put("headimgurl", ossId);
 					}
+					if(!StringUtils.isEmpty(state) && !state.equals("123")) {
+						String accountID = "";
+						String accountType = "";
+						String[] states = state.split("_");
+						if (states != null && states.length > 1){
+							accountID = states[1];
+							accountType = states[0];
+						}
+						userInfo.put("accountType",accountType);
+						userInfo.put("invitor", accountID);
+						userInfo.put("inviteDate", new Date());
+					}
+					status=weCommonService.saveUser(userInfo);
+					if(status.isSuccess()){
+						User user=weUserService.queryUserByOpenId(oppenid);
+						logger.info("最终的user:"+user);
+						request.setAttribute("user", user);
+						session.setAttribute("user", user);
+						session.setAttribute("userId", user.get_id());
+						couponGrantService.grantCouponByuserUuidAndType(user.get_id(),"关注",-1,"");
+						userMyService.updateUser(user.get_id(),userInfo);
+					}
+				}
+			}else {
+				String oppenid = "";
+				if(userInfo.get("openid")!=null){
+					oppenid=userInfo.get("openid").toString();
+					session.setAttribute("openid", oppenid);
+				}
+				User user = weUserService.queryUserByOpenId(oppenid);
+				logger.info("最终的user:" + user);
+				request.setAttribute("user", user);
+				session.setAttribute("user", user);
+				session.setAttribute("userId", user.get_id());
+				userMyService.updateUser(user.get_id(),userInfo);
+			}
+			logger.info("最终的userInfo:"+userInfo);
+			String oppenid=userInfo.get("openid").toString();
+			User user = weUserService.queryUserByOpenId(oppenid);
+			userMyService.updateUser(user.get_id(),userInfo);
+			Map<String, Object> sign = redisService.getWechatPositioningMessage(Configure.DOMAIN_URL + request.getRequestURI() + "?" + request.getQueryString(),"user");
+			mv.addObject("sign", sign);
+			List<WeCarousel> weCarousels = weUserService.findCarousels();
+			mv.addObject("weCarousels", weCarousels);
+			mv.setViewName("user/userhome/home_page");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mv;
+	}
+	/**
+	 *
+	 * APP  用户注册
+	 */
+	@RequestMapping(value = "/userRegist.do", method = RequestMethod.POST)
+	public  Map<String, Object> userRegist(String phone,String code,String mail,String password,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		try {
+
+			HttpSession session=request.getSession(true);
+
+			//	Map<String,Object> userInfo=(Map<String,Object>)session.getAttribute("userInfo");
+			Map<String,Object> userInfo=new HashMap<String, Object>();;
+			//		logger.info("已经存在userInfo:"+userInfo);
+			userInfo.put("oppenid",phone);
+			userInfo.put("unionid","asdf");
+			userInfo.put("password",password);
+
+
+
+
+			// Map<String,Object> user_token=wxgetInfo.getAccess_token(code,"user");
+			//   userInfo=wxgetInfo.getUserInfo(user_token);
+			logger.info("userInfo:"+userInfo);
+			ReturnStatus status=null;
+			String oppenid="";
+			String unionid="";
+
+
+
+
+
+
+			if(userInfo.get("openid")!=null){
+				oppenid=userInfo.get("openid").toString();
+				session.setAttribute("openid", oppenid);
+			}
+			if(userInfo.get("unionid")!=null){
+				unionid=userInfo.get("unionid").toString();
+			}
+
+
+			status=weCommonService.isExist(oppenid, unionid, "user");
+
+
+			if(accountService.verify(phone, code).isSuccess()) {
+
+			} else {
+
+				map.put("code","1");
+				map.put("message","验证码有误");
+				map.put("data","");
+				return map;
+			}
+
+
+			if(status.isSuccess()||userMyService.isHaveUserPhone(phone)){
+				//用户存在直接返回已经存在
+				map.put("code","1");
+				map.put("message","用户已经存在");
+				map.put("data","");
+				return map;
+			}else{
+
+				//用户不存在开始注册
+				GpsPoint gpsPoint=new GpsPoint();
+				double longitude;
+				double latitude;
+				session.setAttribute("city", "北京市");
+				session.setAttribute("cityId", "1667920738524089172");
+				Object lo=session.getAttribute("longitude");
+				Object la=session.getAttribute("latitude");
+				if(lo!=null){
+					longitude=Double.parseDouble(lo.toString());
+					gpsPoint.setLongitude(longitude);
+				}
+				if(la!=null){
+					latitude=Double.parseDouble(la.toString());
+					gpsPoint.setLongitude(latitude);
+				}
+				userInfo.put("gpsPoint", gpsPoint);
+				if(userInfo.get("headimgurl") != null && !userInfo.get("headimgurl").equals("")) {
+					InputStream in = weCommonService.returnBitMap((String)userInfo.get("headimgurl"));
+					String imgName = weCommonService.downImg(in,request);
+					String url=request.getSession().getServletContext().getRealPath("")+"/module/resources/down/"+imgName;
+					File imgFile=new File(url);
+					InputStream inFile=new FileInputStream(imgFile);
+					String ossId = Entity.getLongUUID() + FileNameUtil.getSuffix(imgName);
+					String etag = OSSFileUtil.upload(inFile, imgFile.length(), ossId, OSSFileUtil.pubBucketName);
+					in.close();
+					inFile.close();
+					userInfo.put("headimgurl", ossId);
+				}
 				/*	if(!StringUtils.isEmpty(state) && !state.equals("123")) {
 						String accountID = "";
 						String accountType = "";
@@ -1460,32 +1460,32 @@ public class HomeController {
 						userInfo.put("invitor", accountID);
 
 					}*/
-					userInfo.put("inviteDate", new Date());
-					status=weCommonService.saveUser(userInfo);
-					if(status.isSuccess()){
-						User user=weUserService.queryUserByOpenId(oppenid);
-						logger.info("最终的user:"+user);
-						request.setAttribute("user", user);
-						session.setAttribute("user", user);
-						session.setAttribute("userId", user.get_id());
-						couponGrantService.grantCouponByuserUuidAndType(user.get_id(),"关注",-1,"");
-						userMyService.updateUser(user.get_id(),userInfo);
+				userInfo.put("inviteDate", new Date());
+				status=weCommonService.saveUser(userInfo);
+				if(status.isSuccess()){
+					User user=weUserService.queryUserByOpenId(oppenid);
+					logger.info("最终的user:"+user);
+					request.setAttribute("user", user);
+					session.setAttribute("user", user);
+					session.setAttribute("userId", user.get_id());
+					couponGrantService.grantCouponByuserUuidAndType(user.get_id(),"关注",-1,"");
+					userMyService.updateUser(user.get_id(),userInfo);
 
-						map.put("code","0");
-						map.put("message","用户注冊成功");
-						map.put("data","");
-					}
-
-
+					map.put("code","0");
+					map.put("message","用户注冊成功");
+					map.put("data","");
 				}
 
+
+			}
+
 			logger.info("最终的userInfo:"+userInfo);
-			 oppenid=userInfo.get("openid").toString();
+			oppenid=userInfo.get("openid").toString();
 			User user = weUserService.queryUserByOpenId(oppenid);
 			userMyService.updateUser(user.get_id(),userInfo);
-		//	Map<String, Object> sign = redisService.getWechatPositioningMessage(Configure.DOMAIN_URL + request.getRequestURI() + "?" + request.getQueryString(),"user");
+			//	Map<String, Object> sign = redisService.getWechatPositioningMessage(Configure.DOMAIN_URL + request.getRequestURI() + "?" + request.getQueryString(),"user");
 
-		//	List<WeCarousel> weCarousels = weUserService.findCarousels();
+			//	List<WeCarousel> weCarousels = weUserService.findCarousels();
 			session.setAttribute("userInfo", userInfo);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1657,102 +1657,19 @@ public class HomeController {
 	@RequestMapping("/toverifycode")
 	@ResponseBody
 	public Map<String,String> toverifycode(String phone,String type,String code,HttpServletRequest request) throws Exception {
-			HttpSession session=request.getSession(true);
-			Map<String,Object> userInfo=(Map<String, Object>) session.getAttribute("userInfo");
-			Map<String,String> msg=new HashMap<String,String>();
-			ReturnStatus status=null;
-			User user=null;
-			if(userInfo!=null){
-				String oppenid="";
-				String unionid="";
-				String logo="";
-				String nickname="";
-				GpsPoint gpsPoint=new GpsPoint();
-				double longitude;
-				double latitude;
-				Object lo=session.getAttribute("longitude");
-				Object la=session.getAttribute("latitude");
-				if(lo!=null){
-					longitude=Double.parseDouble(lo.toString());
-					gpsPoint.setLongitude(longitude);
-				}
-				if(la!=null){
-					latitude=Double.parseDouble(la.toString());
-					gpsPoint.setLongitude(latitude);
-				}
-				if(userInfo.get("openid")!=null){
-					oppenid=userInfo.get("openid").toString();
-				}
-				if(userInfo.get("unionid")!=null){
-					unionid=userInfo.get("unionid").toString();
-				}
-				if(userInfo.get("headimgurl")!=null){
-					logo=userInfo.get("headimgurl").toString();
-				}
-				if(userInfo.get("nickname")!=null){
-					nickname=userInfo.get("nickname").toString();
-				}
-				
-				status=weCommonService.verify(oppenid, unionid, phone, code, type, logo, nickname, gpsPoint);
-				if(status.isSuccess()){
-					msg.put("msg", "绑定成功");
-					user=weUserService.queryUserByOpenId(oppenid);
-					session.setAttribute("user", user);
-					msg.put("userId", user.get_id());
-				}else{
-					msg.put("msg", status.getMessage());
-				}
-			}
-		   return msg;
-	}
-	@RequestMapping(value ="/tofeedback")
-	public ModelAndView tofeedback(String code,String state,
-			HttpServletRequest request, 
-			HttpServletResponse response)throws Exception {
-		ModelAndView mv = new ModelAndView();
-		HttpSession session=request.getSession(true);//
-		Map<String,Object> userInfo=(Map<String,Object>)session.getAttribute("userInfo");
-		if(userInfo==null){
-		Map<String,Object> user_token=wxgetInfo.getAccess_token(code,"user");
-		userInfo=wxgetInfo.getUserInfo(user_token);
+		HttpSession session=request.getSession(true);
+		Map<String,Object> userInfo=(Map<String, Object>) session.getAttribute("userInfo");
+		Map<String,String> msg=new HashMap<String,String>();
 		ReturnStatus status=null;
-		String oppenid="";
-		String unionid="";
-		session.setAttribute("userInfo", userInfo);
-		if(userInfo!=null)
-		{
-			if(userInfo.get("openid")!=null){
-				oppenid=userInfo.get("openid").toString();
-			}
-			if(userInfo.get("unionid")!=null){
-				unionid=userInfo.get("unionid").toString();
-			}
-			status=weCommonService.isExist(oppenid, unionid, "user");
-		}
-		if(status.isSuccess()){
-			User user=weUserService.queryUserByOpenId(oppenid);
-			request.setAttribute("user", user);
-			session.setAttribute("user", user);
-			session.setAttribute("city", "北京市");
-			session.setAttribute("cityId", "1667920738524089172");
-			if(user!=null&&"".equals(user.getAvatar())&&userInfo.get("headimgurl") != null && !userInfo.get("headimgurl").equals("")){
-				InputStream in = weCommonService.returnBitMap((String)userInfo.get("headimgurl"));
-				String imgName = weCommonService.downImg(in,request);
-				String url=request.getSession().getServletContext().getRealPath("")+"/module/resources/down/"+imgName;
-				File imgFile=new File(url);
-				InputStream inFile=new FileInputStream(imgFile);
-				String ossId = Entity.getLongUUID() + FileNameUtil.getSuffix(imgName);
-				String etag = OSSFileUtil.upload(inFile, imgFile.length(), ossId, OSSFileUtil.pubBucketName);
-				in.close();
-				inFile.close();
-				userMyService.updateImg(user.get_id(),ossId);
-			}
-		}else{
+		User user=null;
+		if(userInfo!=null){
+			String oppenid="";
+			String unionid="";
+			String logo="";
+			String nickname="";
 			GpsPoint gpsPoint=new GpsPoint();
 			double longitude;
 			double latitude;
-			session.setAttribute("city", "北京市");
-			session.setAttribute("cityId", "1667920738524089172");
 			Object lo=session.getAttribute("longitude");
 			Object la=session.getAttribute("latitude");
 			if(lo!=null){
@@ -1763,39 +1680,122 @@ public class HomeController {
 				latitude=Double.parseDouble(la.toString());
 				gpsPoint.setLongitude(latitude);
 			}
-			userInfo.put("gpsPoint", gpsPoint);
-			if(userInfo.get("headimgurl") != null && !userInfo.get("headimgurl").equals("")) {
-				InputStream in = weCommonService.returnBitMap((String)userInfo.get("headimgurl"));
-				String imgName = weCommonService.downImg(in,request);
-				String url=request.getSession().getServletContext().getRealPath("")+"/module/resources/down/"+imgName;
-				File imgFile=new File(url);
-				InputStream inFile=new FileInputStream(imgFile);
-				String ossId = Entity.getLongUUID() + FileNameUtil.getSuffix(imgName);
-				String etag = OSSFileUtil.upload(inFile, imgFile.length(), ossId, OSSFileUtil.pubBucketName);
-				in.close();
-				inFile.close();
-				userInfo.put("headimgurl", ossId);
+			if(userInfo.get("openid")!=null){
+				oppenid=userInfo.get("openid").toString();
 			}
-			if(!StringUtils.isEmpty(state) && !state.equals("123")) {
-				String accountID = "";
-				String accountType = "";
-				String[] states = state.split("_");
-				System.out.println("state"+state);
-				if (states != null && states.length > 1){
-					accountID = states[1];
-					accountType = states[0];
+			if(userInfo.get("unionid")!=null){
+				unionid=userInfo.get("unionid").toString();
+			}
+			if(userInfo.get("headimgurl")!=null){
+				logo=userInfo.get("headimgurl").toString();
+			}
+			if(userInfo.get("nickname")!=null){
+				nickname=userInfo.get("nickname").toString();
+			}
+
+			status=weCommonService.verify(oppenid, unionid, phone, code, type, logo, nickname, gpsPoint);
+			if(status.isSuccess()){
+				msg.put("msg", "绑定成功");
+				user=weUserService.queryUserByOpenId(oppenid);
+				session.setAttribute("user", user);
+				msg.put("userId", user.get_id());
+			}else{
+				msg.put("msg", status.getMessage());
+			}
+		}
+		return msg;
+	}
+	@RequestMapping(value ="/tofeedback")
+	public ModelAndView tofeedback(String code,String state,
+								   HttpServletRequest request,
+								   HttpServletResponse response)throws Exception {
+		ModelAndView mv = new ModelAndView();
+		HttpSession session=request.getSession(true);//
+		Map<String,Object> userInfo=(Map<String,Object>)session.getAttribute("userInfo");
+		if(userInfo==null){
+			Map<String,Object> user_token=wxgetInfo.getAccess_token(code,"user");
+			userInfo=wxgetInfo.getUserInfo(user_token);
+			ReturnStatus status=null;
+			String oppenid="";
+			String unionid="";
+			session.setAttribute("userInfo", userInfo);
+			if(userInfo!=null)
+			{
+				if(userInfo.get("openid")!=null){
+					oppenid=userInfo.get("openid").toString();
 				}
-				userInfo.put("accountType",accountType);
-				userInfo.put("invitor", accountID);
-				userInfo.put("inviteDate", new Date());
+				if(userInfo.get("unionid")!=null){
+					unionid=userInfo.get("unionid").toString();
+				}
+				status=weCommonService.isExist(oppenid, unionid, "user");
 			}
-			status=weCommonService.saveUser(userInfo);
 			if(status.isSuccess()){
 				User user=weUserService.queryUserByOpenId(oppenid);
 				request.setAttribute("user", user);
 				session.setAttribute("user", user);
+				session.setAttribute("city", "北京市");
+				session.setAttribute("cityId", "1667920738524089172");
+				if(user!=null&&"".equals(user.getAvatar())&&userInfo.get("headimgurl") != null && !userInfo.get("headimgurl").equals("")){
+					InputStream in = weCommonService.returnBitMap((String)userInfo.get("headimgurl"));
+					String imgName = weCommonService.downImg(in,request);
+					String url=request.getSession().getServletContext().getRealPath("")+"/module/resources/down/"+imgName;
+					File imgFile=new File(url);
+					InputStream inFile=new FileInputStream(imgFile);
+					String ossId = Entity.getLongUUID() + FileNameUtil.getSuffix(imgName);
+					String etag = OSSFileUtil.upload(inFile, imgFile.length(), ossId, OSSFileUtil.pubBucketName);
+					in.close();
+					inFile.close();
+					userMyService.updateImg(user.get_id(),ossId);
+				}
+			}else{
+				GpsPoint gpsPoint=new GpsPoint();
+				double longitude;
+				double latitude;
+				session.setAttribute("city", "北京市");
+				session.setAttribute("cityId", "1667920738524089172");
+				Object lo=session.getAttribute("longitude");
+				Object la=session.getAttribute("latitude");
+				if(lo!=null){
+					longitude=Double.parseDouble(lo.toString());
+					gpsPoint.setLongitude(longitude);
+				}
+				if(la!=null){
+					latitude=Double.parseDouble(la.toString());
+					gpsPoint.setLongitude(latitude);
+				}
+				userInfo.put("gpsPoint", gpsPoint);
+				if(userInfo.get("headimgurl") != null && !userInfo.get("headimgurl").equals("")) {
+					InputStream in = weCommonService.returnBitMap((String)userInfo.get("headimgurl"));
+					String imgName = weCommonService.downImg(in,request);
+					String url=request.getSession().getServletContext().getRealPath("")+"/module/resources/down/"+imgName;
+					File imgFile=new File(url);
+					InputStream inFile=new FileInputStream(imgFile);
+					String ossId = Entity.getLongUUID() + FileNameUtil.getSuffix(imgName);
+					String etag = OSSFileUtil.upload(inFile, imgFile.length(), ossId, OSSFileUtil.pubBucketName);
+					in.close();
+					inFile.close();
+					userInfo.put("headimgurl", ossId);
+				}
+				if(!StringUtils.isEmpty(state) && !state.equals("123")) {
+					String accountID = "";
+					String accountType = "";
+					String[] states = state.split("_");
+					System.out.println("state"+state);
+					if (states != null && states.length > 1){
+						accountID = states[1];
+						accountType = states[0];
+					}
+					userInfo.put("accountType",accountType);
+					userInfo.put("invitor", accountID);
+					userInfo.put("inviteDate", new Date());
+				}
+				status=weCommonService.saveUser(userInfo);
+				if(status.isSuccess()){
+					User user=weUserService.queryUserByOpenId(oppenid);
+					request.setAttribute("user", user);
+					session.setAttribute("user", user);
+				}
 			}
-		}
 		}
 		mv.setViewName("user/usermy/feedback");
 		return mv;
@@ -1808,8 +1808,8 @@ public class HomeController {
 	 */
 	@RequestMapping(value ="/toAppointDetail", method = RequestMethod.GET)
 	public ModelAndView toAppointDetail(@RequestParam(required =true)String staffId,
-			HttpServletRequest request, 
-			HttpServletResponse response) {
+										HttpServletRequest request,
+										HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		Staff staff= weUserService.queryStaffById(staffId);
 		mv.addObject("staff", staff);
@@ -1819,7 +1819,7 @@ public class HomeController {
 	/**
 	 *  去选择城市界面
 	 * @param request
-	 * @param response 
+	 * @param response
 	 */
 	@RequestMapping(value ="/toSelectCity", method = RequestMethod.GET)
 	public ModelAndView toSelectCity(@RequestParam String city,HttpServletRequest request, HttpServletResponse response) {
@@ -1828,14 +1828,14 @@ public class HomeController {
 			city = URLDecoder.decode(city,"utf-8");
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException("后台解码城市异常！！");
-		}   
+		}
 		mv.addObject("city", city);
 		List<WeBCity> cityList=weUserService.cityList();
 		mv.addObject("cityList", cityList);
 		mv.setViewName("user/userhome/select_city");
 		return mv;
 	}
-	
+
 	/**
 	 * 选择城市以后跳转到主页面
 	 * @param city  选择的城市
@@ -1848,8 +1848,8 @@ public class HomeController {
 			city = URLDecoder.decode(city,"utf-8");
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException("后台解码城市异常！！");
-		}   
-		
+		}
+
 		HttpSession session = request.getSession();
 		session.setAttribute("city", city);
 		session.setAttribute("seleltCity", true);
@@ -1891,7 +1891,7 @@ public class HomeController {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 通过手机号获得验证码	getCodeByPhone
 	 */
@@ -1954,15 +1954,15 @@ public class HomeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/oauth2wx", method = RequestMethod.GET)
-    @ResponseBody
+	@ResponseBody
 	public void Oauth2shareCoupon(HttpServletRequest request, HttpServletResponse response,String inviaterId) throws IOException {
 		WxShare wxShare = new WxShare(inviaterId);
 		List<User> list = new ArrayList<>();
 		wxShare.setShareUserList(list);
 		cacheManager.save("share"+inviaterId,wxShare);
-        System.out.println("userInfo_______________"+ JSON.toJSONString(inviaterId));
-        String oppenid=inviaterId;
-        logger.info("当前用户的openid____________________________________:"+JSONObject.toJSONString(oppenid));
+		System.out.println("userInfo_______________"+ JSON.toJSONString(inviaterId));
+		String oppenid=inviaterId;
+		logger.info("当前用户的openid____________________________________:"+JSONObject.toJSONString(oppenid));
 		String backUrl = "http://test.wangtiansoft.cn/mrmf/w/home/oauth2me.do";
 		String redirect_uri = "";
 		try {
@@ -1971,26 +1971,26 @@ public class HomeController {
 			e.printStackTrace();
 		}
 		String oauth2Url = "http://open.weixin.qq.com/connect/oauth2/authorize?appid="+ Configure.userAppID+"&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_userinfo&state="+oppenid+"#wechat_redirect";
-        logger.info("oauth2Url:"+oauth2Url);
+		logger.info("oauth2Url:"+oauth2Url);
 		response.sendRedirect(oauth2Url);
 	}
 
 
-    /**
-     * 分享成功发放优惠券
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value ="/grantCouponByShare", method = RequestMethod.POST)
-    @ResponseBody
-    public String grantCouponByShare(HttpServletRequest request, HttpServletResponse response, String inviaterId) {
-        if (couponGrantService.grantCouponByuserUuidAndType(inviaterId,"分享",-1,"").isSuccess()){
-            return "发放成功";
-        }else {
-            return "发放失败";
-        }
-    }
+	/**
+	 * 分享成功发放优惠券
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value ="/grantCouponByShare", method = RequestMethod.POST)
+	@ResponseBody
+	public String grantCouponByShare(HttpServletRequest request, HttpServletResponse response, String inviaterId) {
+		if (couponGrantService.grantCouponByuserUuidAndType(inviaterId,"分享",-1,"").isSuccess()){
+			return "发放成功";
+		}else {
+			return "发放失败";
+		}
+	}
 
 
 //--------------------------------------------------------------测试授权使用------------------------------------------------------------------------------------------
@@ -2000,11 +2000,11 @@ public class HomeController {
 	 */
 	@RequestMapping(value ="/oauth2me.do")
 	public void oAuth2Url(HttpServletRequest request,HttpServletResponse response, String code, String state){
-        logger.info("回调了___________________");
+		logger.info("回调了___________________");
 		AccessToken accessToken = wxoAuth2Service.getOAuth2TokenByCode(code,state);
-			if (accessToken != null){
-				getMemberGuidByCode(accessToken,response,state);
-			}
+		if (accessToken != null){
+			getMemberGuidByCode(accessToken,response,state);
+		}
 	}
 
 	/**

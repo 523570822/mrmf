@@ -1,30 +1,28 @@
 package com.mrmf.module.organ;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Logger;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import com.alibaba.fastjson.JSONObject;
 import com.mrmf.entity.*;
+import com.mrmf.entity.user.Bigsort;
+import com.mrmf.entity.user.Smallsort;
+import com.mrmf.entity.user.Userpart;
 import com.mrmf.entity.wxpay.CommonUtil;
+import com.mrmf.entity.wxpay.WxTemplate;
+import com.mrmf.service.account.AccountService;
 import com.mrmf.service.common.CashUtil;
-import com.mrmf.service.wecommon.WeCommonServiceImpl;
+import com.mrmf.service.common.Configure;
+import com.mrmf.service.common.WxgetInfo;
+import com.mrmf.service.redis.RedisService;
+import com.mrmf.service.usermy.UserMyService;
+import com.mrmf.service.wecommon.WeComonService;
+import com.mrmf.service.weorgan.WeOrganService;
+import com.mrmf.service.weuser.WeUserService;
+import com.osg.entity.FlipInfo;
+import com.osg.entity.GpsPoint;
+import com.osg.entity.ReturnStatus;
 import com.osg.framework.BaseException;
+import com.osg.framework.util.FlipPageInfo;
+import com.osg.framework.util.PositionUtil;
+import com.osg.framework.util.QRCodeUtil;
 import com.osg.framework.web.cache.CacheManager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -33,36 +31,28 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EncodingUtils;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mrmf.entity.user.Bigsort;
-import com.mrmf.entity.user.Smallsort;
-import com.mrmf.entity.user.Userpart;
-import com.mrmf.entity.wxpay.WxTemplate;
-import com.mrmf.service.account.AccountService;
-import com.mrmf.service.common.Configure;
-import com.mrmf.service.common.WxgetInfo;
-import com.mrmf.service.redis.RedisService;
-import com.mrmf.service.wecommon.WeComonService;
-import com.mrmf.service.weorgan.WeOrganService;
-import com.mrmf.service.weuser.WeUserService;
-import com.mrmf.service.usermy.UserMyService;
-import com.osg.entity.FlipInfo;
-import com.osg.entity.GpsPoint;
-import com.osg.entity.ReturnStatus;
-import com.osg.framework.util.FlipPageInfo;
-import com.osg.framework.util.PositionUtil;
-import com.osg.framework.util.QRCodeUtil;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * 店铺管理相关
@@ -1071,7 +1061,23 @@ public class OrganController {
         }
         return status.getMessage();
     }
+    /**
+     * 通过手机号获得验证码	getCodeByPhone
+     */
+    @RequestMapping(value ="/getTest", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object>  getCodeByPhone1(HttpServletRequest request, HttpServletResponse response) {
+        //'phone':phone,'type':'user'
 
+        Map<String, Object> map = new HashMap<String, Object>();
+
+            map.put("code","0");
+            map.put("message","测试123！");
+            map.put("data","");
+
+        return map;
+
+    }
     @RequestMapping("/getUserLocation")
     @ResponseBody
     public String getUserLocation(String latitude, String longitude, String userId, String type, String city, HttpServletRequest request) throws Exception {
