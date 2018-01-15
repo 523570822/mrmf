@@ -11,8 +11,9 @@ APP用户端接口：
 
 2.用户注册 /w/home/userRegist.do,
  {
- phone:"",
- code:"",
- mail:"",
- password:""
+ "phone":"",
+ "code":"",
+ "mail":"",
+ "password":""
  }
+  {  "phone":"15620512895",  "code":"1052",  "mail":"523",  "password":"159221"  }
