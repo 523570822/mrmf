@@ -7,13 +7,13 @@
     data : {}返回数据}
 
 APP用户端接口：
-1. 用户验证码接口"/w/app/getCodeByPhone",{"phone":phone,"type":"user"}//{"phone":"15620512895","type":"user"}
+1. 用户验证码接口"/w/app/getCodeByPhone",{"phone":phone,"type":"user"}//{"phone":"13920025389","type":"user"}
 
-2.用户注册 /w/app/userRegistdo,
+2.用户注册 /w/app/userRegist,
  {
  "phone":"",
  "code":"",
  "mail":"",
  "password":""
  }
-  {  "phone":"15620512895",  "code":"1052",  "mail":"523",  "password":"159221"  }
+  {  "phone":"13920025389",  "code":"6732",  "mail":"523",  "password":"159221"  }
