@@ -1,0 +1,23 @@
+第一次：
+$ mkdir learngit //创建文件夹
+$ cd learngit
+$ pwd   // 查看文件夹路径
+/root/learngit   //显示的文件夹路径
+git clone http://192.168.1.222:3000/root/rxm.git  //克隆远程仓库 ，改成自己的地址连接
+git branch -a// 列出所有远程分支
+git checkout  -b rxm_login  remotes/origin/rxm_login//远程分支   //切换到指定分支  rxm_login(自己起的名字)
+git pull origin rxm_login  --force ;//强制更新本地仓库
+mvn -X install -Dmaven.test.skip=true ; //通过maven自动编译代码
+tar zcvf /home/production/chengqiandaiweb$(date +%Y%m%d%H).tar.gz /home/production/chengqiandaiweb/ ;//备份语句根据实际情况修改
+rsync -rtlvz  --exclude 'business-config.xml' --exclude 'datasource-config.xml'  --exclude '*.jsp'   --exclude '*.htm*' --exclude 'upload/*'  --exclude 'jsp/*'  --exclude 'thymeleaf/*'  --exclude "resources/*" --exclude 'log/*' /home/chengqiandai/chengqiandaiProjects/chengqiandaiweb/target/chengqiandaiweb/*  /home/production/chengqiandaiweb/ ;
+rsync -rtlvz  /root/learngit/rxm/target/mrmf/*  /var/lib/tomcat/webapps/mrmf ;   简化后 拷贝编译后的代码到指定tomcat服务器中
+sudo systemctl restart tomcat  启动Tomcat
+
+以后：
+
+git pull origin rxm_login  --force ;//强制更新本地仓库
+mvn -X install -Dmaven.test.skip=true ; //通过maven自动编译代码
+rsync -rtlvz  /root/learngit/rxm/target/mrmf/*  /var/lib/tomcat/webapps/mrmf ;   简化后 拷贝编译后的代码到指定tomcat服务器中
+sudo systemctl restart tomcat
+
+
