@@ -3,7 +3,6 @@ package com.mrmf.entity.coupon;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.osg.entity.DataEntity;
 import com.osg.entity.util.EHDateTimeSerializer;
-import jdk.nashorn.internal.objects.annotations.Setter;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.util.Date;

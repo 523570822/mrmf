@@ -57,7 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <span>接口地址1236</span>
             </div>
             <div >
-                <input  style="width: 1000px" type="text" placeholder="输入接口地址1" id="face"/>
+                <input  style="width: 1000px" type="text" placeholder="输入接口地址1" id="face" value="/w/app/"/>
 
             </div>
 

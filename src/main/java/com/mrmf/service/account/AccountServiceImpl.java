@@ -1,19 +1,5 @@
 package com.mrmf.service.account;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
 import com.mrmf.entity.Account;
 import com.mrmf.entity.Role;
 import com.osg.entity.FlipInfo;
@@ -25,6 +11,14 @@ import com.osg.framework.mongodb.EMongoTemplate;
 import com.osg.framework.util.DateUtil;
 import com.osg.framework.util.SMSUtil;
 import com.osg.framework.util.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
 
 @Service("accountService")
 public class AccountServiceImpl implements AccountService {
@@ -117,6 +111,8 @@ public class AccountServiceImpl implements AccountService {
 		params.put("code", randomCode);
 		params.put("product", "任性猫");
 		ReturnStatus status = SMSUtil.send(phone, Constants.getProperty("sms.verifyCodeTemplate"), params);
+
+
 
 		return verifyResult(status, phone, randomCode);
 	}

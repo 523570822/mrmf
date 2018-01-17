@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -70,7 +72,9 @@ public class AppController {
 
 	private static Logger logger = Logger.getLogger(AppController.class);
 	/**
+	 *
 	 * 通过手机号获得验证码	getCodeByPhone
+	 * {"phone":"15620512895","type":"user"}
 	 */
 	@RequestMapping(value ="/getCodeByPhone", method = RequestMethod.POST)
 	@ResponseBody
@@ -93,10 +97,11 @@ public class AppController {
 	}
 
 	/**
-	 *userRegist.do
+	 *
 	 * APP  用户注册
+	 *  {  "phone":"15620512895",  "code":"1052",  "mail":"523",  "password":"159221"  }
 	 */
-	@RequestMapping(value = "/userRegist.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/userRegist", method = RequestMethod.POST)
 	@ResponseBody
 	public  Map<String, Object> userRegist(String phone,String code,String mail,String password,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -108,9 +113,10 @@ public class AppController {
 			//	Map<String,Object> userInfo=(Map<String,Object>)session.getAttribute("userInfo");
 			Map<String,Object> userInfo=new HashMap<String, Object>();;
 			//		logger.info("已经存在userInfo:"+userInfo);
-			userInfo.put("oppenid",phone);
+			userInfo.put("openid",phone);
 			userInfo.put("unionid","asdf");
 			userInfo.put("password",password);
+            userInfo.put("phone",phone);
 
 
 
@@ -139,7 +145,7 @@ public class AppController {
 			status=weCommonService.isExist(oppenid, unionid, "user");
 
 
-			if(accountService.verify(phone, code).isSuccess()) {
+		/*	if(accountService.verify(phone, code).isSuccess()) {
 
 			} else {
 
@@ -147,13 +153,13 @@ public class AppController {
 				map.put("message","验证码有误");
 				map.put("data","");
 				return map;
-			}
+			}*/
 
 
 			if(status.isSuccess()||userMyService.isHaveUserPhone(phone)){
 				//用户存在直接返回已经存在
 				map.put("code","1");
-				map.put("message","用户已经存在");
+				map.put("message","用户已经存在   ");
 				map.put("data","");
 				return map;
 			}else{
@@ -211,7 +217,7 @@ public class AppController {
 					userMyService.updateUser(user.get_id(),userInfo);
 
 					map.put("code","0");
-					map.put("message","用户注冊成功");
+					map.put("message","用户注册成功");
 					map.put("data","");
 				}
 
@@ -227,6 +233,9 @@ public class AppController {
 			//	List<WeCarousel> weCarousels = weUserService.findCarousels();
 			session.setAttribute("userInfo", userInfo);
 		} catch (Exception e) {
+			map.put("code","1");
+			map.put("message","该手机好异常");
+			map.put("data","");
 			e.printStackTrace();
 		}
 
