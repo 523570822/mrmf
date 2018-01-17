@@ -4,9 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.osg.entity.DataEntity;
 import com.osg.entity.util.EHDateTimeSerializer;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
-
 import java.util.Date;
-
 /**
  * 代金券配置表
  * Created by 蔺哲 on 2017/3/7.
