@@ -21,3 +21,4 @@ rsync -rtlvz  /root/learngit/rxm/target/mrmf/*  /var/lib/tomcat/webapps/mrmf ;  
 sudo systemctl restart tomcat
 
 
+

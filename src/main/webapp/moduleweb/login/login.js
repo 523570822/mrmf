@@ -40,6 +40,7 @@ function submitForm() {
 			request.setRequestHeader(cookieRelative.authorization, userdetail);
 		},
 		success : function(data) {
+
 			if (!data.success || data.status == 0) {
 				layer.alert(data.message);
 				$.shade.hide();
@@ -57,11 +58,12 @@ function submitForm() {
 			layer.alert("error:" + $.toJSON(data));
 		},
 		complete : function(response) {
+
 			var token = response.getResponseHeader(cookieRelative.token);
 			if (token != null && token != "null") {
 				eh.utils.cookie.set(cookieRelative.token, token,
 						cookieRelative.tokenExpires);
-				window.location.href = _ctxPath + "/login/main.html";
+			window.location.href = _ctxPath + "/login/main.html";
 			}
 		}
 	});

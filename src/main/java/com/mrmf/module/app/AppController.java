@@ -2,6 +2,7 @@ package com.mrmf.module.app;
 
 
 import com.mrmf.entity.User;
+import com.mrmf.entity.UserCollect;
 import com.mrmf.service.account.AccountService;
 import com.mrmf.service.common.WxgetInfo;
 import com.mrmf.service.coupon.CouponGrantService;
@@ -14,6 +15,7 @@ import com.mrmf.service.weorgan.WeOrganService;
 import com.mrmf.service.weuser.WeUserService;
 import com.mrmf.service.wxOAuth2.WXOAuth2Service;
 import com.osg.entity.Entity;
+import com.osg.entity.FlipInfo;
 import com.osg.entity.GpsPoint;
 import com.osg.entity.ReturnStatus;
 import com.osg.framework.util.FileNameUtil;
@@ -25,12 +27,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.InetAddress;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -235,6 +239,54 @@ public class AppController {
 			map.put("data","");
 			e.printStackTrace();
 		}
+
+		return map;
+	}
+
+
+	@RequestMapping("/imgList")
+	@ResponseBody
+	public  Map<String, Object>  imgList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		HttpSession session = request.getSession(true);
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		FlipInfo<UserCollect> fpi = userMyService.mycollect("7840835260965106637","3","116.387194","39.927073","1","10");
+		map.put("code","1");
+		map.put("message","该手机好异常");
+		map.put("data",fpi);
+
+
+
+		return map;
+	}
+
+
+	@RequestMapping("/test")
+	@ResponseBody
+	public  Map<String, Object>  text(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+
+		Map<String, Object> map = new HashMap<String, Object>();
+//获取本机的InetAddress实例
+		InetAddress address =InetAddress.getLocalHost();
+		address.getHostName();//获取计算机名
+		address.getHostAddress();//获取IP地址
+		byte[] bytes = address.getAddress();//获取字节数组形式的IP地址,以点分隔的四部分
+
+//获取其他主机的InetAddress实例
+		InetAddress address2 =InetAddress.getByName("其他主机名");
+		InetAddress address3 =InetAddress.getByName("IP地址");
+
+     StringBuffer  test=new StringBuffer("其他主机名:"+address2+";");
+
+		test.append("IP地址:"+address3);
+
+		map.put("code","1");
+		map.put("message","该手机好异常");
+		map.put("data",test);
+
+
 
 		return map;
 	}
