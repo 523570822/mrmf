@@ -14,6 +14,7 @@ import com.mrmf.service.wecommon.WeComonService;
 import com.mrmf.service.weorgan.WeOrganService;
 import com.mrmf.service.weuser.WeUserService;
 import com.mrmf.service.wxOAuth2.WXOAuth2Service;
+import com.mrmf.socket.WebSocket;
 import com.osg.entity.Entity;
 import com.osg.entity.FlipInfo;
 import com.osg.entity.GpsPoint;
@@ -33,8 +34,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.net.InetAddress;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -264,27 +265,43 @@ public class AppController {
 
 	@RequestMapping("/test")
 	@ResponseBody
-	public  Map<String, Object>  text(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public  Map<String, Object>  text(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 
 		Map<String, Object> map = new HashMap<String, Object>();
 //获取本机的InetAddress实例
-		InetAddress address =InetAddress.getLocalHost();
-		address.getHostName();//获取计算机名
-		address.getHostAddress();//获取IP地址
-		byte[] bytes = address.getAddress();//获取字节数组形式的IP地址,以点分隔的四部分
+
+
+
 
 //获取其他主机的InetAddress实例
-		InetAddress address2 =InetAddress.getByName("其他主机名");
-		InetAddress address3 =InetAddress.getByName("IP地址");
+	//	InetAddress address2 =InetAddress.getByName("其他主机名");
+		//InetAddress address3 =InetAddress.getByName("IP地址");
 
-     StringBuffer  test=new StringBuffer("其他主机名:"+address2+";");
+   //  StringBuffer  test=new StringBuffer("其他主机名:"+address2+";");
+		String phone =String.valueOf(request.getParameter("phone"));
+	//	test.append("IP地址:"+address3);
+		WebSocket asd = WebSocket.webSocketSet.get(phone);
 
-		test.append("IP地址:"+address3);
 
-		map.put("code","1");
-		map.put("message","该手机好异常");
-		map.put("data",test);
+            if( WebSocket.webSocketSet.get(phone)!=null){
+                WebSocket.webSocketSet.get(phone).sendMessage(phone);
+
+
+            map.put("code","1");
+            map.put("message","成功通知");
+            map.put("data","geiliba");
+        } else {
+            map.put("code","1");
+            map.put("message","用户不存在");
+            map.put("data","geiliba");
+        }
+
+
+
+
+
+
 
 
 

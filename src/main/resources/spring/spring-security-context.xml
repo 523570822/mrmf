@@ -52,8 +52,8 @@
 
 	<http pattern="/shopVip/sendVerifyCode.do" security="none" />
 	<http pattern="/websocket" security="none" />
-
-
+    <http pattern="/websocket/**" security="none" />
+    <http pattern="/websocket/*" security="none" />
 	<http pattern="/shopVip/verify.do" security="none" />
 
 	<http realm="Protected API" use-expressions="true" create-session="stateless"

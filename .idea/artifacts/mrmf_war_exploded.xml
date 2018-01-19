@@ -78,6 +78,18 @@
           <element id="library" level="project" name="Maven: org.scala-lang:scala-library:2.11.7" />
           <element id="library" level="project" name="Maven: com.typesafe:config:1.3.0" />
           <element id="library" level="project" name="Maven: com.belerweb:pinyin4j:2.5.1" />
+          <element id="library" level="project" name="Maven: javax:javaee-api:8.0" />
+          <element id="library" level="project" name="Maven: com.sun.mail:javax.mail:1.6.0" />
+          <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
+          <element id="library" level="project" name="Maven: org.apache.kafka:kafka_2.9.2:0.8.1.1" />
+          <element id="library" level="project" name="Maven: com.yammer.metrics:metrics-core:2.2.0" />
+          <element id="library" level="project" name="Maven: org.xerial.snappy:snappy-java:1.0.5" />
+          <element id="library" level="project" name="Maven: org.apache.zookeeper:zookeeper:3.3.4" />
+          <element id="library" level="project" name="Maven: jline:jline:0.9.94" />
+          <element id="library" level="project" name="Maven: net.sf.jopt-simple:jopt-simple:3.2" />
+          <element id="library" level="project" name="Maven: com.101tec:zkclient:0.3" />
+          <element id="library" level="project" name="Maven: org.apache.kafka:kafka-clients:1.0.0" />
+          <element id="library" level="project" name="Maven: org.lz4:lz4-java:1.4" />
         </element>
       </element>
       <element id="directory" name="META-INF">

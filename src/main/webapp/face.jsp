@@ -53,7 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <span>接口地址1236</span>
             </div>
             <div >
-                <input  style="width: 1000px" type="text" placeholder="输入接口地址1" id="face" value="/w/app/"/>
+                <input  style="width: 1000px" type="text" placeholder="输入接口地址1" id="face" value="/w/app/test"/>
             </div>
         </div>
     </div>
@@ -64,7 +64,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <span>参数</span>
             </div>
             <div>
-              <input style="width: 1000px" type="text" id="data">
+              <input style="width: 1000px" type="text" id="data"   value='{"phone":"13920025389","type":"user"}'>
             </div>
         </div>
     </div>
@@ -91,10 +91,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 
   <script type="text/javascript">
+
+      function GetQueryString(name)
+      {
+          var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+          var r = window.location.search.substr(1).match(reg);
+          if(r!=null)return unescape(r[2]);
+          return null;
+      }
       var websocket = null;
+
       //判断当前浏览器是否支持WebSocket
       if ('WebSocket' in window) {
-          websocket = new WebSocket("ws://localhost:80/websocket");
+
+          var url="ws://192.168.1.223:80/websocket/"+GetQueryString("phone")
+          websocket = new WebSocket(url);
       }
       else {
           alert('当前浏览器 Not support websocket')
@@ -138,7 +149,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       //发送消息
       function send() {
           var message = document.getElementById('text').value;
-          websocket.send(message);
+          websocket.send(message,"123");
       }
   </script>
 </html>
