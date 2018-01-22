@@ -14,11 +14,14 @@ rsync -rtlvz  /root/learngit/rxm/target/mrmf/*  /var/lib/tomcat/webapps/mrmf ;  
 sudo systemctl restart tomcat  启动Tomcat
 
 以后：
-
+cd root/learngit/rxm
 git pull origin rxm_login  --force ;//强制更新本地仓库
 mvn -X install -Dmaven.test.skip=true ; //通过maven自动编译代码
 rsync -rtlvz  /root/learngit/rxm/target/mrmf/*  /var/lib/tomcat/webapps/mrmf ;   简化后 拷贝编译后的代码到指定tomcat服务器中
 sudo systemctl restart tomcat
+
+
+
 
 
 
