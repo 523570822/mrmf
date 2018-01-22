@@ -1,15 +1,15 @@
 package com.mrmf.entity.kucun;
 
-import java.util.Date;
-
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-
 import com.osg.entity.DataEntity;
 import com.osg.entity.util.EHDateTimeSerializer;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import java.util.Date;
 
 /**
  * 入库信息表
  */
+
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class WOutstoreroom extends DataEntity {
 	private String parentOrganId;// 上级公司id，0为总公司

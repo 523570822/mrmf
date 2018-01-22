@@ -280,12 +280,13 @@ public class AppController {
 
    //  StringBuffer  test=new StringBuffer("其他主机名:"+address2+";");
 		String phone =String.valueOf(request.getParameter("phone"));
+        String type =String.valueOf(request.getParameter("type"));
 	//	test.append("IP地址:"+address3);
 		WebSocket asd = WebSocket.webSocketSet.get(phone);
 
 
             if( WebSocket.webSocketSet.get(phone)!=null){
-                WebSocket.webSocketSet.get(phone).sendMessage(phone);
+                WebSocket.webSocketSet.get(phone).sendMessage(type);
 
 
             map.put("code","1");
@@ -296,17 +297,38 @@ public class AppController {
             map.put("message","用户不存在");
             map.put("data","geiliba");
         }
-
-
-
-
-
-
-
-
-
 		return map;
 	}
+
+    /**
+     *  App支付配置
+     * @param phone
+     * @param type（staff:技师;user:用户）
+     * @param money
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("/appPay")
+    @ResponseBody
+    public  Map<String, Object>  appPay(String  phone,String type,String money,HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
+
+
+
+            map.put("code","0");
+            map.put("message","支付成功");
+            map.put("data","geiliba");
+
+
+
+
+        return map;
+    }
 }
 
 

@@ -1,9 +1,9 @@
 package com.mrmf.entity;
 
+import com.osg.entity.DataEntity;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.osg.entity.DataEntity;
 
 /**
  * 账号信息 原oprator和opermafun表合并
@@ -20,6 +20,10 @@ public class Account extends DataEntity {
 	public static final String STATUS_LOCK = "5";
 
 	private String accountName; // 登陆用户名（为账号、微信号openid）
+
+
+
+	private String openid;//微信号openid
 	private String accountPwd; // 微信号时为openid前10位md5
 	private String status;// 状态，0禁用；1启用
 	private String accountType;// 账号类型，admin:超级管理员;organ:店铺管理员;staff:技师;user:用户
@@ -91,7 +95,13 @@ public class Account extends DataEntity {
 		this.weUnionId = weUnionId;
 	}
 
+	public String getOpenid() {
+		return openid;
+	}
 
+	public void setOpenid(String openid) {
+		this.openid = openid;
+	}
 	public List<String> getRoleIds() {
 		if (roleIds == null)
 			roleIds = new ArrayList<>();

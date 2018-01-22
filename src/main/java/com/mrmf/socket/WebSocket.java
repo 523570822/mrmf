@@ -29,6 +29,8 @@ public class WebSocket {
     @OnOpen
     public void onOpen(Session session,@PathParam("userId")String  userId){
         this.session = session;
+
+
        webSocketSet.put(userId,this);
         addOnlineCount();           //在线数加1
         System.out.println("有新连接加入！当前在线人数为" + getOnlineCount()+";"+webSocketSet.size());
