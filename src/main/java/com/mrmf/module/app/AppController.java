@@ -313,8 +313,12 @@ public class AppController {
     @RequestMapping("/appPay")
     @ResponseBody
     public  Map<String, Object>  appPay(String  phone,String type,String money,HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-
+    //	String dressingTableStatus=
+				HttpSession session=request.getSession(true);
+		Object dressingTableStatusO	=session.getAttribute("dressingTableStatus");
+		if(dressingTableStatusO==null){
+			session.setAttribute("dressingTableStatus",true);
+		}
         Map<String, Object> map = new HashMap<String, Object>();
 
 
@@ -329,6 +333,64 @@ public class AppController {
 
         return map;
     }
+
+	/**
+	 *   轮训查询镜台状态
+	 * @param devicedId 设备ID
+	 * @param type（A:上屏;B:下屏）
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("/getDressingTableStatus")
+	@ResponseBody
+	public  Map<String, Object>  getDressingTableStatus(String  devicedId,String type,HttpServletRequest request, HttpServletResponse response) throws IOException {
+		//	String dressingTableStatus=
+		HttpSession session=request.getSession(true);
+		Object dressingTableStatusO	=session.getAttribute("dressingTableStatus");
+		if(dressingTableStatusO==null){
+			session.setAttribute("dressingTableStatus",false);
+		}
+		 dressingTableStatusO	=session.getAttribute("dressingTableStatus");
+	Boolean	dressingTableStatus= (Boolean) dressingTableStatusO;
+		Map<String, Object> data = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
+
+	if(type.equals("A")){
+		if(dressingTableStatus){
+			data.put("dressingTableStatus",false);
+		}else{
+			data.put("dressingTableStatus",true);
+		}
+
+
+	}else if(type.equals("B")){
+		data.put("dressingTableStatus",dressingTableStatusO);
+	}else{
+		map.put("code","1");
+		map.put("message","设备异常");
+		map.put("data",data);
+		return map;
+
+	}
+
+
+
+
+
+		map.put("code","0");
+		map.put("message","调取成功当前镜面状态"+dressingTableStatusO);
+		map.put("data",data);
+
+
+
+
+		return map;
+	}
+
+
+
 }
 
 

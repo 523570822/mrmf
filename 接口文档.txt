@@ -25,7 +25,14 @@ APP用户端接口：
 3.技师与用户支付接口 /w/app/appPay,
  {
  "phone":"",
- "type":"",
+ "type":"staff:技师;user:用户",
  "money":"",
+
+ }
+
+ 4. 轮训查询镜台状态/w/app/getDressingTableStatus
+ {
+  "devicedId":"设备ID",
+  "type":"A:上屏;B:下屏",
 
  }
