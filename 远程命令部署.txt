@@ -28,4 +28,8 @@ mvn -X install -Dmaven.test.skip=true ; //通过maven自动编译代码
 rsync -rtlvz  /root/learngit/rxm/target/mrmf/*  /root/apache-tomcat-8.5.24/webapps/ROOT ;  
 
 
+sudo /root/apache-tomcat-8.5.24/bin/startup.sh --启动
+sudo /root/apache-tomcat-8.5.24/bin/shutdown.sh --停止
+tail -f /root/apache-tomcat-8.5.24/logs/catalina.out  --查看日志
+
 
