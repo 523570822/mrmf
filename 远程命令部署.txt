@@ -22,7 +22,7 @@ sudo systemctl restart tomcat
 
 
 更新后的  Tomcat开发版本与服务器版本不一致导致无法登陆
-cd root/learngit/rxm
+cd /root/rxm
 git pull origin rxm_login  --force ;//强制更新本地仓库
 mvn -X install -Dmaven.test.skip=true ; //通过maven自动编译代码
 rsync -rtlvz  /root/learngit/rxm/target/mrmf/*  /root/apache-tomcat-8.5.24/webapps/ROOT ;  
