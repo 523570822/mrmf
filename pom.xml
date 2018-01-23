@@ -287,8 +287,6 @@
         </dependency>
     </dependencies>
     <build>
-
-
         <finalName>mrmf</finalName>
         <plugins>
             <plugin>
