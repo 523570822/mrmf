@@ -355,14 +355,14 @@ public class AppController {
 
 	if(type.equals("A")){
 		if(dressingTableStatus){
-			data.put("dressingTableStatus",false);
+			data.put("equipmentStatus",false);
 		}else{
-			data.put("dressingTableStatus",true);
+			data.put("equipmentStatus",true);
 		}
 
 
 	}else if(type.equals("B")){
-		data.put("dressingTableStatus",dressingTableStatusO);
+		data.put("equipmentStatus",dressingTableStatusO);
 	}else{
 		map.put("code","1");
 		map.put("message","设备异常");
@@ -385,6 +385,42 @@ public class AppController {
 		return map;
 	}
 
+	/**
+	 *   轮训查询镜台状态
+	 * @param devicedId 设备ID
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("/closeStage")
+	@ResponseBody
+	public  Map<String, Object>  closeStage(String  devicedId,HttpServletRequest request, HttpServletResponse response) throws IOException {
+		//	String dressingTableStatus=
+		HttpSession session=request.getSession(true);
+
+		session.setAttribute("dressingTableStatus", false);
+
+
+
+		Map<String, Object> map = new HashMap<String, Object>();
+
+
+
+
+
+
+
+
+		map.put("code","0");
+		map.put("message","调取成功当前镜面状态"+session.getAttribute("dressingTableStatus"));
+		map.put("data","");
+
+
+
+
+		return map;
+	}
 
 
 }

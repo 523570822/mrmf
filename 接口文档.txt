@@ -37,3 +37,8 @@ APP用户端接口：
   "type":"A:上屏;B:下屏",
 
  }
+  5. 关闭镜台接口/w/app/closeStage
+  {
+   "devicedId":"设备ID"
+
+  }
