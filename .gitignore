@@ -1,6 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
 target/
 
-.idea/inspectionProfiles/
-.idea/workspace.xml
-/.idea/mongoSettings.xml
+
