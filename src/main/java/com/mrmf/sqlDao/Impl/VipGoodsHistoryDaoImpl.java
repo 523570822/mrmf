@@ -43,8 +43,8 @@ public class VipGoodsHistoryDaoImpl implements VipGoodsHistoryDao {
             sql+=" AND phone LIKE '%"+phone+"%'";
             count+=" AND phone LIKE '%"+phone+"%'";
         }
-        int num =jdbcTemplate.queryForInt(count);
-
+       // int num =jdbcTemplate.queryForInt(count);
+        int num =jdbcTemplate.queryForObject(count,Integer.class);
         if(StringUtils.isEmpty(sidx)){
             sidx = "create_date";
             sord = "desc";

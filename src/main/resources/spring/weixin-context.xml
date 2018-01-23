@@ -10,7 +10,7 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
 	<!-- spring组件扫描 -->
 	<context:component-scan base-package="com.mrmf.module">
@@ -28,7 +28,7 @@
 				</property>
 			</bean>
 			<bean
-				class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 				<property name="supportedMediaTypes">
 					<list>
 						<value>text/json;charset=utf-8</value>
@@ -41,7 +41,7 @@
 
 	<!-- 过滤器 -->
 	<mvc:interceptors>
-		<!-- 上下文过滤器，初始化系统上下文，需放在所有拦截器之前，必需 -->
+		<!-- 上下文过滤器，初始化系统上下文，需放在所有拦截器之前，必需  -->
 		<bean
 			class="com.osg.framework.web.springmvc.interceptor.MContextInterceptor" />
 		<!-- 权限过滤器，适用于大家oauth权限体系 -->

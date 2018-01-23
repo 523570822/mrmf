@@ -28,7 +28,7 @@ import com.osg.entity.ReturnStatus;
 import com.osg.framework.BaseException;
 import com.osg.framework.util.FileNameUtil;
 import com.osg.framework.util.OSSFileUtil;
-import org.apache.commons.lang3.StringUtils;
+import com.osg.framework.util.StringUtils;
 import org.jdom.JDOMException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

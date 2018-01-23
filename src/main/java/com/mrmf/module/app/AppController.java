@@ -39,11 +39,6 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-/**
- * 用户端首页相关的类
- * @author yangshaodong
- */
 @Controller
 @RequestMapping("/app")
 public class AppController {
@@ -94,6 +89,7 @@ public class AppController {
 			map.put("message","获取验证码成功！");
 			map.put("data","");
 		}
+
 		return map;
 
 	}

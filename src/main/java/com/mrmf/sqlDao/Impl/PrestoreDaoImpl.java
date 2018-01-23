@@ -46,7 +46,8 @@ public class PrestoreDaoImpl implements PrestoreDao {
 
         String sql = "SELECT * FROM prestore where organ_id="+memberId+" AND type=0";
         String count = "SELECT count(*) FROM prestore where organ_id="+memberId+" AND type=0";
-        int num =jdbcTemplate.queryForInt(count);
+      //  int num =jdbcTemplate.queryForInt(count);
+        int num =jdbcTemplate.queryForObject(count,Integer.class);
 
         if(StringUtils.isEmpty(sidx)){
             sidx = "create_date";

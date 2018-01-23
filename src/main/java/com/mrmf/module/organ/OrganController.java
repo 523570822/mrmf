@@ -24,7 +24,7 @@ import com.osg.framework.util.FlipPageInfo;
 import com.osg.framework.util.PositionUtil;
 import com.osg.framework.util.QRCodeUtil;
 import com.osg.framework.web.cache.CacheManager;
-import org.apache.commons.lang3.StringUtils;
+import com.osg.framework.util.StringUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
