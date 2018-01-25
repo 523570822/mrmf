@@ -3,25 +3,16 @@ package com.mrmf.module.app;
 
 import com.mrmf.entity.User;
 import com.mrmf.entity.UserCollect;
-import com.mrmf.service.account.AccountService;
-import com.mrmf.service.common.WxgetInfo;
+import com.mrmf.entity.stage.StageMent;
 import com.mrmf.service.coupon.CouponGrantService;
-import com.mrmf.service.redis.RedisService;
-import com.mrmf.service.staff.StaffMyService;
-import com.mrmf.service.staff.StaffService;
+import com.mrmf.service.stage.StageService;
 import com.mrmf.service.usermy.UserMyService;
 import com.mrmf.service.wecommon.WeComonService;
-import com.mrmf.service.weorgan.WeOrganService;
 import com.mrmf.service.weuser.WeUserService;
-import com.mrmf.service.wxOAuth2.WXOAuth2Service;
 import com.mrmf.socket.WebSocket;
-import com.osg.entity.Entity;
-import com.osg.entity.FlipInfo;
-import com.osg.entity.GpsPoint;
-import com.osg.entity.ReturnStatus;
+import com.osg.entity.*;
 import com.osg.framework.util.FileNameUtil;
 import com.osg.framework.util.OSSFileUtil;
-import com.osg.framework.web.cache.CacheManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,36 +27,24 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
 @Controller
 @RequestMapping("/app")
 public class AppController {
 	@Autowired 
 	private WeUserService weUserService;
-	@Autowired
-	private StaffService staffService;
+
 	@Autowired 
 	private WeComonService weCommonService;
-	@Autowired 
-	private WxgetInfo wxgetInfo;
+
 	@Autowired
 	private UserMyService userMyService;
-	@Autowired
-	private AccountService accountService;
-	@Autowired 
-	private RedisService redisService;
-	@Autowired 
-	private WeOrganService weOrganService;
-	@Autowired
-	private StaffMyService staffMyService;
+
 	@Autowired
 	private CouponGrantService couponGrantService;
 	@Autowired
-	private WXOAuth2Service wxoAuth2Service;
-	@Autowired
-	private CacheManager cacheManager;
+	private StageService stageService;
 
 	private static Logger logger = Logger.getLogger(AppController.class);
 	/**
@@ -261,7 +240,16 @@ public class AppController {
 
 	@RequestMapping("/test")
 	@ResponseBody
-	public  Map<String, Object>  text(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public FaceStatus  text( StageMent stageMent,AndroidPoint androidPoint, HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+
+		return null;
+
+
+	}
+	@RequestMapping("/test1")
+	@ResponseBody
+	public  Map<String, Object>  text1(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -271,31 +259,30 @@ public class AppController {
 
 
 //获取其他主机的InetAddress实例
-	//	InetAddress address2 =InetAddress.getByName("其他主机名");
+		//	InetAddress address2 =InetAddress.getByName("其他主机名");
 		//InetAddress address3 =InetAddress.getByName("IP地址");
 
-   //  StringBuffer  test=new StringBuffer("其他主机名:"+address2+";");
+		//  StringBuffer  test=new StringBuffer("其他主机名:"+address2+";");
 		String phone =String.valueOf(request.getParameter("phone"));
-        String type =String.valueOf(request.getParameter("type"));
-	//	test.append("IP地址:"+address3);
+		String type =String.valueOf(request.getParameter("type"));
+		//	test.append("IP地址:"+address3);
 		WebSocket asd = WebSocket.webSocketSet.get(phone);
 
 
-            if( WebSocket.webSocketSet.get(phone)!=null){
-                WebSocket.webSocketSet.get(phone).sendMessage(type);
+		if( WebSocket.webSocketSet.get(phone)!=null){
+			WebSocket.webSocketSet.get(phone).sendMessage(type);
 
 
-            map.put("code","1");
-            map.put("message","成功通知");
-            map.put("data","geiliba");
-        } else {
-            map.put("code","1");
-            map.put("message","用户不存在");
-            map.put("data","geiliba");
-        }
+			map.put("code","1");
+			map.put("message","成功通知");
+			map.put("data","geiliba");
+		} else {
+			map.put("code","1");
+			map.put("message","用户不存在");
+			map.put("data","geiliba");
+		}
 		return map;
 	}
-
     /**
      *  App支付配置
      * @param phone
@@ -308,26 +295,40 @@ public class AppController {
      */
     @RequestMapping("/appPay")
     @ResponseBody
-    public  Map<String, Object>  appPay(String  phone,String type,String money,HttpServletRequest request, HttpServletResponse response) throws IOException {
-    //	String dressingTableStatus=
-				HttpSession session=request.getSession(true);
-		Object dressingTableStatusO	=session.getAttribute("dressingTableStatus");
-		if(dressingTableStatusO==null){
-			session.setAttribute("dressingTableStatus",true);
-		}
-        Map<String, Object> map = new HashMap<String, Object>();
+    public  FaceStatus  appPay(String  phone,String type,String money,String devicedId,HttpServletRequest request, HttpServletResponse response) throws IOException {
+        FaceStatus status;
+
+
+			if("staff".equals(type)){
+
+                StageMent stageMent =stageService.findOne(devicedId);
+
+                if(stageMent.get_id()==null){
+                    status = new FaceStatus(false, "设备不存在");
+                    status.setEntity(stageMent);
+                    return status;
+                }else{
+                    stageMent.setStatus("0");
+                    stageService.upsertAndSave(stageMent);
+                    status = new FaceStatus(true, "技师支付成功");
+                    status.setEntity(stageMent);
+                    return status;
+                }
+
+
+            }else {
+                status = new FaceStatus(false, "用户支付成功");
+             /*   map.put("code","0");
+                map.put("message","用户支付成功支付成功");
+                map.put("data","geiliba");*/
+                return status;
+            }
 
 
 
 
-            map.put("code","0");
-            map.put("message","支付成功");
-            map.put("data","geiliba");
 
 
-
-
-        return map;
     }
 
 	/**
@@ -341,18 +342,49 @@ public class AppController {
 	 */
 	@RequestMapping("/getDressingTableStatus")
 	@ResponseBody
-	public  Map<String, Object>  getDressingTableStatus(String  devicedId,String type,HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public  FaceStatus  getDressingTableStatus(String  devicedId,String type,HttpServletRequest request, HttpServletResponse response) throws IOException {
 		//	String dressingTableStatus=
-		HttpSession session=request.getSession(true);
-		Object dressingTableStatusO	=session.getAttribute("dressingTableStatus");
-		if(dressingTableStatusO==null){
-			session.setAttribute("dressingTableStatus",false);
-		}
-		 dressingTableStatusO	=session.getAttribute("dressingTableStatus");
-	Boolean	dressingTableStatus= (Boolean) dressingTableStatusO;
-		Map<String, Object> data = new HashMap<String, Object>();
-		Map<String, Object> map = new HashMap<String, Object>();
+        FaceStatus status;
+        StageMent stageMent =stageService.findOne(devicedId);
 
+
+        if(stageMent==null){
+            status = new FaceStatus(false, "设备不存在");
+
+            status.setEntity(stageMent);
+            return status;
+        }else{
+            Map<String, Object> map = new HashMap<String, Object>();
+            if(type.equals("A")){
+                if("0".equals(stageMent.getStatus())){
+                    map.put("equipmentStatus",false );
+                }else{
+                    map.put("equipmentStatus",true);
+                }
+
+
+            }else if(type.equals("B")){
+                if("0".equals(stageMent.getStatus())){
+                    map.put("equipmentStatus",true );
+                }else{
+                    map.put("equipmentStatus",false );
+                }
+
+
+
+            }else{
+                status = new FaceStatus(true, "设备异常");
+                return status;
+
+            }
+
+            status = new FaceStatus(true, "状态查询成功");
+            status.setData(map);
+            return status;
+        }
+
+
+/*
 	if(type.equals("A")){
 		if(dressingTableStatus){
 			data.put("equipmentStatus",false);
@@ -382,11 +414,11 @@ public class AppController {
 
 
 
-		return map;
+		return map;*/
 	}
 
 	/**
-	 *   轮训查询镜台状态
+	 *   关闭镜台
 	 * @param devicedId 设备ID
 	 * @param request
 	 * @param response
@@ -395,31 +427,29 @@ public class AppController {
 	 */
 	@RequestMapping("/closeStage")
 	@ResponseBody
-	public  Map<String, Object>  closeStage(String  devicedId,HttpServletRequest request, HttpServletResponse response) throws IOException {
-		//	String dressingTableStatus=
-		HttpSession session=request.getSession(true);
+	public FaceStatus  closeStage(String  devicedId,HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-		session.setAttribute("dressingTableStatus", false);
+        FaceStatus status;
 
+        StageMent stageMent =stageService.findOne(devicedId);
 
-
-		Map<String, Object> map = new HashMap<String, Object>();
-
-
-
-
-
-
-
-
-		map.put("code","0");
-		map.put("message","调取成功当前镜面状态"+session.getAttribute("dressingTableStatus"));
-		map.put("data","");
+        if(stageMent.get_id()==null){
+            status = new FaceStatus(false, "设备没有绑定");
+            status.setEntity(stageMent);
+            return status;
+        }else{
+            stageMent.setStatus("1");
+            status = new FaceStatus(true, "修改成功");
+            status.setEntity(stageMent);
+            return status;
+        }
 
 
 
 
-		return map;
+
+
+
 	}
 
 

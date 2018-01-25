@@ -1,17 +1,23 @@
 package com.mrmf.service.staff;
 
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.WriteResult;
 import com.mrmf.entity.*;
+import com.mrmf.entity.kaoqin.KBancidingyi;
+import com.mrmf.entity.kaoqin.KPaiban;
 import com.mrmf.entity.relevance.UserRelevanceStaff;
+import com.mrmf.entity.staff.Staffpost;
+import com.mrmf.entity.user.Smallsort;
 import com.mrmf.service.VipMember.VipMemberService;
+import com.mrmf.service.account.AccountService;
+import com.mrmf.service.common.PinYinUtil;
+import com.mrmf.service.organ.OrganService;
+import com.osg.entity.FlipInfo;
+import com.osg.entity.GpsPoint;
+import com.osg.entity.ReturnStatus;
+import com.osg.framework.BaseException;
+import com.osg.framework.mongodb.EMongoTemplate;
+import com.osg.framework.util.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.http.util.TextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,28 +31,13 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.mrmf.entity.kaoqin.KBancidingyi;
-import com.mrmf.entity.kaoqin.KPaiban;
-import com.mrmf.entity.staff.Staffpost;
-import com.mrmf.entity.user.Smallsort;
-import com.mrmf.service.account.AccountService;
-import com.mrmf.service.common.PinYinUtil;
-import com.mrmf.service.organ.OrganService;
-import com.osg.entity.FlipInfo;
-import com.osg.entity.GpsPoint;
-import com.osg.entity.ReturnStatus;
-import com.osg.framework.BaseException;
-import com.osg.framework.mongodb.EMongoTemplate;
-import com.osg.framework.util.DateUtil;
-import com.osg.framework.util.FlipPageInfo;
-import com.osg.framework.util.GetSetUtil;
-import com.osg.framework.util.GpsUtil;
-import com.osg.framework.util.PositionUtil;
-import com.osg.framework.util.StringUtils;
+import javax.servlet.http.HttpServletRequest;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.group;
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.match;
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 
 @Service("staffService")
 public class StaffServiceImpl implements StaffService {

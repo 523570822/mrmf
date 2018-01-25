@@ -27,14 +27,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
        //   }else{
 
           var  face=$("#face").val();
-        var data1=$("#data").val();
-        console.info(data1);
-          var data = JSON.parse(data1);
-          $.post(_ctxPath +face,data,
+        var data=$("#data").val();
+        console.info(data);
+         var data1 = JSON.parse(data);
+       var stageMent= JSON.stringify(data1)
+          console.info(stageMent);
+       $.post(_ctxPath +face,data1,
                   function(data){
                   console.info(data);
                    $("#dataTime").html("code:"+data.code+"</br> message"+data.message+"</br> data:"+data.data)
                   });
+
+/*      $.ajax(
+              {
+                  url:_ctxPath +face,
+                  type: "POST",
+                  data: data1,
+                  success: function(data){
+                      $("#dataTime").html("code:"+data.code+"</br> message"+data.message+"</br> data:"+data.data)
+                  },
+                  dataType: "json",
+                  contentType: "application/json"
+              } );*/
+
         //  }
       });
       });
@@ -50,7 +65,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="pay_pwd_div">
         <div>
             <div class="pay_pwd_email">
-                <span>接口地址1236</span>
+                <span>接口地址1</span>
             </div>
             <div >
                 <input  style="width: 1000px" type="text" placeholder="输入接口地址1" id="face" value="/w/app/test"/>

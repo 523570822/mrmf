@@ -1,20 +1,18 @@
 package com.mrmf.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-
 import com.osg.entity.DataEntity;
 import com.osg.entity.GpsPoint;
-import com.osg.entity.geo.GeoDistance;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 公司信息（店铺、门店，包括总公司、子公司），通过parentId建立总公司和子公司关联 原organ表
  * 
  */
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-public class Organ extends DataEntity implements GeoDistance {
+public class Organ extends DataEntity  {
 
 	private String parentId; // 父公司id，0为根节点（总部）
 	private String name; // 名称

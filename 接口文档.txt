@@ -28,6 +28,7 @@ APP用户端接口：
  "phone":"",
  "type":"staff:技师;user:用户",
  "money":"",
+ "devicedId":"445566"
 
  }
 
@@ -40,5 +41,17 @@ APP用户端接口：
   5. 关闭镜台接口/w/app/closeStage
   {
    "devicedId":"设备ID"
+
+  }
+
+
+
+  6.首次录入设备信息/w/stageApp/firstInstall
+  {
+"organId":"5282086565131207777",
+"name":"1",
+"devicedId":"445566",
+"floor":"A",
+"status":"1"
 
   }
