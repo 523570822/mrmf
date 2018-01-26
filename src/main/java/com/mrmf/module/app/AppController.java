@@ -12,6 +12,7 @@ import com.mrmf.service.weuser.WeUserService;
 import com.mrmf.socket.WebSocket;
 import com.osg.entity.*;
 import com.osg.framework.util.FileNameUtil;
+import com.osg.framework.util.JsonUtils;
 import com.osg.framework.util.OSSFileUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/app")
@@ -240,16 +243,20 @@ public class AppController {
 
 	@RequestMapping("/test")
 	@ResponseBody
-	public FaceStatus  text( StageMent stageMent,AndroidPoint androidPoint, HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-
-		return null;
+	public Object  test( String stageMentStr, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	//	Gson gson = new Gson();
+			/*FaceStatus status;
+		status = new FaceStatus(false, "设备不存在");
+		status.setEntity(stageMent);*/
+	//	StageMent stageMent = gson.fromJson(stageMentStr, StageMent.class);
+		StageMent	stageMent=	JsonUtils.fromJson(stageMentStr, StageMent.class);
+		return stageMent;
 
 
 	}
 	@RequestMapping("/test1")
 	@ResponseBody
-	public  Map<String, Object>  text1(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public  Map<String, Object>  text1(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -281,6 +288,15 @@ public class AppController {
 			map.put("message","用户不存在");
 			map.put("data","geiliba");
 		}
+
+
+		//	Gson gson = new Gson();
+			/*FaceStatus status;
+		status = new FaceStatus(false, "设备不存在");
+		status.setEntity(stageMent);*/
+		//	StageMent stageMent = gson.fromJson(stageMentStr, StageMent.class);
+		String stageMentStr = "";
+		StageMent	stageMent=	JsonUtils.fromJson(stageMentStr, StageMent.class);
 		return map;
 	}
     /**

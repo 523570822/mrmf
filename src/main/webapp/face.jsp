@@ -26,29 +26,52 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       //        alert("输入正确的手机号码！");
        //   }else{
 
-          var  face=$("#face").val();
-        var data=$("#data").val();
-        console.info(data);
-         var data1 = JSON.parse(data);
-       var stageMent= JSON.stringify(data1)
-          console.info(stageMent);
-       $.post(_ctxPath +face,data1,
-                  function(data){
-                  console.info(data);
-                   $("#dataTime").html("code:"+data.code+"</br> message"+data.message+"</br> data:"+data.data)
-                  });
 
-/*      $.ajax(
+          var person = {
+              "organId": "5282086565131207777",
+
+              "androidPoints": [{
+                  "devicedId": "445566",
+                  "floor": "A"
+              }],
+
+              "status": "1"
+          }
+          var person1 = {
+              "organId": "5282086565131207777",
+
+
+
+              "status": "1"
+          }
+
+       var  face=$("#face").val();
+    //    var data=$("#data").val();
+        var qwe= JSON.stringify(person);
+
+/*       $.post(_ctxPath +face,data1,
+                  function(stageMent){
+                  console.info("返回值:"+data);
+                   $("#dataTime").html("code:"+data.code+"</br> message"+data.message+"</br> data:"+data.data)
+                  });*/
+
+          var str=JSON.stringify(person1);
+
+var data={
+    "stageMentStr":qwe
+}
+     $.ajax(
               {
                   url:_ctxPath +face,
                   type: "POST",
-                  data: data1,
+                  data: data,
                   success: function(data){
+                      console.info(data);
                       $("#dataTime").html("code:"+data.code+"</br> message"+data.message+"</br> data:"+data.data)
                   },
-                  dataType: "json",
-                  contentType: "application/json"
-              } );*/
+
+
+              } );
 
         //  }
       });
