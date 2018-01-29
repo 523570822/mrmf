@@ -46,8 +46,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           }
 
        var  face=$("#face").val();
-    //    var data=$("#data").val();
-        var qwe= JSON.stringify(person);
+          var data=$("#data").val();
+       var json123=JSON.parse(data);
+
+
+       var json1= JSON.stringify(person);
 
 /*       $.post(_ctxPath +face,data1,
                   function(stageMent){
@@ -57,14 +60,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
           var str=JSON.stringify(person1);
 
-var data={
-    "stageMentStr":qwe
-}
+
      $.ajax(
               {
                   url:_ctxPath +face,
                   type: "POST",
-                  data: data,
+                  data: json123,
                   success: function(data){
                       console.info(data);
                       $("#dataTime").html("code:"+data.code+"</br> message"+data.message+"</br> data:"+data.data)
