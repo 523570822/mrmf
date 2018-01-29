@@ -240,20 +240,20 @@ public class AppController {
 		return map;
 	}
 
-
+/*
 	@RequestMapping("/test")
 	@ResponseBody
 	public Object  test( String stageMentStr, HttpServletRequest request, HttpServletResponse response) throws Exception {
 	//	Gson gson = new Gson();
-			/*FaceStatus status;
+			*//*FaceStatus status;
 		status = new FaceStatus(false, "设备不存在");
-		status.setEntity(stageMent);*/
+		status.setEntity(stageMent);*//*
 	//	StageMent stageMent = gson.fromJson(stageMentStr, StageMent.class);
 		StageMent	stageMent=	JsonUtils.fromJson(stageMentStr, StageMent.class);
 		return stageMent;
 
 
-	}
+	}*/
 	@RequestMapping("/test1")
 	@ResponseBody
 	public  Map<String, Object>  text1(HttpServletRequest request, HttpServletResponse response) throws Exception {
