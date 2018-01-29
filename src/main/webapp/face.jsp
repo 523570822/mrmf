@@ -60,7 +60,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
           var str=JSON.stringify(person1);
 
-
+      /*    var data={
+              "stageMentStr":qwe
+          }*/
      $.ajax(
               {
                   url:_ctxPath +face,

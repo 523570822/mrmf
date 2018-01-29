@@ -2,3 +2,5 @@
 target/
 
 
+.idea/inspectionProfiles/
+.idea/workspace.xml
