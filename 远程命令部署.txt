@@ -6,6 +6,7 @@ $ pwd   // 查看文件夹路径
 git clone http://192.168.1.222:3000/root/rxm.git  //克隆远程仓库 ，改成自己的地址连接
 git branch -a// 列出所有远程分支
 git checkout  -b rxm_login  remotes/origin/rxm_login//远程分支   //切换到指定分支  rxm_login(自己起的名字)
+cd rxm
 git pull origin rxm_login  --force ;//强制更新本地仓库
 mvn -X install -Dmaven.test.skip=true ; //通过maven自动编译代码
 tar zcvf /home/production/chengqiandaiweb$(date +%Y%m%d%H).tar.gz /home/production/chengqiandaiweb/ ;//备份语句根据实际情况修改
@@ -16,20 +17,17 @@ sudo systemctl restart tomcat  启动Tomcat
 以后：
 cd root/learngit/rxm
 git pull origin rxm_login  --force ;//强制更新本地仓库
+m -rf /root/learngit/rxm/target/mrmf/*     //部署前先删除
+
 mvn -X install -Dmaven.test.skip=true ; //通过maven自动编译代码
-rsync -rtlvz  /root/learngit/rxm/target/mrmf/*  /var/lib/tomcat/webapps/mrmf ;   简化后 拷贝编译后的代码到指定tomcat服务器中
-sudo systemctl restart tomcat
+rsync -rtlvz  /root/learngit/rxm/target/mrmf/*  /opt/tomcat/webapps/mrmf ;   简化后 拷贝编译后的代码到指定tomcat服务器中
+
+sudo /opt/tomcat/bin/startup.sh --启动
+sudo /opt/tomcat/bin/shutdown.sh --停止
+tail -f /opt/tomcat/logs/catalina.out  --查看日志
+//sudo systemctl restart tomcat
 
 
-更新后的  Tomcat开发版本与服务器版本不一致导致无法登陆
-cd /root/rxm
-git pull origin rxm_login  --force ;//强制更新本地仓库
-mvn -X install -Dmaven.test.skip=true ; //通过maven自动编译代码
-rsync -rtlvz  /root/rxm/target/mrmf/*  /root/apache-tomcat-8.5.24/webapps/ROOT ;  
 
-
-sudo /root/apache-tomcat-8.5.24/bin/startup.sh --启动
-sudo /root/apache-tomcat-8.5.24/bin/shutdown.sh --停止
-tail -f /root/apache-tomcat-8.5.24/logs/catalina.out  --查看日志
 
 
