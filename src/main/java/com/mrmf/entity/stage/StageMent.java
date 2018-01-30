@@ -9,9 +9,10 @@ import java.util.List;
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class StageMent extends DataEntity {
     private String organId; // 所属公司id
-    private String name; // 名称
+    private String name; // 名称（镜台编号）
     private String status;//镜台状态（0：开启中，1 关闭中）
-    private List<AndroidPoint> androidPoints;
+    // 需要节目分类字段   稍后追加
+    private List<AndroidPoint> androidPoints;//镜台设备编码
 
     public List<AndroidPoint> getAndroidPoints() {
         return androidPoints;

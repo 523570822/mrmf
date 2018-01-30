@@ -455,7 +455,9 @@ public class AppController {
             return status;
         }else{
             stageMent.setStatus("1");
+			stageService.upsertAndSave(stageMent);
             status = new FaceStatus(true, "修改成功");
+
             status.setEntity(stageMent);
             return status;
         }

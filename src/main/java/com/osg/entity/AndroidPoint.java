@@ -2,6 +2,9 @@ package com.osg.entity;
 
 import java.io.Serializable;
 
+/**
+ *   镜台设备编码
+ */
 public class AndroidPoint implements Serializable {
 
 	private String devicedId; //设备唯一编码

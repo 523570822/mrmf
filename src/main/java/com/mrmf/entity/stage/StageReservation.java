@@ -2,8 +2,11 @@ package com.mrmf.entity.stage;
 
 import java.util.Date;
 import java.util.List;
-//技师支付成功镜台记录页面
-public class staffReservation {
+
+/**
+ * 技师支付成功镜台记录页面
+ */
+public class StageReservation {
     private String  stageId; // 镜台ID
     private List<String> devicedId; //所属镜台的设备码
     private String phone;    //技师手机号

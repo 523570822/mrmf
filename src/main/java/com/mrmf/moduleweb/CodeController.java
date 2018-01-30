@@ -1,28 +1,22 @@
 package com.mrmf.moduleweb;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.mrmf.entity.Code;
 import com.mrmf.service.code.CodeService;
 import com.osg.entity.FlipInfo;
 import com.osg.entity.ReturnStatus;
 import com.osg.framework.util.FlipPageInfo;
 import com.osg.framework.util.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 代码管理相关
@@ -37,6 +31,7 @@ public class CodeController {
 	@RequestMapping("/toQuery")
 	public ModelAndView toQuery(HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView();
+
 		mv.setViewName("code/query");
 		return mv;
 	}
