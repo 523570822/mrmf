@@ -1,21 +1,5 @@
 package com.mrmf.moduleweb;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.alibaba.fastjson.JSONObject;
 import com.mrmf.entity.Account;
 import com.mrmf.entity.Function;
@@ -32,6 +16,20 @@ import com.mrmf.service.organ.OrganService;
 import com.osg.entity.ReturnStatus;
 import com.osg.framework.util.StringUtils;
 import com.osg.framework.web.security.token.TokenManager;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 
 @Controller
 @RequestMapping("/login")
@@ -64,7 +62,7 @@ public class LoginController {
 		mv.setViewName("login/login");
 		return mv;
 	}
-
+//登陆后入口
 	@RequestMapping(value = "/main")
 	public ModelAndView main(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mv = new ModelAndView();

@@ -1,10 +1,15 @@
+
+
 $()
 		.ready(
 				function() {
+
 					$(window).load(function() { // trigger change on all select
 						// while all dom and js loaded
 						$("select").trigger('change');
 					});
+
+
 					$(".switcher").each(function() {
 						new Switchery(this, {
 							color : "#1AB394"
@@ -249,6 +254,7 @@ $()
 	};
 	$.fn.grid = function(options) {
 		var settings = {
+            rownumbers: false,
 			datatype : "json",
 			height : 350,
 			mtype : "POST",

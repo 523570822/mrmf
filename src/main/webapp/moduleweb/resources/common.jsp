@@ -103,8 +103,7 @@
 	src="${ctxPath}/moduleweb/resources/plugins/toastr/toastr.min.js">
 	
 </script>
-<script
-	src="${ctxPath}/moduleweb/resources/plugins/ztree/seeyon.ui.tree-debug.js">
+<script src="${ctxPath}/moduleweb/resources/plugins/ztree/seeyon.ui.tree-debug.js">
 	
 </script>
 <script
@@ -130,6 +129,9 @@
 <script src="${ctxPath}/moduleweb/resources/js/ext/token.js"></script>
 <script src="${ctxPath}/moduleweb/resources/js/ext/shade.js"></script>
 <script src="${ctxPath}/moduleweb/resources/js/ext/GpsConversion.js"></script>
+
+<script src="${ctxPath}/moduleweb/resources/plugins/jsKnob/jquery.knob.js"></script>
+
 <script type="text/javascript">
 	var fillmaps = <c:out value="${_FILL_MAP}" default="null" escapeXml="false"/>;
 	$().ready(function() {
@@ -138,4 +140,5 @@
 		});
 	});
 </script>
+
 <script src="${ctxPath}/moduleweb/resources/common.js"></script>

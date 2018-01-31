@@ -57,6 +57,7 @@
 							$("#accountTable")
 									.grid(
 											{
+                                                rownumbers: true,
 												url : _ctxPath
 														+ "/account/query.do",
 												postData : $("#searchForm")

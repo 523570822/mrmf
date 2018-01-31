@@ -15,7 +15,26 @@ public class StageController {
     @RequestMapping("/toQuery")
     public ModelAndView toQuery(HttpServletRequest request) throws Exception {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("user/bigsort/query");
+        mv.setViewName("/stage/query");
+        return mv;
+
+
+    }
+
+    /**
+     * 新增分类
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/toUpsert")
+    public ModelAndView toUpsert(HttpServletRequest request) throws Exception {
+
+
+
+
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("stage/upsert");
         return mv;
     }
 

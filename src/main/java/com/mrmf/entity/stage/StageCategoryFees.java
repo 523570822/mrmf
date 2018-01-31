@@ -7,13 +7,21 @@ import com.osg.entity.DataEntity;
  */
 public class StageCategoryFees  extends DataEntity{
 
-
+ private Double  name;//类别名称
     private Double leaseMoney;//单日镜台租金
     private Double platRentSharing;//平台租金分成
     private Double shopRentSharing;//店铺租金分成
     private Double staffEarningsSharing;//技师收益分成
     private Double platEarningsSharing;//平台收益分成
     private Double shopEarningsSharing;//店铺收益分成.
+
+    public Double getName() {
+        return name;
+    }
+
+    public void setName(Double name) {
+        this.name = name;
+    }
 
     public Double getLeaseMoney() {
         return leaseMoney;

@@ -1,14 +1,22 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@ include file="/module/resources/wecommon.jsp"%>
+<%--<%@ include file="/module/resources/wecommon.jsp"%>--%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String basePathS =request.getServerName()+":"+request.getServerPort()+path+"/";
+    String scheme=request.getScheme();
+    pageContext.setAttribute("basePath",basePath);
+    pageContext.setAttribute("basePathS",basePathS);
+    pageContext.setAttribute("scheme",scheme);
+
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
+<base href="<%=scheme%>">
+
   <head>
-    <base href="<%=basePath%>">
+    <base href="<%=basePathS%>">
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
@@ -16,6 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta content="email=no" name="format-detection">
     <meta name="description" content="This is  a ..">
     <title>任性猫</title>
+      <script src="moduleweb/resources/js/jquery.min.js?v=2.1.4"></script>
 </head>
   <script type="text/javascript">
       $(function(){
@@ -59,13 +68,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   });*/
 
           var str=JSON.stringify(person1);
+          console.info("${basePath}")
+          console.info("${basePathS}")
+          console.info("${scheme}")
 
       /*    var data={
               "stageMentStr":qwe
           }*/
      $.ajax(
               {
-                  url:_ctxPath +face,
+                  url:face,
                   type: "POST",
                   data: json123,
                   success: function(data){
@@ -145,7 +157,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       //判断当前浏览器是否支持WebSocket
       if ('WebSocket' in window) {
 
-          var url="ws://192.168.1.223:80/websocket/"+GetQueryString("phone")
+          var url="ws://"+"${basePathS}"+"websocket/"+GetQueryString("phone")
+       //   var url="ws://192.168.1.223:80/websocket/"+GetQueryString("phone")
           websocket = new WebSocket(url);
       }
       else {
