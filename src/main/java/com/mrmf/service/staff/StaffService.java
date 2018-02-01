@@ -1,25 +1,15 @@
 package com.mrmf.service.staff;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import com.mrmf.entity.Code;
-import com.mrmf.entity.Organ;
+import com.mrmf.entity.*;
 import com.mrmf.entity.relevance.UserRelevanceStaff;
-import com.mrmf.entity.Staff;
-import com.mrmf.entity.WeBDistrict;
-import com.mrmf.entity.WeBRegion;
-import com.mrmf.entity.WeOrganStaffVerify;
-import com.mrmf.entity.WeStaffCalendar;
-import com.mrmf.entity.WeStaffCase;
-import com.mrmf.entity.WeStaffSign;
-import com.mrmf.entity.WeUserInquiry;
 import com.mrmf.entity.user.Smallsort;
 import com.osg.entity.FlipInfo;
 import com.osg.entity.ReturnStatus;
 import com.osg.framework.BaseException;
 import com.osg.framework.util.FlipPageInfo;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public interface StaffService {
 

@@ -3,7 +3,9 @@ package com.mrmf.service.stage;
 import com.mrmf.entity.stage.StageMent;
 import com.osg.entity.FaceStatus;
 
-public interface StageService {
+import java.util.List;
+
+public interface StageService  {
     /**
      * 新增/修改镜台信息
      *
@@ -31,5 +33,12 @@ public interface StageService {
      * @return
      */
     public StageMent findOne(String organId,String name,String floor);
+
+    public void saveOrUpdate(StageMent t);
+    public void deleteById(int id);
+    public StageMent queryById(int id);
+    public List<StageMent> query();
+
+
 
 }

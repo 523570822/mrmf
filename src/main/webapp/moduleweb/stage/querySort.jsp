@@ -15,7 +15,7 @@
 					<c:if test="${param.parentId != null && param.parentId != ''}">
 						<div class="ibox-title">
 							<h5>
-								<a href="${ctxPath}/organ/toQuery.do?parentId=${param.parentId}"
+								<a href="${ctxPath}/organ/toQuerySort.do"
 									class="btn-link"><i class="fa fa-angle-double-left"></i>返回</a>
 								员工管理
 							</h5>
@@ -31,16 +31,7 @@
 									<input id="regex:name" name="regex:name" type="text"
 										class="form-control">
 								</div>
-								<label class="col-sm-1 control-label">身份证号</label>
-								<div class="col-sm-2">
-									<input id="regex:idcard" name="regex:idcard" type="text"
-										class="form-control">
-								</div>
-								<label class="col-sm-1 control-label">手机号</label>
-								<div class="col-sm-2">
-									<input id="regex:phone" name="regex:phone" type="text"
-										   class="form-control">
-								</div>
+
 								<div class="col-sm-1">
 									<button id="search" class="btn btn-primary" type="submit">查询</button>
 								</div>
@@ -81,30 +72,36 @@
 											{
                                                 rownumbers: true,
 												url : _ctxPath
-														+ "/staff/query.do",
+														+ "/stage/query.do",
 												shrinkToFit : false,
-												colNames : [  "镜台租金(日)", "平台租金分成",
-														"店铺租金分成", "技师收益分成", "平台收益分成",
+												colNames : [  "名称","镜台租金(元/天", "平台租金分成（%）",
+														"店铺租金分成（%）", "技师收益分成", "平台收益分成",
 														"店铺收益分成","操作"],
 												postData : $("#searchForm")
 														.formobj(),
 												colModel : [
-
+													{
+                                                        name : "name",
+                                                        index : "name",
+                                                        width : 100
+													},
 
 														{
 															name : "leaseMoney",
 															index : "leaseMoney",
-															width : 100
+															width : 150,
+                                                            align : "center"
 														},
 														{
 															name : "platRentSharing",
 															index : "platRentSharing",
-															width : 60,
+
 															align : "center"
 														},
 														{
 															name : "shopRentSharing",
-															index : "shopRentSharing"
+															index : "shopRentSharing",
+                                                            align : "center"
 
 														},
 														{

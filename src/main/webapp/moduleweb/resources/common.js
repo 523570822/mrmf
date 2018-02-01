@@ -253,6 +253,7 @@ $()
 		}
 	};
 	$.fn.grid = function(options) {
+
 		var settings = {
             rownumbers: false,
 			datatype : "json",
@@ -285,7 +286,7 @@ $()
 
 		options = $.extend(settings, options);
 
-		$t.jqGrid(options);
+$t.jqGrid(options);
 
 		$(window).bind("resize", function() {
 			var width = $(".jqGrid_wrapper").width();
@@ -293,6 +294,7 @@ $()
 		})
 	};
 	$.fn.reloadGrid = function(options) {
+
 		var settings = {
 			page : 1
 		};
@@ -300,6 +302,7 @@ $()
 		if (!options.postData) {
 			options.postData = options.data;
 		}
+
 		this.jqGrid("setGridParam", options, true).trigger("reloadGrid");
 	};
 })(jQuery);

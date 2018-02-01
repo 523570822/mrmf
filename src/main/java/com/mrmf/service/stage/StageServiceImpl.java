@@ -1,5 +1,6 @@
 package com.mrmf.service.stage;
 
+import com.mrmf.service.base.BaseServiceImpl;
 import com.mrmf.entity.Organ;
 import com.mrmf.entity.stage.StageMent;
 import com.osg.entity.FaceStatus;
@@ -10,7 +11,11 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 @Service("stageService")
-public class StageServiceImpl implements StageService {
+public class StageServiceImpl extends BaseServiceImpl<StageMent> implements StageService   {
+
+    public StageServiceImpl(){
+        super();
+    }
     @Autowired
     private EMongoTemplate mongoTemplate;
 

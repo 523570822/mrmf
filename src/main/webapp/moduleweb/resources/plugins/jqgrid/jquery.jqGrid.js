@@ -1214,7 +1214,7 @@ $.fn.jqGrid = function( pin ) {
 				rows:"rows", 
 				sort: "sidx",
 				order: "sord", 
-				search:"_search", 
+				search:"_search",
 				nd:"nd", 
 				id:"id",
 				oper:"oper",
@@ -1223,7 +1223,8 @@ $.fn.jqGrid = function( pin ) {
 				deloper:"del", 
 				subgridid:"id", 
 				npage: null, 
-				totalrows:"totalrows"
+				totalrows:"totalrows",
+                repeatitems: false,
 			},
 			forceFit : false,
 			gridstate : "visible",
