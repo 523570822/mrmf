@@ -1,13 +1,17 @@
 package com.mrmf.entity.stage;
 
 import com.osg.entity.DataEntity;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 /**
  * 镜台收费类别
  */
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class StageCategoryFees  extends DataEntity{
 
- private String  name;//类别名称
+
+
+    private String  name;//类别名称
     private Double leaseMoney;//单日镜台租金
     private Double platRentSharing;//平台租金分成
     private Double shopRentSharing;//店铺租金分成
@@ -19,6 +23,15 @@ public class StageCategoryFees  extends DataEntity{
         return name;
     }
 
+    @Override
+    public String get_id() {
+        return _id;
+    }
+
+    @Override
+    public void set_id(String _id) {
+        this._id = _id;
+    }
     public void setName(String name) {
         this.name = name;
     }

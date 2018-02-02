@@ -25,13 +25,13 @@
 					<div class="ibox-title">
 						<h5>
 							<a
-								href="${ctxPath}/stage/toQuery.do"
+								href="${ctxPath}/stage/toQuerySort.do"
 								class="btn-link"> <i class="fa fa-angle-double-left"></i>返回
 							</a>
-							<c:if test="${ffstaff._id == null}">
+							<c:if test="${ffstageCategoryFees._id == null}">
 								新建分类
 							</c:if>
-							<c:if test="${ffstaff._id != null}">修改分类 <small>修改分类信息。</small>
+							<c:if test="${ffstageCategoryFees._id != null}">收费类别管理<small>修改分类信息。</small>
 							</c:if>
 						</h5>
 					</div>
@@ -40,11 +40,12 @@
 							<div class="alert alert-danger">
 								<i class="fa fa-exclamation-triangle"></i>${returnStatus.message}</div>
 						</c:if>
-						<input type="hidden" value="${oldOrganId}">
-						<form id="staff" method="post" action="${ctxPath}/stage/upsert.do"
+
+						<form id="stageCategoryFees" method="post" action="${ctxPath}/stage/upsert123.do"
 							class="form-horizontal">
 							<input type="hidden" id="_id" name="_id">
-
+							<input type="hidden"
+								   id="createTime" name="createTime">
 							<div class="form-group">
 								<label class="col-sm-2 control-label">分类名称</label>
 								<div class="col-sm-10">
@@ -132,7 +133,7 @@
 
 
 		$().ready(function() {
-
+    console.info("${stageCategoryFees.name}");
             $("#platRentSharing").knob({
             //    max: 940,
               //  min: 500,

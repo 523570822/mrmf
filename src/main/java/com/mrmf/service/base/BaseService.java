@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface BaseService<T> {
     public void saveOrUpdate(T t);
-    public void deleteById(int id);
-    public T queryById(int id);
+    public void deleteById(String id);
+    public T queryById(String id);
     public List<T> query();
     public FlipInfo<T> query(FlipInfo<T> fpi);
 

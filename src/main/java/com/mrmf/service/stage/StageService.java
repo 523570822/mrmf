@@ -35,8 +35,8 @@ public interface StageService  {
     public StageMent findOne(String organId,String name,String floor);
 
     public void saveOrUpdate(StageMent t);
-    public void deleteById(int id);
-    public StageMent queryById(int id);
+    public void deleteById(String id);
+    public StageMent queryById(String id);
     public List<StageMent> query();
 
 

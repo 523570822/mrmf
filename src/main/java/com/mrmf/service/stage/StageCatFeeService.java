@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface StageCatFeeService {
     public void saveOrUpdate(StageCategoryFees t);
-    public void deleteById(int id);
-    public StageCategoryFees queryById(int id);
+    public void deleteById(String id);
+    public StageCategoryFees queryById(String id);
     public List<StageCategoryFees> query();
     public FlipInfo<StageCategoryFees> query(FlipInfo<StageCategoryFees> fpi);
 }

@@ -74,9 +74,9 @@
 												url : _ctxPath
 														+ "/stage/query.do",
 												shrinkToFit : false,
-												colNames : [  "名称","镜台租金(元/天", "平台租金分成（%）",
-														"店铺租金分成（%）", "技师收益分成", "平台收益分成",
-														"店铺收益分成","操作"],
+												colNames : [  "名称","镜台租金(元/天)", "平台租金分成（%）",
+														"店铺租金分成（%）", "技师收益分成（%）", "平台收益分成（%）",
+														"店铺收益分成（%）","操作"],
 												postData : $("#searchForm")
 														.formobj(),
 												colModel : [
@@ -129,7 +129,7 @@
                                                             cellvalue,
                                                             options,
                                                             rowObject) {
-                                                            var v = "<a href='${ctxPath}/staff/toUpsert.do'>详情</a>&nbsp;&nbsp;";
+                                                            var v = "<a href='${ctxPath}/stage/toUpsert.do?_id="+cellvalue+"'>详情</a>&nbsp;&nbsp;";
 //                                                                v +="<a href='javascript:void(0);' onclick='relevanceUser(\""
 //                                                                    + cellvalue
 //                                                                    + "\")'>关联用户</a>&nbsp;&nbsp;";

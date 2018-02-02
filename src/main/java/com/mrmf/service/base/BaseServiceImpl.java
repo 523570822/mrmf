@@ -37,14 +37,14 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(String id) {
         Query query = Query.query(Criteria.where("_id").is(id));
         mongoTemplate.remove(query,clazz);
 
     }
 
     @Override
-    public  T queryById(int id) {
+    public  T queryById(String id) {
         Object dd = mongoTemplate.findById(id, clazz);
         return (T)dd;
     }

@@ -22,10 +22,14 @@ m -rf /root/learngit/rxm/target/mrmf/*     //部署前先删除
 mvn -X install -Dmaven.test.skip=true ; //通过maven自动编译代码
 rsync -rtlvz  /root/learngit/rxm/target/mrmf/*  /opt/tomcat/webapps/mrmf ;   简化后 拷贝编译后的代码到指定tomcat服务器中
 
-sudo /opt/tomcat/bin/startup.sh --启动
-sudo /opt/tomcat/bin/shutdown.sh --停止
+
+//sudo /opt/tomcat/bin/startup.sh --启动
+//sudo /opt/tomcat/bin/shutdown.sh --停止
+
 tail -f /opt/tomcat/logs/catalina.out  --查看日志
-//sudo systemctl restart tomcat
+
+sudo systemctl restart tomcat
+sudo systemctl restart tomcat
 
 
 
