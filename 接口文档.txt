@@ -57,9 +57,9 @@ APP用户端接口：
 
   6.首次录入设备信息/w/stageApp/firstInstall
   {
-"organId":"5282086565131207777",
-"name":"1",
-"devicedId":"445566",
+"organId":"5282086565131207777",// 所属公司id
+"name":"1",// 名称（镜台编号）
+"devicedId":"445566",//设备唯一编码
 "floor":"A",
 "status":"1"
 

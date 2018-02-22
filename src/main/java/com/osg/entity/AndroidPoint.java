@@ -9,6 +9,15 @@ public class AndroidPoint implements Serializable {
 
 	private String devicedId; //设备唯一编码
 	private String floor; //设备编号（A,B）
+	private String name;//设备名称
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public String getFloor() {
 		return floor;

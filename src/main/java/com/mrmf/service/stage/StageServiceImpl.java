@@ -51,25 +51,35 @@ public class StageServiceImpl extends BaseServiceImpl<StageMent> implements Stag
                 return status;
             }
 
-
-
+            StageMent     stageMentQ = findOneS(stageMent.getAndroidPoints().get(0).getName());
+            if(stageMentF!=null){
+                status = new FaceStatus(false, "名称已经存在");
+                status.setEntity(stageMent);
+                return status;
+            }
         }
         //没有绑定过的 查看镜台是否已经绑定
-        StageMent     stageMentE    = findOne(stageMent.getOrganId(),stageMent.getName(),stageMent.getAndroidPoints().get(0).getFloor());
+     //   StageMent     stageMentE    = findOne(stageMent.getOrganId(),stageMent.getName(),stageMent.getAndroidPoints().get(0).getFloor());
+
+        StageMent     stageMentE    = findOne(stageMent.getOrganId(),stageMent.getAndroidPoints().get(0).getName(),null);
         if(stageMentE!=null){
             status = new FaceStatus(false, "镜台已被绑定,请联系客服");
             status.setEntity(stageMent);
             return status;
         }
-        StageMent     stageMentG   = findOne(stageMent.getOrganId(),stageMent.getName(),null);
+        StageMent     stageMentG   = findOne(stageMent.getOrganId(),null,null);
         if(stageMentG==null){
 
         }else{
+
             stageMent.set_id(stageMentG.get_id());
-            stageMent.getAndroidPoints().add(stageMentG.getAndroidPoints().get(0));
+           stageMent.getAndroidPoints().addAll(stageMentG.getAndroidPoints());
+
+
+        //    stageMent.getAndroidPoints().add(stageMentG.getAndroidPoints().get(0));
         }
         mongoTemplate.save(stageMent);
-        status = new FaceStatus(true, "成功添加设备，请重新修改技师基本信息。");
+        status = new FaceStatus(true, "成功添加设备。");
         status.setEntity(stageMent);
         return status;
 
@@ -99,12 +109,33 @@ public class StageServiceImpl extends BaseServiceImpl<StageMent> implements Stag
         FaceStatus status;
         Criteria criteria;
         if(floor==null){
-            criteria=Criteria.where("organId").is(organId).and( "name").is(name);
+            if(name==null){
+                criteria=Criteria.where("organId").is(organId);
+            }else{
+                criteria=Criteria.where("organId").is(organId).and( "name").is(name);
+            }
+
         }else{
              criteria=Criteria.where("androidPoints.floor").is(floor).and("organId").is(organId).and( "name").is(name);
         }
 
 
+        Query query=new Query(criteria);
+        StageMent     stageMentF = mongoTemplate.findOne(query,StageMent.class);
+        return stageMentF;
+    }
+
+  @Override
+    public StageMent findOneS( String name) {
+
+        Class<? extends String> ww = name.getClass();
+
+        String ddd = ww.toString();
+      //  ww.determineCollectionName(entityClass)
+        FaceStatus status;
+        Criteria criteria;
+        String asd=ww.getName();
+        criteria=Criteria.where(asd).is("");
         Query query=new Query(criteria);
         StageMent     stageMentF = mongoTemplate.findOne(query,StageMent.class);
         return stageMentF;

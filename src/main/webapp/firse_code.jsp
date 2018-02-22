@@ -35,51 +35,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       //        alert("输入正确的手机号码！");
        //   }else{
 
+var devicedId=GetQueryString("devicedId");
+          var  organId=$("#organId").val();
 
+          var  name=$("#name").val();
           var person = {
-              "organId": "5282086565131207777",
-
-              "androidPoints": [{
-                  "devicedId": "445566",
-                  "floor": "A"
-              }],
-
-              "status": "1"
-          }
-          var person1 = {
-              "organId": "5282086565131207777",
-
-
-
-              "status": "1"
+              "organId": organId,
+              "name": name,
+              "devicedId":devicedId
           }
 
-       var  face=$("#face").val();
-          var data=$("#data").val();
-       var json123=JSON.parse(data);
 
 
-       var json1= JSON.stringify(person);
 
-/*       $.post(_ctxPath +face,data1,
-                  function(stageMent){
-                  console.info("返回值:"+data);
-                   $("#dataTime").html("code:"+data.code+"</br> message"+data.message+"</br> data:"+data.data)
-                  });*/
 
-          var str=JSON.stringify(person1);
-          console.info("${basePath}")
-          console.info("${basePathS}")
-          console.info("${scheme}")
 
-      /*    var data={
-              "stageMentStr":qwe
-          }*/
+       var json= JSON.stringify(person);
+console.info(json);
      $.ajax(
               {
-                  url:face,
+                  url:"/w/stageApp/firstInstall",
                   type: "POST",
-                  data: json123,
+                  data: person,
                   success: function(data){
                       console.info(data);
                       $("#dataTime").html("code:"+data.code+"</br> message"+data.message+"</br> data:"+data.data)
@@ -97,16 +74,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <body class="bg_gray">
     <div class="common_nav">
-         		 <h4 class="font-34">接口测试</h4>
+         		 <h4 class="font-34">首次绑定设备</h4>
 
    </div>
     <div class="pay_pwd_div">
         <div>
             <div class="pay_pwd_email">
-                <span>接口地址1</span>
+                <span>镜台名称</span>
             </div>
             <div >
-                <input  style="width: 1000px" type="text" placeholder="输入接口地址1" id="face" value="/w/app/test"/>
+                <input  style="width: 1000px" type="text" placeholder="输入镜台名称" id="name" value=""/>
             </div>
         </div>
     </div>
@@ -114,10 +91,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="code_div">
         <div>
             <div class="phone_code_name">
-                <span>参数</span>
+                <span>店铺编码</span>
             </div>
             <div>
-              <input style="width: 1000px" type="text" id="data"   value='{"phone":"13920025389","type":"user"}'>
+              <input style="width: 1000px" type="text" id="organId" value="5282086565131207777"  >
             </div>
         </div>
     </div>
@@ -134,12 +111,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 </div>
 
-    Welcome<br/><input id="text" type="text"/>
-    <button onclick="send()">发送消息</button>
-    <hr/>
-    <button onclick="closeWebSocket()">关闭WebSocket连接</button>
-    <hr/>
-    <div id="message"></div>
+
 </body>
 
 
@@ -152,58 +124,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           if(r!=null)return unescape(r[2]);
           return null;
       }
-      var websocket = null;
 
-      //判断当前浏览器是否支持WebSocket
-      if ('WebSocket' in window) {
-
-          var url="ws://"+"${basePathS}"+"websocket/"+GetQueryString("phone")
-       //   var url="ws://192.168.1.223:80/websocket/"+GetQueryString("phone")
-          websocket = new WebSocket(url);
-      }
-      else {
-          alert('当前浏览器 Not support websocket')
-      }
-
-      //连接发生错误的回调方法
-      websocket.onerror = function () {
-          setMessageInnerHTML("WebSocket连接发生错误");
-      };
-
-      //连接成功建立的回调方法
-      websocket.onopen = function () {
-          setMessageInnerHTML("WebSocket连接成功");
-      }
-
-      //接收到消息的回调方法
-      websocket.onmessage = function (event) {
-          setMessageInnerHTML(event.data);
-      }
-
-      //连接关闭的回调方法
-      websocket.onclose = function () {
-          setMessageInnerHTML("WebSocket连接关闭");
-      }
-
-      //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
-      window.onbeforeunload = function () {
-          closeWebSocket();
-      }
-
-      //将消息显示在网页上
-      function setMessageInnerHTML(innerHTML) {
-          document.getElementById('message').innerHTML += innerHTML + '<br/>';
-      }
-
-      //关闭WebSocket连接
-      function closeWebSocket() {
-          websocket.close();
-      }
-
-      //发送消息
-      function send() {
-          var message = document.getElementById('text').value;
-          websocket.send(message,"123");
-      }
   </script>
 </html>
