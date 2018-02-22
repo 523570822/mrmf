@@ -41,7 +41,7 @@
 								<i class="fa fa-exclamation-triangle"></i>${returnStatus.message}</div>
 						</c:if>
 
-						<form id="stageCategoryFees" method="post" action="${ctxPath}/stage/upsert123.do"
+						<form id="stageCategoryFees" method="post" action="${ctxPath}/stage/upsert.do"
 							class="form-horizontal">
 							<input type="hidden" id="_id" name="_id">
 							<input type="hidden"
@@ -51,6 +51,24 @@
 								<div class="col-sm-10">
 									<input id="name" name="name" type="text" class="form-control"
 										minlength="2" maxlength="50" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">城市</label>
+								<div class="col-sm-10">
+									<select class="form-control" id="city" name="city"
+											<c:if test="${sessionScope.isOrganAdmin}">disabled</c:if>>
+										<option value="">请选择</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">区域</label>
+								<div class="col-sm-10">
+									<select class="form-control" id="district" name="district"
+											<c:if test="${sessionScope.isOrganAdmin}">disabled</c:if>>
+										<option value="">请选择</option>
+									</select>
 								</div>
 							</div>
 							<%--<div class="form-group">
@@ -131,9 +149,9 @@
 	<script type="text/javascript">
 
 
-
+        var layerId,addressComponents;
 		$().ready(function() {
-    console.info("${stageCategoryFees.name}");
+
             $("#platRentSharing").knob({
             //    max: 940,
               //  min: 500,
@@ -251,6 +269,74 @@
 												document.location.href = _ctxPath
 														+ "/staff/toQuery.do?organId=${organId}&parentId=${param.parentId}";
 											});
+
+
+
+            $
+                .post(
+                    '${ctxPath}/weixin/s/queryCity.do',
+                    {},
+                    function(data, status) {
+                        var c = $("#city")[0];
+                        for (var i = 0; i < data.length; i++) {
+                            var d = data[i];
+                            var option = new Option(
+                                d.name, d.name);
+                            option.tmp = d._id;
+                            c.options[c.options.length] = option;
+                            if (fillmaps
+                                && fillmaps.organ
+                                && fillmaps.organ.city == d.name) {
+                                option.selected = true;
+                                $(c).trigger('change');
+                            }
+                        }
+                    });
+            $("#city")
+                .change(
+                    function() {
+                        var t = $("#city")[0];
+                        var v = t.options[t.selectedIndex];
+                        if (v.tmp) {
+                            $
+                                .post(
+                                    '${ctxPath}/weixin/s/queryDistrict.do',
+                                    {
+                                        cityId : v.tmp
+                                    },
+                                    function(
+                                        data,
+                                        status) {
+                                        var c = $("#district")[0],ds=[];
+                                        c.options.length = 1;
+                                        for (var i = 0; i < data.length; i++) {
+                                            var d = data[i];
+                                            var option = new Option(
+                                                d.name,
+                                                d.name);
+                                            option.tmp = d._id;
+                                            c.options[c.options.length] = option;
+                                            if (fillmaps
+                                                && fillmaps.organ
+                                                && fillmaps.organ.district == d.name) {
+                                                option.selected = true;
+                                                $(
+                                                    c)
+                                                    .trigger(
+                                                        'change');
+                                            }else if(addressComponents && addressComponents.district == d.name){
+                                                option.selected = true;
+                                                $(
+                                                    c)
+                                                    .trigger(
+                                                        'change');
+                                            }
+                                        }
+                                    });
+                        } else {
+                            $("#district")[0].options.length = 1;
+                        }
+                    });
 
 						});
 	</script>

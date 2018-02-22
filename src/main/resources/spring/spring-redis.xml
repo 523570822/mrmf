@@ -29,6 +29,8 @@
 	<bean id="jedisConnectionFactory"
 		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
 			<property name="hostName" value="${redis.ip}" />
+
+			<property name="password" value="${redis.password}" />
 			<property name="port" value="${redis.port}" />
 			<property name="timeout" value="${redis.timeout}" />
 			<property name="poolConfig" ref="jedisPoolConfig" />

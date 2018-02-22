@@ -18,19 +18,27 @@ public class StageCategoryFees  extends DataEntity{
     private Double staffEarningsSharing;//技师收益分成
     private Double platEarningsSharing;//平台收益分成
     private Double shopEarningsSharing;//店铺收益分成.
+    private String city;// 城市，比如：北京
+    private String district; // 区，比如：海淀区
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
 
     public String getName() {
         return name;
     }
 
-    @Override
-    public String get_id() {
-        return _id;
+    public String getCity() {
+        return city;
     }
 
-    @Override
-    public void set_id(String _id) {
-        this._id = _id;
+    public void setCity(String city) {
+        this.city = city;
     }
     public void setName(String name) {
         this.name = name;

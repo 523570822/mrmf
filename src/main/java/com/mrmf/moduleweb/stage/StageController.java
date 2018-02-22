@@ -1,5 +1,6 @@
 package com.mrmf.moduleweb.stage;
 
+import com.mrmf.BaseController.BaseController;
 import com.mrmf.entity.Staff;
 import com.mrmf.entity.stage.StageCategoryFees;
 import com.mrmf.service.stage.StageCatFeeService;
@@ -10,19 +11,14 @@ import com.osg.framework.util.FlipPageInfo;
 import com.osg.framework.util.StringUtils;
 import com.osg.framework.web.context.MAppContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 /**
@@ -30,7 +26,7 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping("/stage")
-public class StageController {
+public class StageController extends BaseController {
     @Autowired
     private StageCatFeeService stageCatFeeService;
     @RequestMapping("/toQuerySort")
@@ -80,16 +76,19 @@ public class StageController {
         StageCategoryFees stageCategoryFees;
         if (!StringUtils.isEmpty(_id)) {
             stageCategoryFees = stageCatFeeService.queryById(_id);
+            request.setAttribute("ffstageCategoryFees", stageCategoryFees);
             returnStatus = new ReturnStatus(true, " 操作成功");
 
 
         } else {
             stageCategoryFees = new StageCategoryFees();
+         //   returnStatus = new ReturnStatus(false, " 操作失败");
+
         }
 
 
-        request.setAttribute("returnStatus", returnStatus);
-        request.setAttribute("ffstageCategoryFees", stageCategoryFees);
+
+
         ModelAndView mv = new ModelAndView();
         mv.setViewName("stage/upsertSort");
         return mv;
@@ -99,7 +98,11 @@ public class StageController {
     @RequestMapping("/upsert")
     public ModelAndView upsert(StageCategoryFees stageCategoryFees, BindingResult results, HttpServletRequest request) throws Exception {
         ModelAndView mv = new ModelAndView();
-    //   stageCatFeeService.saveOrUpdate(stageCategoryFees);
+        if (StringUtils.isEmpty(stageCategoryFees.get_id())) {
+            stageCategoryFees.setIdIfNew();
+            stageCategoryFees.setCreateTimeIfNew();
+        }
+            stageCatFeeService.saveOrUpdate(stageCategoryFees);
 
 
 
@@ -126,12 +129,5 @@ public class StageController {
 
         return mv;
     }
-    @InitBinder
-    public void InitBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        dateFormat.setLenient(false);
-        binder.registerCustomEditor(Date.class, null, new CustomDateEditor(dateFormat, true));
-        // 解决_id字段注入问题，去除“_”前缀处理
-        binder.setFieldMarkerPrefix(null);
-    }
+
 }

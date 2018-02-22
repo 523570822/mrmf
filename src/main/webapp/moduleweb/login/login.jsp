@@ -91,12 +91,12 @@
 				<div class="form-group">
 					<input type="text" class="form-control" placeholder="用户名"
 						required="" minlength="2" maxlength="30" id="accountName"
-						name="accountName">
+						name="accountName" value="admin" >
 				</div>
 				<div class="form-group">
 					<input type="password" class="form-control" placeholder="密码"
 						required="" minlength="6" maxlength="30" id="accountPwd"
-						name="accountPwd">
+						name="accountPwd" value="000000">
 				</div>
 				<c:if test="${needVerify }">
 					<div class="form-group">
