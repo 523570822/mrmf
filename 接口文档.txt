@@ -44,7 +44,7 @@ APP用户端接口：
  4. 轮训查询镜台状态/w/app/getDressingTableStatus
  {
   "devicedId":"设备ID",
-  "type":"A:上屏;B:下屏",
+ // "type":"A:上屏;B:下屏",
 
  }
  返回值{

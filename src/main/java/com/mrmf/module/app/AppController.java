@@ -350,7 +350,6 @@ public class AppController {
 	/**
 	 *   轮训查询镜台状态
 	 * @param devicedId 设备ID
-	 * @param type（A:上屏;B:下屏）
 	 * @param request
 	 * @param response
 	 * @return
