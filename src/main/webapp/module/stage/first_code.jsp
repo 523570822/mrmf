@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%--<%@ include file="/module/resources/wecommon.jsp"%>--%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -12,10 +13,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
 <html>
 <base href="<%=scheme%>">
 
   <head>
+
     <base href="<%=basePathS%>">
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
     <meta content="yes" name="apple-mobile-web-app-capable">
@@ -24,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta content="email=no" name="format-detection">
     <meta name="description" content="This is  a ..">
     <title>任性猫</title>
-      <script src="moduleweb/resources/js/jquery.min.js?v=2.1.4"></script>
+      <script src="/moduleweb/resources/js/jquery.min.js?v=2.1.4"></script>
 </head>
   <script type="text/javascript">
       $(function(){
@@ -87,17 +90,32 @@ console.info(json);
             </div>
         </div>
     </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label"> 店铺名称</label>
+        <div class="col-sm-10">
+          <%--  <select class="form-control" id="city" name="city">
+                <option value="">请选择</option>
+            </select>--%>
 
-    <div class="code_div">
-        <div>
-            <div class="phone_code_name">
-                <span>店铺编码</span>
-            </div>
-            <div>
-              <input style="width: 1000px" type="text" id="organId" value="5282086565131207777"  >
-            </div>
+
+            <select id="organId" name="organId" width="10px">
+                <option value="">---请选择---</option>
+                <c:forEach items="${organlist}" var="organ" varStatus="row">
+
+                       <%-- <c:when test="${file.fid eq obj.service.docUrl}">
+                            <option value="${file._id}" selected="selected">${file.name }</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="${file._id}">${file.name}</option>
+                        </c:otherwise>--%>
+                        <option value="${organ._id}">${organ.name}</option>
+
+
+                </c:forEach>
+            </select>
         </div>
     </div>
+
     <br>
     <br>
     <br>

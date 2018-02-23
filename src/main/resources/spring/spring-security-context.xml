@@ -20,7 +20,7 @@
 
 	<global-method-security secured-annotations="enabled" />
 	<http pattern="/face.jsp" security="none" />
-	<http pattern="/firse_code.jsp" security="none" />
+	<http pattern="/first_code.jsp" security="none" />
 
 
 	<http pattern="/index.jsp" security="none" />

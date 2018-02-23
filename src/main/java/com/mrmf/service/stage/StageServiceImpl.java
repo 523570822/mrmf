@@ -51,9 +51,9 @@ public class StageServiceImpl extends BaseServiceImpl<StageMent> implements Stag
                 return status;
             }
 
-            StageMent     stageMentQ = findOneS(stageMent.getAndroidPoints().get(0).getName());
-            if(stageMentF!=null){
-                status = new FaceStatus(false, "名称已经存在");
+            StageMent     stageMentQ = findOneS(stageMent.getOrganId(),stageMent.getAndroidPoints().get(0).getName());
+            if(stageMentQ!=null){
+                status = new FaceStatus(false, "镜台名称已经存在");
                 status.setEntity(stageMent);
                 return status;
             }
@@ -126,16 +126,17 @@ public class StageServiceImpl extends BaseServiceImpl<StageMent> implements Stag
     }
 
   @Override
-    public StageMent findOneS( String name) {
+    public StageMent findOneS(String organId,String name) {
 
-        Class<? extends String> ww = name.getClass();
 
-        String ddd = ww.toString();
-      //  ww.determineCollectionName(entityClass)
-        FaceStatus status;
+
+
+
+
         Criteria criteria;
-        String asd=ww.getName();
-        criteria=Criteria.where(asd).is("");
+
+        criteria=Criteria.where("androidPoints.name").is(name).and("organId").is(organId);
+
         Query query=new Query(criteria);
         StageMent     stageMentF = mongoTemplate.findOne(query,StageMent.class);
         return stageMentF;

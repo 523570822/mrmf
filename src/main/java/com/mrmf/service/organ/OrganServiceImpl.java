@@ -1,26 +1,17 @@
 package com.mrmf.service.organ;
 
-import java.math.BigDecimal;
-import java.util.*;
-
 import com.mrmf.entity.*;
 import com.mrmf.entity.sqlEntity.MrmfShop;
 import com.mrmf.entity.sqlEntity.Prestore;
-import com.mrmf.sqlDao.MemberDao;
-import com.mrmf.sqlDao.MrmfShopDao;
-import com.mrmf.sqlDao.PrestoreDao;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
 import com.mrmf.entity.user.Bigsort;
 import com.mrmf.entity.user.Usercard;
 import com.mrmf.service.account.AccountService;
 import com.mrmf.service.common.PinYinUtil;
 import com.mrmf.service.kaoqin.KaoqinService;
 import com.mrmf.service.usercard.UsercardService;
+import com.mrmf.sqlDao.MemberDao;
+import com.mrmf.sqlDao.MrmfShopDao;
+import com.mrmf.sqlDao.PrestoreDao;
 import com.osg.entity.FlipInfo;
 import com.osg.entity.ReturnStatus;
 import com.osg.framework.BaseException;
@@ -28,7 +19,15 @@ import com.osg.framework.Constants;
 import com.osg.framework.mongodb.EMongoTemplate;
 import com.osg.framework.util.SMSUtil;
 import com.osg.framework.util.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.util.*;
 
 @Service("organService")
 public class OrganServiceImpl implements OrganService {
@@ -567,5 +566,9 @@ public class OrganServiceImpl implements OrganService {
 		List<Organ> organList = mongoTemplate.find(Query.query(Criteria.where("parentId").is(parentId)), Organ.class);
 		return organList;
 	}
-
+	@Override
+	public List<Organ> queryOrganList() {
+		List<Organ> organList = mongoTemplate.findAll( Organ.class);
+		return organList;
+	}
 }

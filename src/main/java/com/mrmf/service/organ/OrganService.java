@@ -1,7 +1,5 @@
 package com.mrmf.service.organ;
 
-import java.util.List;
-
 import com.mrmf.entity.Account;
 import com.mrmf.entity.Organ;
 import com.mrmf.entity.OrganSetting;
@@ -9,6 +7,8 @@ import com.mrmf.entity.sqlEntity.Prestore;
 import com.osg.entity.FlipInfo;
 import com.osg.entity.ReturnStatus;
 import com.osg.framework.BaseException;
+
+import java.util.List;
 
 public interface OrganService {
 
@@ -207,5 +207,8 @@ public interface OrganService {
 	 * @return
 	 */
 	public List<Organ> queryOrganListByParentId(String parentId);
-
+/**
+ *查询所有店铺
+ */
+public List<Organ>  queryOrganList();
 }

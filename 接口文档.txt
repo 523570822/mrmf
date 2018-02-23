@@ -47,6 +47,10 @@ APP用户端接口：
   "type":"A:上屏;B:下屏",
 
  }
+ 返回值{
+status   镜台状态（0：开启中，1 关闭中）
+
+ }
   5. 关闭镜台接口/w/app/closeStage
   {
    "devicedId":"设备ID"
@@ -55,7 +59,9 @@ APP用户端接口：
 
 
 
-  6.首次录入设备信息/w/stageApp/firstInstall
+  6.
+  http://localhost/w/stageApp/first_code?devicedId=5282086565131202315  // 的生成二维码
+  首次录入设备信息/w/stageApp/firstInstall
   {
 "organId":"5282086565131207777",// 所属公司id
 "name":"1",// 名称（镜台编号）

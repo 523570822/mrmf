@@ -358,7 +358,7 @@ public class AppController {
 	 */
 	@RequestMapping("/getDressingTableStatus")
 	@ResponseBody
-	public  FaceStatus  getDressingTableStatus(String  devicedId,String type,HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public  FaceStatus  getDressingTableStatus(String  devicedId,HttpServletRequest request, HttpServletResponse response) throws IOException {
 		//	String dressingTableStatus=
         FaceStatus status;
         StageMent stageMent =stageService.findOne(devicedId);
@@ -371,68 +371,55 @@ public class AppController {
             return status;
         }else{
             Map<String, Object> map = new HashMap<String, Object>();
-            if(type.equals("A")){
-                if("0".equals(stageMent.getStatus())){
-                    map.put("equipmentStatus",false );
-                }else{
-                    map.put("equipmentStatus",true);
-                }
-
-
-            }else if(type.equals("B")){
-                if("0".equals(stageMent.getStatus())){
-                    map.put("equipmentStatus",true );
-                }else{
-                    map.put("equipmentStatus",false );
-                }
-
-
-
-            }else{
-                status = new FaceStatus(true, "设备异常");
-                return status;
-
-            }
-
+            map.put("status",stageMent.getStatus());
             status = new FaceStatus(true, "状态查询成功");
             status.setData(map);
             return status;
         }
 
+	}
+/*	public  FaceStatus  getDressingTableStatus(String  devicedId,String type,HttpServletRequest request, HttpServletResponse response) throws IOException {
+		//	String dressingTableStatus=
+		FaceStatus status;
+		StageMent stageMent =stageService.findOne(devicedId);
 
-/*
-	if(type.equals("A")){
-		if(dressingTableStatus){
-			data.put("equipmentStatus",false);
+
+		if(stageMent==null){
+			status = new FaceStatus(false, "设备不存在");
+
+			status.setEntity(stageMent);
+			return status;
 		}else{
-			data.put("equipmentStatus",true);
+			Map<String, Object> map = new HashMap<String, Object>();
+			if(type.equals("A")){
+				if("0".equals(stageMent.getStatus())){
+					map.put("equipmentStatus",false );
+				}else{
+					map.put("equipmentStatus",true);
+				}
+
+
+			}else if(type.equals("B")){
+				if("0".equals(stageMent.getStatus())){
+					map.put("equipmentStatus",true );
+				}else{
+					map.put("equipmentStatus",false );
+				}
+
+
+
+			}else{
+				status = new FaceStatus(true, "设备异常");
+				return status;
+
+			}
+
+			status = new FaceStatus(true, "状态查询成功");
+			status.setData(map);
+			return status;
 		}
 
-
-	}else if(type.equals("B")){
-		data.put("equipmentStatus",dressingTableStatusO);
-	}else{
-		map.put("code","1");
-		map.put("message","设备异常");
-		map.put("data",data);
-		return map;
-
-	}
-
-
-
-
-
-		map.put("code","0");
-		map.put("message","调取成功当前镜面状态"+dressingTableStatusO);
-		map.put("data",data);
-
-
-
-
-		return map;*/
-	}
-
+	}*/
 	/**
 	 *   关闭镜台
 	 * @param devicedId 设备ID

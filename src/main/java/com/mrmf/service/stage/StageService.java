@@ -38,7 +38,7 @@ public interface StageService  {
     public void deleteById(String id);
     public StageMent queryById(String id);
     public List<StageMent> query();
-    public StageMent findOneS( String name);
+    public StageMent findOneS( String organId,String name);
 
 
 
