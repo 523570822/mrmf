@@ -1,5 +1,6 @@
-接口测试地址：   http://192.168.1.223/face.jsp
+接口测试地址：   http://192.168.1.223/mrmf/face.jsp（本地）   服务器  http://192.168.1.222:8080/mrmf//face.jsp
    服务器IP：http://192.168.1.222:8080/mrmf/
+   本地IP： http://192.168.1.223/mrmf/
 
 
 
@@ -59,7 +60,7 @@ status   镜台状态（0：开启中，1 关闭中）
 
 
   6.
-    判断是否已经录入设备 w/stageApp/first_test
+    判断是否已经录入设备 /w/stageApp/first_test
 
   {
 "devicedId":"5282086565131207777"
