@@ -1,11 +1,27 @@
 <%@ page language="java" pageEncoding="utf-8"%>
 <%@ include file="/moduleweb/resources/common.jsp"%>
+
+
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+
+	pageContext.setAttribute("basePath",basePath);
+
+/*    String basePathS =request.getServerName()+":"+request.getServerPort()+path+"/";
+    String scheme=request.getScheme();
+
+    pageContext.setAttribute("basePathS",basePathS);
+    pageContext.setAttribute("scheme",scheme);*/
+
+%>
 <c:set var="organId"
 	value="${param.organId == null?sessionScope.organId:param.organId}" />
 
 <html>
 <head>
-
+	<base href="<%=basePath%>">
+	<script src="/moduleweb/resources/js/chosen.jquery.js" type="text/javascript"></script>
 
 
 <title></title>
@@ -29,9 +45,9 @@
 								class="btn-link"> <i class="fa fa-angle-double-left"></i>返回
 							</a>
 							<c:if test="${ffstageCategoryFees._id == null}">
-								新建分类
+								新建视频1
 							</c:if>
-							<c:if test="${ffstageCategoryFees._id != null}">收费类别管理<small>修改分类信息。</small>
+							<c:if test="${ffstageCategoryFees._id != null}">视频管理<small>修改视频信息。</small>
 							</c:if>
 						</h5>
 					</div>

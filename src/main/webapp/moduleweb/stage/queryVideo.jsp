@@ -57,7 +57,7 @@
                 $("#newStaff").click(
                         function () {
                             document.location.href = _ctxPath
-                                + "/stage/toUpsert.do";
+                                + "/video/toUpsert.do";
                         });
                 $("#searchForm").submit(function () {
                     $("#staffTable").reloadGrid({

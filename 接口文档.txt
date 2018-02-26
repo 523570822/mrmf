@@ -1,4 +1,4 @@
-接口测试地址：   http://192.168.1.223/mrmf/face.jsp（本地）   服务器  http://192.168.1.222:8080/mrmf//face.jsp
+接口测试地址：   http://192.168.1.223/mrmf/face.jsp（本地）   服务器  http://192.168.1.222:8080/mrmf/face.jsp
    服务器IP：http://192.168.1.222:8080/mrmf/
    本地IP： http://192.168.1.223/mrmf/
 
@@ -18,9 +18,9 @@
 
 
 APP用户端接口：
-1. 用户验证码接口"/w/app/getCodeByPhone",{"phone":phone,"type":"user"}//{"phone":"13920025389","type":"user"}
+1. 用户验证码接口"w/app/getCodeByPhone",{"phone":phone,"type":"user"}//{"phone":"13920025389","type":"user"}
 
-2.用户注册 /w/app/userRegist,
+2.用户注册 w/app/userRegist,
  {
  "phone":"",
  "code":"",
@@ -33,7 +33,7 @@ APP用户端接口：
 
 
 
-3.技师与用户支付接口 /w/app/appPay,
+3.技师与用户支付接口 w/app/appPay,
  {
  "phone":"",
  "type":"staff:技师;user:用户",
@@ -42,7 +42,7 @@ APP用户端接口：
 
  }
 
- 4. 轮训查询镜台状态/w/app/getDressingTableStatus
+ 4. 轮训查询镜台状态w/app/getDressingTableStatus
  {
   "devicedId":"设备ID",
  // "type":"A:上屏;B:下屏",
@@ -52,7 +52,7 @@ APP用户端接口：
 status   镜台状态（0：开启中，1 关闭中）
 
  }
-  5. 关闭镜台接口/w/app/closeStage
+  5. 关闭镜台接口w/app/closeStage
   {
    "devicedId":"设备ID"
 
@@ -60,7 +60,7 @@ status   镜台状态（0：开启中，1 关闭中）
 
 
   6.
-    判断是否已经录入设备 /w/stageApp/first_test
+    判断是否已经录入设备 w/stageApp/first_test
 
   {
 "devicedId":"5282086565131207777"

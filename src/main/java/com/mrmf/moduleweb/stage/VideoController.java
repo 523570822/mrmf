@@ -29,10 +29,10 @@ import javax.servlet.http.HttpServletRequest;
 public class VideoController extends BaseController {
     @Autowired
     private StageCatFeeService stageCatFeeService;
-    @RequestMapping("/toQuerySort")
+    @RequestMapping("/toQueryVideo")
     public ModelAndView toQuery(HttpServletRequest request) throws Exception {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("stage/querySort");
+        mv.setViewName("stage/queryVideo");
         return mv;
 
 
@@ -90,7 +90,7 @@ public class VideoController extends BaseController {
 
 
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("stage/upsertSort");
+        mv.setViewName("stage/upsertVideo");
         return mv;
     }
 
@@ -107,7 +107,7 @@ public class VideoController extends BaseController {
 
 
 
-                mv.setViewName("stage/querySort");
+                mv.setViewName("stage/queryVideo");
 
 
 

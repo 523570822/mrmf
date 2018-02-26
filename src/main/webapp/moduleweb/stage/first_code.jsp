@@ -3,20 +3,23 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-    String basePathS =request.getServerName()+":"+request.getServerPort()+path+"/";
-    String scheme=request.getScheme();
+
     pageContext.setAttribute("basePath",basePath);
+
+/*    String basePathS =request.getServerName()+":"+request.getServerPort()+path+"/";
+    String scheme=request.getScheme();
+
     pageContext.setAttribute("basePathS",basePathS);
-    pageContext.setAttribute("scheme",scheme);
+    pageContext.setAttribute("scheme",scheme);*/
 
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-<base href="<%=scheme%>">
+
 
   <head>
-    <base href="<%=basePathS%>">
+    <base href="<%=basePath%>">
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
