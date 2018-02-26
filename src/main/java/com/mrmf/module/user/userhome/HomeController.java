@@ -1221,7 +1221,11 @@ public class HomeController {
 			if(userInfo==null){
                 logger.info("不存在userInfo:"+userInfo);
                // Map<String,Object> user_token=wxgetInfo.getAccess_token(code,"user");
-             //   userInfo=wxgetInfo.getUserInfo(user_token);
+         //   userInfo=wxgetInfo.getUserInfo(user_token);
+				userInfo =new HashMap<>();
+				userInfo.put("openid","obyuqwXqicWs5i8EWZyWQF0Dqssw");
+				userInfo.put("unionid","asdf");
+
                 logger.info("userInfo:"+userInfo);
                 ReturnStatus status=null;
                 String oppenid="";

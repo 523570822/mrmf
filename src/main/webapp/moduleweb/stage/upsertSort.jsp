@@ -277,6 +277,7 @@
                     '${ctxPath}/weixin/s/queryCity.do',
                     {},
                     function(data, status) {
+                        console.info(fillmaps);
                         var c = $("#city")[0];
                         for (var i = 0; i < data.length; i++) {
                             var d = data[i];
@@ -285,8 +286,8 @@
                             option.tmp = d._id;
                             c.options[c.options.length] = option;
                             if (fillmaps
-                                && fillmaps.organ
-                                && fillmaps.organ.city == d.name) {
+                                && fillmaps.stageCategoryFees
+                                && fillmaps.stageCategoryFees.city == d.name) {
                                 option.selected = true;
                                 $(c).trigger('change');
                             }
@@ -317,8 +318,8 @@
                                             option.tmp = d._id;
                                             c.options[c.options.length] = option;
                                             if (fillmaps
-                                                && fillmaps.organ
-                                                && fillmaps.organ.district == d.name) {
+                                                && fillmaps.stageCategoryFees
+                                                && fillmaps.stageCategoryFees.district == d.name) {
                                                 option.selected = true;
                                                 $(
                                                     c)

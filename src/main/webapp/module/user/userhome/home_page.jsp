@@ -67,10 +67,10 @@
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=UbLgidkKinZvi3ksTu1Q0hDAhWHM8Zi6"></script>
 </head>
 <body style="background: #f9f9f9">
-	<div id="zzc"  style="<c:if test="${userLocation==true }">display:none;</c:if> width: 100%;height: 120%; z-index:9999;position:absolute;top:0;background: url(${ctxPath}/module/resources/images/zzc.png);">
+<%--	<div id="zzc"  style="<c:if test="${userLocation==true }">display:none;</c:if> width: 100%;height: 120%; z-index:9999;position:absolute;top:0;background: url(${ctxPath}/module/resources/images/zzc.png);">
         <img src="${ctxPath}/module/resources/images/loading.gif;" style="display:block;position: relative;top: 24%;left: 30%;">
         <span style="display:block;position: relative;top: 24%;left: 40%;">获取地理位置...</span>
-    </div>
+    </div>--%>
 
     <div class="index_nav">
         <div class="position">
@@ -173,7 +173,7 @@
 	    <input type="hidden" value="${user._id }" name="userId" id="userId"/>
 	    <input type="hidden" value="${cityId }" id="cityId" name="cityId" />
     </form>
-    <script src="${ctxPath}/module/resources/js/jquery.min.js"></script>
+
     <script src="${ctxPath}/module/resources/js/media_contrl.js"></script>
     <script src="${ctxPath}/module/resources/js/swiper.min.js"></script>
     <script src="${ctxPath}/module/user/userhome/js/user_my.js"></script>
