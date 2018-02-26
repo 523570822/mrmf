@@ -4,15 +4,12 @@ import com.mrmf.entity.WeCarousel;
 import com.mrmf.entity.WeSysConfig;
 import com.mrmf.entity.WeUserCompensate;
 import com.mrmf.entity.WeUserFeedback;
-import com.mrmf.entity.stage.StageCategoryFees;
 import com.mrmf.service.stage.StageCatFeeService;
 import com.mrmf.service.wesysconfig.WeSysConfigService;
 import com.osg.entity.DataEntity;
 import com.osg.entity.FlipInfo;
 import com.osg.entity.ReturnStatus;
-import com.osg.framework.BaseException;
 import com.osg.framework.util.*;
-import com.osg.framework.web.context.MAppContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -213,92 +210,6 @@ public class WeSysConfigController {
 		}
 		
 		return null;		
-	}
-
-	@RequestMapping("/query")
-	@ResponseBody
-	public FlipInfo<StageCategoryFees> query(HttpServletRequest request) throws Exception {
-		FlipInfo<StageCategoryFees> fpi = new FlipPageInfo<StageCategoryFees>(request);
-		Boolean isOrganAdmin = (Boolean) MAppContext.getSessionVariable("isOrganAdmin");
-		String organId = (String) MAppContext.getSessionVariable("organId");
-		if (isOrganAdmin != null && isOrganAdmin) { // 企业管理员
-			if (StringUtils.isEmpty(organId)) {
-				throw new BaseException("当前登录企业信息缺失！");
-			} else {
-				if (StringUtils.isEmpty((String) fpi.getParams().get("organId")))
-					fpi.getParams().put("organId", organId);
-			}
-		}
-
-		fpi = stageCatFeeService.query(fpi);
-		return fpi;
-//		String sidx = (String) fpi.getParams().get("sidx");
-//		if("userNum".equals(sidx)||"".equals(sidx)){
-//			List<Staff> list =  staffService.queryUserOfstaff(fpi);
-//			fpi.setData(list);
-//			return fpi;
-//		}else {
-//			return staffService.queryUserOfStaff1(fpi);
-//		}
-	}
-	/**
-	 * 新增分类
-	 * @param request
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping("/toUpsert")
-	public ModelAndView toUpsert(@RequestParam(required = false) String _id, HttpServletRequest request) throws Exception {
-		ReturnStatus returnStatus;
-		returnStatus = new ReturnStatus(false, " 操作失败");
-		StageCategoryFees stageCategoryFees;
-		if (!StringUtils.isEmpty(_id)) {
-			stageCategoryFees = stageCatFeeService.queryById(_id);
-			request.setAttribute("ffstageCategoryFees", stageCategoryFees);
-			returnStatus = new ReturnStatus(true, " 操作成功");
-
-
-		} else {
-			stageCategoryFees = new StageCategoryFees();
-			//   returnStatus = new ReturnStatus(false, " 操作失败");
-
-		}
-
-
-
-
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("stage/upsertSort");
-		return mv;
-	}
-
-
-	@RequestMapping("/upsert")
-	public ModelAndView upsert(StageCategoryFees stageCategoryFees, BindingResult results, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView();
-		if (StringUtils.isEmpty(stageCategoryFees.get_id())) {
-			stageCategoryFees.setIdIfNew();
-			stageCategoryFees.setCreateTimeIfNew();
-		}
-		stageCatFeeService.saveOrUpdate(stageCategoryFees);
-
-
-
-
-		mv.setViewName("stage/querySort");
-
-
-
-		return mv;
-	}
-
-	@RequestMapping("/toQueryVideo")
-	public ModelAndView toQuery(HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("stage/queryVideo");
-		return mv;
-
-
 	}
 
 
