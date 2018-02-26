@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%--<%@ include file="/module/resources/wecommon.jsp"%>--%>
+<%@ include file="/module/resources/wecommon.jsp"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 String path = request.getContextPath();
@@ -15,11 +15,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
 <html>
-<base href="<%=scheme%>">
+
 
   <head>
 
-    <base href="<%=basePathS%>">
+    <base href="<%=basePath%>">
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
@@ -27,7 +27,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <meta content="email=no" name="format-detection">
     <meta name="description" content="This is  a ..">
     <title>任性猫</title>
-      <script src="/moduleweb/resources/js/jquery.min.js?v=2.1.4"></script>
+
 </head>
   <script type="text/javascript">
       $(function(){
@@ -54,15 +54,19 @@ var devicedId=GetQueryString("devicedId");
 
 
        var json= JSON.stringify(person);
-console.info(json);
+
      $.ajax(
               {
-                  url:"/w/stageApp/firstInstall",
+                  url:"w/stageApp/firstInstall",
                   type: "POST",
                   data: person,
                   success: function(data){
                       console.info(data);
                       $("#dataTime").html("code:"+data.code+"</br> message"+data.message+"</br> data:"+data.data)
+                  },
+                  error:function(data){
+                      console.info(data);
+
                   },
 
 

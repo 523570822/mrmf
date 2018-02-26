@@ -6,10 +6,10 @@
 
 返回规范
 
-{code : ""状态码 0成功  其他失败
- message:""状态码意义
-
-    data : {}返回数据}
+{
+  code : ""状态码 0成功  其他失败
+  message:""状态码意义
+  data : {}返回数据}
 
 
     /w/app/test  测试接口
@@ -58,8 +58,20 @@ status   镜台状态（0：开启中，1 关闭中）
   }
 
 
-
   6.
+    判断是否已经录入设备 w/stageApp/first_test
+
+  {
+"devicedId":"5282086565131207777"
+  }
+返回值：
+{
+code：
+
+}
+
+
+
  http://192.168.1.222:8080/mrmf/w/stageApp/first_code?devicedId=5282086565131202315  // 的生成二维码
   首次录入设备信息/w/stageApp/firstInstall
   {
@@ -70,3 +82,4 @@ status   镜台状态（0：开启中，1 关闭中）
 "status":"1"
 
   }
+

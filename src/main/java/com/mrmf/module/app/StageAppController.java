@@ -57,8 +57,33 @@ private OrganService organService;
 
         return mv;
 
+    }
+
+    /**
+     *
+     * 检验是否首次安装镜台
+     * {"phone":"15620512895","type":"user"}
+     */
+    @RequestMapping(value ="/first_test", method = RequestMethod.POST)
+    @ResponseBody
+    public      FaceStatus first_test(String devicedId, HttpServletRequest request, HttpServletResponse response) {
+
+        FaceStatus status;
+        StageMent stageMent = stageService.findOne(devicedId);
+
+        if(stageMent!=null){
+            status = new FaceStatus(true, "设备已经绑定");
+        }else {
+            status = new FaceStatus(false, "设备没有绑定");
+        }
+
+
+
+
+        return status;
 
 
     }
+
 
 }

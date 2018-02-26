@@ -1,15 +1,18 @@
 package com.mrmf.moduleweb.weixin;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.mrmf.entity.WeCarousel;
+import com.mrmf.entity.WeSysConfig;
+import com.mrmf.entity.WeUserCompensate;
+import com.mrmf.entity.WeUserFeedback;
+import com.mrmf.entity.stage.StageCategoryFees;
+import com.mrmf.service.stage.StageCatFeeService;
+import com.mrmf.service.wesysconfig.WeSysConfigService;
+import com.osg.entity.DataEntity;
+import com.osg.entity.FlipInfo;
+import com.osg.entity.ReturnStatus;
+import com.osg.framework.BaseException;
+import com.osg.framework.util.*;
+import com.osg.framework.web.context.MAppContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -21,21 +24,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.mongodb.util.Hash;
-import com.mrmf.entity.Organ;
-import com.mrmf.entity.WeCarousel;
-import com.mrmf.entity.WeSysConfig;
-import com.mrmf.entity.WeUserCompensate;
-import com.mrmf.entity.WeUserFeedback;
-import com.mrmf.service.wesysconfig.WeSysConfigService;
-import com.osg.entity.DataEntity;
-import com.osg.entity.FlipInfo;
-import com.osg.entity.ReturnStatus;
-import com.osg.framework.util.DownloadResponse;
-import com.osg.framework.util.ExcelUtil;
-import com.osg.framework.util.FlipPageInfo;
-import com.osg.framework.util.JsonUtils;
-import com.osg.framework.util.StringUtils;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 系统业务参数设置相关
@@ -43,7 +39,8 @@ import com.osg.framework.util.StringUtils;
 @Controller
 @RequestMapping("/weixin/sysConfig")
 public class WeSysConfigController {
-
+	@Autowired
+	private StageCatFeeService stageCatFeeService;
 	@Autowired
 	private WeSysConfigService weSysConfigService;
 
@@ -217,6 +214,98 @@ public class WeSysConfigController {
 		
 		return null;		
 	}
+
+	@RequestMapping("/query")
+	@ResponseBody
+	public FlipInfo<StageCategoryFees> query(HttpServletRequest request) throws Exception {
+		FlipInfo<StageCategoryFees> fpi = new FlipPageInfo<StageCategoryFees>(request);
+		Boolean isOrganAdmin = (Boolean) MAppContext.getSessionVariable("isOrganAdmin");
+		String organId = (String) MAppContext.getSessionVariable("organId");
+		if (isOrganAdmin != null && isOrganAdmin) { // 企业管理员
+			if (StringUtils.isEmpty(organId)) {
+				throw new BaseException("当前登录企业信息缺失！");
+			} else {
+				if (StringUtils.isEmpty((String) fpi.getParams().get("organId")))
+					fpi.getParams().put("organId", organId);
+			}
+		}
+
+		fpi = stageCatFeeService.query(fpi);
+		return fpi;
+//		String sidx = (String) fpi.getParams().get("sidx");
+//		if("userNum".equals(sidx)||"".equals(sidx)){
+//			List<Staff> list =  staffService.queryUserOfstaff(fpi);
+//			fpi.setData(list);
+//			return fpi;
+//		}else {
+//			return staffService.queryUserOfStaff1(fpi);
+//		}
+	}
+	/**
+	 * 新增分类
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/toUpsert")
+	public ModelAndView toUpsert(@RequestParam(required = false) String _id, HttpServletRequest request) throws Exception {
+		ReturnStatus returnStatus;
+		returnStatus = new ReturnStatus(false, " 操作失败");
+		StageCategoryFees stageCategoryFees;
+		if (!StringUtils.isEmpty(_id)) {
+			stageCategoryFees = stageCatFeeService.queryById(_id);
+			request.setAttribute("ffstageCategoryFees", stageCategoryFees);
+			returnStatus = new ReturnStatus(true, " 操作成功");
+
+
+		} else {
+			stageCategoryFees = new StageCategoryFees();
+			//   returnStatus = new ReturnStatus(false, " 操作失败");
+
+		}
+
+
+
+
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("stage/upsertSort");
+		return mv;
+	}
+
+
+	@RequestMapping("/upsert")
+	public ModelAndView upsert(StageCategoryFees stageCategoryFees, BindingResult results, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		if (StringUtils.isEmpty(stageCategoryFees.get_id())) {
+			stageCategoryFees.setIdIfNew();
+			stageCategoryFees.setCreateTimeIfNew();
+		}
+		stageCatFeeService.saveOrUpdate(stageCategoryFees);
+
+
+
+
+		mv.setViewName("stage/querySort");
+
+
+
+		return mv;
+	}
+
+	@RequestMapping("/toQueryVideo")
+	public ModelAndView toQuery(HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("stage/queryVideo");
+		return mv;
+
+
+	}
+
+
+
+
+
+
 	@InitBinder
 	public void InitBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -225,4 +314,5 @@ public class WeSysConfigController {
 		// 解决_id字段注入问题，去除“_”前缀处理
 		binder.setFieldMarkerPrefix(null);
 	}
+
 }
