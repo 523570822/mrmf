@@ -10,6 +10,7 @@ import com.mrmf.service.usermy.UserMyService;
 import com.mrmf.service.wecommon.WeComonService;
 import com.mrmf.service.weuser.WeUserService;
 import com.mrmf.socket.WebSocket;
+import com.mrmf.util.Util;
 import com.osg.entity.*;
 import com.osg.framework.util.FileNameUtil;
 import com.osg.framework.util.JsonUtils;
@@ -324,8 +325,11 @@ public class AppController {
                     status.setEntity(stageMent);
                     return status;
                 }else{
-                    stageMent.setStatus("0");
-                    stageService.upsertAndSave(stageMent);
+                 //   stageMent.setStatus("0");
+                  //  stageService.upsertAndSave(stageMent);
+
+                    stageService.upsertAndSaveStatus(devicedId,"0");
+
                     status = new FaceStatus(true, "技师支付成功");
                     status.setEntity(stageMent);
                     return status;
@@ -357,20 +361,24 @@ public class AppController {
 	 */
 	@RequestMapping("/getDressingTableStatus")
 	@ResponseBody
-	public  FaceStatus  getDressingTableStatus(String  devicedId,HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public  FaceStatus  getDressingTableStatus(String devicedId,HttpServletRequest request, HttpServletResponse response) throws IOException {
 		//	String dressingTableStatus=
         FaceStatus status;
-        StageMent stageMent =stageService.findOne(devicedId);
+		StageMent stageMent=stageService.findOne(devicedId);
 
 
-        if(stageMent==null){
+        if(stageMent==null||stageMent.getAndroidPoints()==null){
             status = new FaceStatus(false, "设备不存在");
 
-            status.setEntity(stageMent);
+
             return status;
         }else{
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("status",stageMent.getStatus());
+
+
+			AndroidPoint ss = (AndroidPoint) Util.checkList(stageMent.getAndroidPoints(), "devicedId", devicedId);
+			map.put("status",ss.getStatus());
+
             status = new FaceStatus(true, "状态查询成功");
             status.setData(map);
             return status;
@@ -440,9 +448,12 @@ public class AppController {
             status.setEntity(stageMent);
             return status;
         }else{
-            stageMent.setStatus("1");
-			stageService.upsertAndSave(stageMent);
-            status = new FaceStatus(true, "修改成功");
+
+
+
+            stageService.upsertAndSaveStatus(devicedId,"1");
+
+            status = new FaceStatus(true, "成功关闭镜台");
 
             status.setEntity(stageMent);
             return status;

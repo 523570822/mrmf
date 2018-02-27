@@ -1,14 +1,15 @@
 package com.mrmf.service.stage;
 
-import com.mrmf.service.base.BaseServiceImpl;
 import com.mrmf.entity.Organ;
 import com.mrmf.entity.stage.StageMent;
+import com.mrmf.service.base.BaseServiceImpl;
 import com.osg.entity.FaceStatus;
 import com.osg.framework.mongodb.EMongoTemplate;
 import com.osg.framework.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 @Service("stageService")
 public class StageServiceImpl extends BaseServiceImpl<StageMent> implements StageService   {
@@ -101,6 +102,15 @@ public class StageServiceImpl extends BaseServiceImpl<StageMent> implements Stag
         mongoTemplate.save(stageMent);
 
 
+    }
+
+    @Override
+    public void upsertAndSaveStatus(String devicedId, String status) {
+        Criteria criteria;
+        criteria=Criteria.where("androidPoints.devicedId").is(devicedId);
+        Query query=new Query(criteria);
+        Update update = Update.update("androidPoints.$.status", status);
+        mongoTemplate.updateFirst(query, update, StageMent.class);
     }
 
     @Override

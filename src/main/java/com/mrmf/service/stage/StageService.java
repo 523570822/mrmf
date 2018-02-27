@@ -1,6 +1,7 @@
 package com.mrmf.service.stage;
 
 import com.mrmf.entity.stage.StageMent;
+import com.osg.entity.AndroidPoint;
 import com.osg.entity.FaceStatus;
 
 import java.util.List;
@@ -24,6 +25,17 @@ public interface StageService  {
      * @param stageMent
      */
     public void    upsertAndSave(StageMent stageMent);
+
+
+
+
+
+
+    /**
+     * 更新或修改镜台状态
+     * @param stageMent
+     */
+    public void    upsertAndSaveStatus(String devicedId,String status);
 
     /**
      *

@@ -13,10 +13,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-<base href="<%=scheme%>">
+
 
   <head>
-    <base href="<%=basePathS%>">
+    <base href="<%=basePath%>">
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
@@ -55,34 +55,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           }
 
        var  face=$("#face").val();
-          var data=$("#data").val();
-       var json123=JSON.parse(data);
 
 
-       var json1= JSON.stringify(person);
+          var data = JSON.parse($("#data").val());
 
-/*       $.post(_ctxPath +face,data1,
-                  function(stageMent){
-                  console.info("返回值:"+data);
-                   $("#dataTime").html("code:"+data.code+"</br> message"+data.message+"</br> data:"+data.data)
-                  });*/
 
-          var str=JSON.stringify(person1);
-          console.info("${basePath}")
-          console.info("${basePathS}")
-          console.info("${scheme}")
 
-      /*    var data={
-              "stageMentStr":qwe
-          }*/
+
      $.ajax(
               {
                   url:face,
                   type: "POST",
-                  data: json123,
+                  data: data,
                   success: function(data){
                       console.info(data);
-                      $("#dataTime").html("code:"+data.code+"</br> message"+data.message+"</br> data:"+JSON.parse(data.data))
+                      $("#dataTime").html("code:"+data.code+"</br> message"+data.message+"</br> data:"+(data.data))
                   },
 
 

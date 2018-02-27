@@ -45,6 +45,7 @@ var devicedId=GetQueryString("devicedId");
           var person = {
               "organId": organId,
               "name": name,
+              "status":"1",
               "devicedId":devicedId
           }
 
@@ -98,7 +99,8 @@ var devicedId=GetQueryString("devicedId");
 
        }
 
-      function close() {
+      function closeqq() {
+
           var devicedId=GetQueryString("devicedId");
           var person = {
 
@@ -168,13 +170,16 @@ var devicedId=GetQueryString("devicedId");
          	  确定
         </button>
     </div>
+    <div id="dataTime">
+
+    </div>
 <div >
-  <input id="pay" onclick="pay()" value="支付">
+  <input type="button" id="pay" onclick="pay()" value="支付">
 
 </div>
 
     <div >
-        <input id="close" onclick="close()" value="关闭镜台">
+        <input type="button" id="close" onclick="closeqq()" value="关闭镜台">
 
     </div>
 </body>

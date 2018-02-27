@@ -312,6 +312,16 @@
             <version>2.7.4</version>
         </dependency>
         <!-- /Spring 升级4+ 依赖的JSON包 -->
+
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
+        <!-- List方便查询使用 -->
+        <!-- https://mvnrepository.com/artifact/commons-collections/commons-collections -->
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+
     </dependencies>
     <build>
         <finalName>mrmf</finalName>
