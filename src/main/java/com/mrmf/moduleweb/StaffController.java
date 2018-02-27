@@ -9,6 +9,7 @@ import com.mrmf.service.staff.staffpost.StaffpostService;
 import com.osg.entity.FlipInfo;
 import com.osg.entity.ReturnStatus;
 import com.osg.framework.BaseException;
+import com.osg.framework.Constants;
 import com.osg.framework.util.FlipPageInfo;
 import com.osg.framework.util.OSSFileUtil;
 import com.osg.framework.util.QRCodeUtil;
@@ -220,12 +221,9 @@ public class StaffController {
 		} finally {
 			try {
 				if(flag){
-String str=	req.getSession().getServletContext().getRealPath("icon_logo.png");
-
-
-					is = new FileInputStream(new File(str));
+					is = new FileInputStream(new File(req.getRealPath("icon_logo.png")));
 				}
-				String url = "http://shop-dev.rxmao.cn:8383/api/member/myHome/addOrgan.jhtml?organId="+organId;
+				String url = Constants.getProperty("shop.url")+"api/member/myHome/addOrgan.jhtml?organId="+organId;
 				QRCodeUtil.encodeQRCode(url, res.getOutputStream( ), 2, is);
 				is.close( );
 			}catch (Exception e){

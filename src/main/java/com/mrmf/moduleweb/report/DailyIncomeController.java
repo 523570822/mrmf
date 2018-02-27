@@ -200,7 +200,7 @@ public class DailyIncomeController {
 			URL = "/WEB-INF/template/template_daily4_export.xls";
 			fileName = "折扣卡消费记录.xls";
 		}else if (!StringUtils.isEmpty(queryType) && "5".equals(queryType)) {
-			list = dailyIncomeService.queryUserCard(organId, startTime, endTime);
+			list = dailyIncomeService.queryUserCardXufei(organId, startTime, endTime);
 			URL = "/WEB-INF/template/template_daily5_export.xls";
 			fileName = "会员续费记录.xls";
 		}else if (!StringUtils.isEmpty(queryType) && "6".equals(queryType)) {

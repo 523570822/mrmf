@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.mrmf.entity.Staff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -86,10 +87,17 @@ public class WaimaiServiceImpl implements WaimaiService {
 			for (WWupin wupin : wupins) {
 				wupinMap.put(wupin.get_id(), wupin);
 			}
-
 			for (WWaimai waimai : dataList) {
 				WWupin wupin = wupinMap.get(waimai.getWupinId());
 				if (wupin != null) {
+					if(!StringUtils.isEmpty(waimai.getStaffId1())){
+						Staff staff = mongoTemplate.findOne(Query.query(Criteria.where("_id").is(waimai.getStaffId1())), Staff.class);
+						waimai.setStaffIName1(staff.getName());
+					}
+					if(!StringUtils.isEmpty(waimai.getStaffId2())){
+						Staff staff = mongoTemplate.findOne(Query.query(Criteria.where("_id").is(waimai.getStaffId2())), Staff.class);
+						waimai.setStaffIName2(staff.getName());
+					}
 					waimai.setWupinName(wupin.getMingcheng());
 					waimai.setGuige(wupin.getGuige());
 					waimai.setWupinCode(wupin.getCode());
@@ -98,6 +106,17 @@ public class WaimaiServiceImpl implements WaimaiService {
 					}else {
 						waimai.setIsCardName("否");
 					}
+					if(waimai.getMiandan()){
+						waimai.setMiandanName("是");
+					}else {
+						waimai.setMiandanName("否");
+					}
+					if(waimai.getGuazhang_flag()){
+						waimai.setGuazhang_name("是");
+					}else {
+						waimai.setGuazhang_name("否");
+					}
+
 				}
 			}
 		}

@@ -416,7 +416,13 @@
 														{
                                                             name : "money_xiaofei",
                                                             index : "money_xiaofei",
-                                                            width : 80
+                                                            width : 80,
+                                                            formatter : function(
+                                                                cellvalue,
+                                                                options,
+                                                                rowObject) {
+                                                                return cellvalue-rowObject.money5;
+                                                            }
 														},
 														{
 															name:"type",

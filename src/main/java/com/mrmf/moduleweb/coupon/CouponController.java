@@ -1,38 +1,25 @@
 package com.mrmf.moduleweb.coupon;
 
 
-import com.mrmf.entity.Organ;
-import com.mrmf.entity.User;
 import com.mrmf.entity.coupon.CouponGrant;
-import com.mrmf.entity.user.Bigsort;
 import com.mrmf.service.coupon.CouponGrantService;
 import com.mrmf.service.coupon.CouponService;
-import com.mrmf.service.organ.OrganService;
-import com.mrmf.service.staff.StaffService;
 import com.mrmf.service.sys.SysUser.SysUserService;
-import com.mrmf.service.user.bigsort.BigsortService;
-import com.mrmf.service.user.smallsort.SmallsortService;
-import com.mrmf.service.user.userpart.UserpartService;
-import com.mrmf.service.user.usersort.UsersortService;
-import com.osg.entity.FlipInfo;
 import com.osg.entity.ReturnStatus;
-import com.osg.framework.BaseException;
-import com.osg.framework.util.FlipPageInfo;
-import com.osg.framework.util.StringUtils;
-import com.osg.framework.web.context.MAppContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

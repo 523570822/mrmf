@@ -9,7 +9,6 @@ import java.util.Date;
 /**
  * 入库信息表
  */
-
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class WOutstoreroom extends DataEntity {
 	private String parentOrganId;// 上级公司id，0为总公司

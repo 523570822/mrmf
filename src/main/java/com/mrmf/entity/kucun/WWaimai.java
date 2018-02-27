@@ -49,9 +49,46 @@ public class WWaimai extends DataEntity {
 	private String wupinName; // 物品名称
 	private String guige;// 规格
 	private String isCardName;//是否卡外卖
+	private String miandanName;//是否免单
+	private String guazhang_name;//是否挂账
+	private String staffIName1;//出售人员1
+	private String staffIName2;//出售人员2
+
+
+	public String getStaffIName1() {
+		return staffIName1;
+	}
+
+	public void setStaffIName1(String staffIName1) {
+		this.staffIName1 = staffIName1;
+	}
+
+	public String getStaffIName2() {
+		return staffIName2;
+	}
+
+	public void setStaffIName2(String staffIName2) {
+		this.staffIName2 = staffIName2;
+	}
 
 	public String getIsCardName() {
 		return isCardName;
+	}
+
+	public String getMiandanName() {
+		return miandanName;
+	}
+
+	public void setMiandanName(String miandanName) {
+		this.miandanName = miandanName;
+	}
+
+	public String getGuazhang_name() {
+		return guazhang_name;
+	}
+
+	public void setGuazhang_name(String guazhang_name) {
+		this.guazhang_name = guazhang_name;
 	}
 
 	public void setIsCardName(String isCardName) {

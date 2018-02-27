@@ -1,8 +1,10 @@
 package com.mrmf.moduleweb.stage;
 
 import com.mrmf.BaseController.BaseController;
+import com.mrmf.entity.Organ;
 import com.mrmf.entity.Staff;
 import com.mrmf.entity.stage.StageCategoryFees;
+import com.mrmf.service.organ.OrganService;
 import com.mrmf.service.stage.StageCatFeeService;
 import com.osg.entity.FlipInfo;
 import com.osg.entity.ReturnStatus;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 /**
@@ -29,6 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 public class VideoController extends BaseController {
     @Autowired
     private StageCatFeeService stageCatFeeService;
+    @Autowired
+    private OrganService organService;
     @RequestMapping("/toQueryVideo")
     public ModelAndView toQuery(HttpServletRequest request) throws Exception {
         ModelAndView mv = new ModelAndView();
@@ -86,10 +91,11 @@ public class VideoController extends BaseController {
 
         }
 
-
+        List<Organ> organlist = organService.queryOrganList();
 
 
         ModelAndView mv = new ModelAndView();
+        mv.addObject("organlist",organlist);
         mv.setViewName("stage/upsertVideo");
         return mv;
     }

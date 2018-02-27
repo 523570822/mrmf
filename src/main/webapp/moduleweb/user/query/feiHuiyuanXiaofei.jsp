@@ -101,7 +101,7 @@
 												input1
 														.attr("name",
 																"queryType");
-												input1.attr("value", "xiaofei");
+												input1.attr("value", "feihuanyuanxiaofei");
                                                 $("#export").append(input1);
 
 												for ( var key in searchCriteria) {
@@ -287,7 +287,7 @@
 															width : 100
 														},
 														{
-															name : "maindan",
+															name : "miandan",
 															index : "miandan",
 															width : 60,
 															formatter : function(

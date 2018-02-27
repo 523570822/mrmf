@@ -2,15 +2,12 @@ package com.mrmf.moduleweb.user;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mrmf.entity.Staff;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -90,7 +87,7 @@ public class UserpartController {
 
 	@RequestMapping("/query2")
 	@ResponseBody
-	public List<Userpart> query2(@RequestParam(required = false) String condition, HttpServletRequest request)
+	public FlipInfo<Userpart> query2(@RequestParam(required = false) String condition,Integer type, HttpServletRequest request)
 			throws Exception {
 		Boolean isOrganAdmin = (Boolean) MAppContext.getSessionVariable("isOrganAdmin");
 		String organId = (String) MAppContext.getSessionVariable("organId");
@@ -101,7 +98,14 @@ public class UserpartController {
 		} else {
 			throw new BaseException("当前登录企业信息缺失！");
 		}
-		return userpartService.queryByCondition(organId, condition);
+		if(StringUtils.isEmpty(condition)){
+			return null;
+		}
+		//分页 和筛选条件补丁
+		FlipInfo<Userpart> fpi = new FlipPageInfo<Userpart>(request);
+		fpi.getParams().remove("condition");
+		fpi.getParams().remove("type");
+		return userpartService.queryByCondition(organId, condition,type,fpi);
 	}
 
 	@RequestMapping("/query")
@@ -163,7 +167,56 @@ public class UserpartController {
 		return fpi;
 
 	}
-
+	@RequestMapping("/amount")
+	@ResponseBody
+	public ReturnStatus amount(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Boolean isOrganAdmin = (Boolean) MAppContext.getSessionVariable("isOrganAdmin");
+		String organId = (String) MAppContext.getSessionVariable("organId");
+		if (isOrganAdmin != null && isOrganAdmin) { // 企业管理员
+			if (StringUtils.isEmpty(organId)) {
+				throw new BaseException("当前登录企业信息缺失！");
+			}
+		} else {
+			throw new BaseException("当前登录企业信息缺失！");
+		}
+		FlipInfo<Userpart> fpi = new FlipPageInfo<Userpart>(request);
+		// eq:createTime|date#and=2016-09-12 lte:createTime|date+1
+		// gte:createTime|date
+		String date = (String) fpi.getParams().get("eq:createTime|date#and");
+		String queryType = (String) fpi.getParams().get("queryType");
+		fpi.getParams().remove("queryType");
+		if (!StringUtils.isEmpty(date)) {
+			fpi.getParams().remove("eq:createTime|date#and");
+			String[] startAndEnd = DateUtil.getDateStartEnd(date);
+			fpi.getParams().put("gte:createTime|date", startAndEnd[0]);
+			fpi.getParams().put("lte:createTime|date+1", startAndEnd[1]);
+		}
+		List<Userpart> list = null;
+		String parOrganId = (String) fpi.getParams().get("organId");
+		if (StringUtils.isEmpty(parOrganId)) {
+			fpi.getParams().put("organId", organId); // 只能查询本公司信息
+			list = userpartService.queryUserPartByFpi(fpi);
+		} else {
+			List<Organ> organList = organService.queryOrganListByParentId(organId);
+			boolean flag = false;
+			if (organList != null && organList.size() > 0) {
+				for (Organ organ : organList) {
+					if (parOrganId.equals(organ.get_id())) {
+						flag = true;
+						break;
+					}
+				}
+				if (flag) {
+					list = userpartService.queryUserPartByFpi(fpi);
+				}
+			}
+		}
+		Double amount = 0D;
+		for(Userpart userpart : list){
+			amount += userpart.getNowMoney4();
+		}
+		return new ReturnStatus(amount,1);
+	}
 	@RequestMapping("/download")
 	public ModelAndView export(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Boolean isOrganAdmin = (Boolean) MAppContext.getSessionVariable("isOrganAdmin");
@@ -219,11 +272,21 @@ public class UserpartController {
 				u.setMoney_xiaofei(u.getMoney_xiaofei()-u.getMoney5());
 			}
 		} else if (!StringUtils.isEmpty(queryType) && "zhekou".equals(queryType)) {
+			//18-1-12  打个补丁(只修改导出，不影响其他代码)   离职技师处理
+			list = checkStaff(list,organId);
+			for(Userpart userpart:list){
+				userpart.setMoney6(userpart.getMoney1()/userpart.getMoney6()*100);
+			}
 			URL = "/WEB-INF/template/template_userpart_export_zhekou.xls";
 			fileName = "折扣卡消费明细.xls";
 		} else if (!StringUtils.isEmpty(queryType) && "xufei".equals(queryType)) {
+			//18-1-12  打个补丁(只修改导出，不影响其他代码)   离职技师处理
+			list = checkStaff(list,organId);
 			URL = "/WEB-INF/template/template_userpart_export_xufei.xls";
 			fileName = "会员续费明细.xls";
+		}else if (!StringUtils.isEmpty(queryType) && "feihuanyuanxiaofei".equals(queryType)) {
+			URL = "/WEB-INF/template/template_userpart_export_feihuiyuan.xls";
+			fileName = "非会员明细.xls";
 		}
 		File template = new File(request.getSession().getServletContext().getRealPath(URL));
 		File outputExcel = new File(request.getSession().getServletContext()
@@ -431,6 +494,32 @@ public class UserpartController {
 		return mv;
 	}
 
+	/**
+	 * 导出验证离店技师
+	 * @param list
+	 * @param organId
+	 * @return
+	 * @throws Exception
+	 */
+	public List checkStaff(List<Userpart> list,String organId) throws Exception{
+		List<Staff> staffList = staffService.findAll(organId);
+		List<String> staffIdList = new ArrayList<>();
+		for(Staff staff : staffList){
+			staffIdList.add(staff.get_id());
+		}
+		for(Userpart userpart:list){
+			if(!staffIdList.contains(userpart.getStaffId1())){
+				userpart.setStaff1Name("无");
+			}
+			if(!staffIdList.contains(userpart.getStaffId2())){
+				userpart.setStaff2Name("无");
+			}
+			if(!staffIdList.contains(userpart.getStaffId3())){
+				userpart.setStaff3Name("无");
+			}
+		}
+		return list;
+	}
 	@InitBinder
 	public void InitBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

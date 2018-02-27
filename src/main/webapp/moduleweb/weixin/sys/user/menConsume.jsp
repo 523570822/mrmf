@@ -268,7 +268,7 @@
                                     width : 100
                                 },
                                 {
-                                    name : "maindan",
+                                    name : "miandan",
                                     index : "miandan",
                                     width : 60,
                                     formatter : function(

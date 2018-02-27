@@ -21,7 +21,7 @@ public interface UserpartService {
 	 * @return
 	 * @throws BaseException
 	 */
-	public List<Userpart> queryByCondition(String organId, String condition) throws BaseException;
+	public FlipInfo<Userpart> queryByCondition(String organId, String condition, Integer type, FlipInfo<Userpart> fpi) throws BaseException;
 
 	/**
 	 * 根据id查询消费信息
@@ -91,7 +91,7 @@ public interface UserpartService {
 	 * @return
 	 */
 	public ReturnStatus jiezhang(String organId, String[] userpartIds, String kaidanId, double money_yinhang_money,
-			double money_li_money, String money_lijuan, double money_cash, double money3);
+                                 double money_li_money, String money_lijuan, double money_cash, double money3);
 
 	/**
 	 * 根据会员卡id和类型查询消费信息
@@ -103,7 +103,7 @@ public interface UserpartService {
 	 * @return
 	 * @throws BaseException
 	 */
-	public List<Userpart> queryByIncardId(String incardId, int type, boolean all,boolean typeFlag) throws BaseException;
+	public List<Userpart> queryByIncardId(String incardId, int type, boolean all, boolean typeFlag) throws BaseException;
 
 	/**
 	 * 根据ids查询消费信息列表

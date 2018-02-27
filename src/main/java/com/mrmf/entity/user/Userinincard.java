@@ -60,6 +60,15 @@ public class Userinincard extends DataEntity {
 	private String deleteName;
 	private String miandanName;
 	private String smallsortName; // 项目名称
+	private Double huansuanMoney; //导出换算金钱
+
+	public Double getHuansuanMoney() {
+		return huansuanMoney;
+	}
+
+	public void setHuansuanMoney(Double huansuanMoney) {
+		this.huansuanMoney = huansuanMoney;
+	}
 
 	public String getDeleteName() {
 		return deleteName;

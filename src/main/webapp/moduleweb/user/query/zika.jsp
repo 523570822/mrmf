@@ -228,14 +228,9 @@
 																	cellvalue,
 																	options,
 																	rowObject) {
-																if (rowObject.delete_flag)
-																	return "0";
-																else {
-																	var v = parseFloat(cellvalue)
-																			* parseFloat(rowObject.danci_money);
-																	return v
-																			.toFixed(2);
-																}
+                                                                var v = parseFloat(cellvalue)
+                                                                    * parseFloat(rowObject.danci_money);
+                                                                return v.toFixed(2);
 															}
 														} ]
 											});

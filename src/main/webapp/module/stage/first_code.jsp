@@ -56,7 +56,7 @@ var devicedId=GetQueryString("devicedId");
        var json= JSON.stringify(person);
 
      $.ajax(
-              {
+         {
                   url:"w/stageApp/firstInstall",
                   type: "POST",
                   data: person,
@@ -66,15 +66,60 @@ var devicedId=GetQueryString("devicedId");
                   },
                   error:function(data){
                       console.info(data);
-
                   },
-
-
               } );
 
         //  }
       });
       });
+
+
+       function pay() {
+           var devicedId=GetQueryString("devicedId");
+           var person = {
+               "money": "12",
+               "type": "staff",
+               "phone": "15620512598",
+               "devicedId":devicedId
+           }
+           $.ajax(
+               {
+                   url:"w/app/appPay",
+                   type: "POST",
+                   data: person,
+                   success: function(data){
+                       console.info(data);
+                       $("#dataTime").html("接口：w/app/appPay <br>code:"+data.code+"</br> message"+data.message+"</br> data:"+data.data)
+                   },
+                   error:function(data){
+                       console.info(data);
+                   },
+               } );
+
+       }
+
+      function close() {
+          var devicedId=GetQueryString("devicedId");
+          var person = {
+
+              "devicedId":devicedId
+          }
+          $.ajax(
+              {
+                  url:"w/app/closeStage",
+                  type: "POST",
+                  data: person,
+                  success: function(data){
+                      console.info(data);
+                      $("#dataTime").html("接口：w/app/closeStage <br>code:"+data.code+"</br> message"+data.message+"</br> data:"+data.data)
+                  },
+                  error:function(data){
+                      console.info(data);
+                  },
+              } );
+
+
+      }
   </script>
 
 
@@ -97,11 +142,6 @@ var devicedId=GetQueryString("devicedId");
     <div class="form-group">
         <label class="col-sm-2 control-label"> 店铺名称</label>
         <div class="col-sm-10">
-          <%--  <select class="form-control" id="city" name="city">
-                <option value="">请选择</option>
-            </select>--%>
-
-
             <select id="organId" name="organId" width="10px">
                 <option value="">---请选择---</option>
                 <c:forEach items="${organlist}" var="organ" varStatus="row">
@@ -128,12 +168,15 @@ var devicedId=GetQueryString("devicedId");
          	  确定
         </button>
     </div>
-<div id="dataTime">
-
+<div >
+  <input id="pay" onclick="pay()" value="支付">
 
 </div>
 
+    <div >
+        <input id="close" onclick="close()" value="关闭镜台">
 
+    </div>
 </body>
 
 

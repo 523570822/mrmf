@@ -135,6 +135,7 @@
 		<!--右侧边栏开始-->
 		<div id="right-sidebar">
 			<div class="sidebar-container">
+				<ul class="nav nav-tabs navs-3">
 
 					<li class="active"><a data-toggle="tab" href="#tab-1"> <i
 							class="fa fa-gear"></i> 主题

@@ -118,8 +118,11 @@
 							<button id="export3" class="btn btn-primary export" type="button" t="3">导出</button>
 						</div>
 						<div class="col-sm-3">
-							现金:<span id="zhekouXianjinTotal">0</span>元&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;挂账:<span
-								id="zhekouGuazhangTotal">0</span>
+							现金:<span id="zhekouXianjinTotal">0</span>元
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							免单:<span id="zhekouMiandanTotal">0</span>元
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							挂账:<span id="zhekouGuazhangTotal">0</span>元
 						</div>
 						<div class="col-sm-2">
 							赠送:<span id="zengsongTotal">0</span>元
@@ -235,10 +238,11 @@
                     $("#totalGuazhang").text(
                         totalGuazhang.toFixed(2));
                     $("#totalMiandanCount").text(totalMiandanCount);
+                    //18-2-8发现问题 次数卡免单会算进消费里，而不算入免单金额，由于totalMiandan 会加入现金计算，所以新加次数卡免单金额 来把次数卡免单记录下来
                     $("#totalMiandan")
-                        .text((totalMiandan+userCardMiandan+waimaiIsCard).toFixed(2));
+                        .text((totalMiandan+userCardMiandan+waimaiIsCard+cishuKaMiandan).toFixed(2));
                     $("#totalHuiyuan")
-                        .text(totalHuiyuan.toFixed(2));
+                        .text((totalHuiyuan-cishuKaMiandan).toFixed(2));
                 }
 
                 function loadAll() {
@@ -294,7 +298,8 @@
                                         userDaijinquan += d.money_li_money;
                                         userYinhangka += d.money_yinhang_money;
                                         if (d.guazhang_flag) {
-                                            userGuazhangTotal += d.money1;
+                                            var money1 =d.money1-d.money5;
+                                            userGuazhangTotal += money1;
                                         }
                                         if (d.miandan) {
                                             totalMiandanCount++;
@@ -302,10 +307,12 @@
                                         }
                                         for (var j = 0; j < ms.length; j++) {
                                             if (ms[j]._id == d.smallsort) {
+                                                //成交金额减去 抹零金额
+                                                var money1 =d.money1-d.money5;
                                                 if (ms[j].charge_flag)
-                                                    userXiaohuoTotal += d.money1;
+                                                    userXiaohuoTotal += money1;
                                                 else
-                                                    userDahuoTotal += d.money1;
+                                                    userDahuoTotal += money1;
                                                 break;
                                             }
                                         }
@@ -356,7 +363,7 @@
                                         'clearGridData');
                                 var ms = fillmaps.smallsorts;
                                 var us = fillmaps.usersorts;
-                                userCardGuazhangTotal = userCardDahuoTotal = userCardXiaohuoTotal = userCardMiandan = zhekouXianjinTotal = 0;
+                                userCardGuazhangTotal = userCardDahuoTotal = userCardXiaohuoTotal = userCardMiandan = zhekouXianjinTotal=cishuKaMiandan=zhekouMiandanTotal= 0;
                                 var m = 0;
                                 if (data) {
                                     for (var i = 0; i < data.length; i++) {
@@ -375,19 +382,28 @@
                                                     'addRowData',
                                                     m,
                                                     d);
-                                            zhekouXianjinTotal += d.money2;
+                                            zhekouXianjinTotal += d.money1-d.money5;
                                             if(!d.miandan){
                                                 totalShouru = d.money2;
-                                            }
+                                            }else {
+                                                totalMiandan+= d.money1-d.money5;
+                                                zhekouMiandanTotal += d.money1-d.money5;
+											}
                                             if (d.guazhang_flag) {
                                                 zhekouGuazhangTotal += d.money2;
                                             }
                                             m++;
                                         } else {
                                             var xf = d.money_xiaofei;
-                                            if (d.usersortType == "1003")
+                                            if (d.usersortType == "1003"){
                                                 xf = d.danci_money
                                                     * d.cishu;
+                                                //次数卡免单 不计入会员消费，计入免单
+												if(d.miandan){
+                                                    cishuKaMiandan =d.danci_money
+                                                        * d.cishu;
+												}
+											}
                                             if (d.guazhang_flag) {
                                                 userCardGuazhangTotal += xf;
                                             }
@@ -397,11 +413,10 @@
                                             for (var j = 0; j < ms.length; j++) {
                                                 if (ms[j]._id == d.smallsort) {
                                                     if (ms[j].charge_flag)
-                                                        userCardXiaohuoTotal += xf
-                                                            + d.money2;
+                                                        userCardXiaohuoTotal += xf;
                                                     else
-                                                        userCardDahuoTotal += xf
-                                                            + d.money2;
+                                                        userCardDahuoTotal += xf;
+
                                                     break;
                                                 }
                                             }
@@ -430,7 +445,11 @@
                                             .toFixed(2));
                                 $("#zhekouXianjinTotal")
                                     .text(
-                                        zhekouXianjinTotal
+										(zhekouXianjinTotal-zhekouMiandanTotal)
+                                            .toFixed(2));
+                                $("#zhekouMiandanTotal")
+                                    .text(
+                                        zhekouMiandanTotal
                                             .toFixed(2));
                                 $("#zhekouGuazhangTotal")
                                     .text(
@@ -615,7 +634,7 @@
                 $("#upTable")
                     .grid(
                         {
-                            colNames: ["应交款额", "实交款额",
+                            colNames: ["应交款额", "实交款额","抹零金额",
                                 "挂账", "现金", "代金券",
                                 "银行卡", "服务明细", "服务人员1",
                                 "服务人员1提成", "服务人员2",
@@ -636,6 +655,11 @@
                                 {
                                     name: "money2",
                                     index: "money2",
+                                    width: 70
+                                },
+                                {
+                                    name: "money5",
+                                    index: "money5",
                                     width: 70
                                 },
                                 {
@@ -813,7 +837,7 @@
                                                          options,
                                                          rowObject) {
                                         if (rowObject.money5 != 0)
-                                            return (cellvalue - rowObject.money5);
+                                            return cellvalue;
                                         else if (rowObject.usersortType == "1003")
                                             return rowObject.danci_money
                                                 * rowObject.cishu;
@@ -828,8 +852,8 @@
                                     formatter: function (cellvalue,
                                                          options,
                                                          rowObject) {
-                                        if (rowObject.money_xiaofei > 0)
-                                            return 0;
+                                        if (rowObject.usersortType != "1003")
+                                            return "";
                                         else
                                             return cellvalue;
                                     }

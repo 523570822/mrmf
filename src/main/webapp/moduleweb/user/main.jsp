@@ -68,11 +68,22 @@
 				<div class="ibox float-e-margins">
 					<div class="ibox-title">
 						<div class="row">
-							<div class="col-sm-3">
+							<div class="col-sm-2">
 								<h5>会员管理</h5>
 							</div>
-							<form id="queryFrm" method="post">
-								<div class="col-sm-6">
+							<form id="queryFrm" method="post" class="form-horizontal">
+                                <div class="col-sm-3">
+                                    <label class="col-sm-5 control-label form-group">查询类型</label>
+                                    <div class="col-sm-7">
+                                        <select class="form-control"  name="type" id="type">
+											<option value="3">卡号</option>
+											<option value="4">卡表面号</option>
+                                            <option value="1">会员电话</option>
+                                            <option value="2">姓名</option>
+                                        </select>
+                                    </div>
+                                </div>
+								<div class="col-sm-4">
 									<input id="condition" name="condition" type="text"
 										class="form-control" maxlength="20"
 										placeholder="输入会员电话、姓名、卡号或卡表面号进行查询">
@@ -88,7 +99,10 @@
 							<form id="kaidanFrm" method="post">
 								<div class="col-sm-2 maxHeight">
 									开单 <input id="kaidan_id" name="kaidan_id" type="text"
-										class="form-control">
+										class="form-control" onkeyup="if(this.value.length==1){
+										    										this.value=this.value.replace(/[^0-9]/g,'')}
+										    							else{this.value=this.value.replace(/\D/g,'')}"
+											  onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
 									<button id="btnKaidan" class="btn btn-primary maxWidth"
 										style="margin-top: 5px;" type="button">开单</button>
 									<button class="btn btn-success maxWidth" type="submit">查询</button>
@@ -1781,7 +1795,10 @@
 							$("#myTable")
 									.grid(
 											{
-												datatype : "local",
+                                                url : _ctxPath
+                                                + "/user/userpart/query2.do",
+												postData : $("#queryFrm").formobj(),
+//												datatype : "local",
 												colNames : [ "操作", "挂账",
 														"卡表面号", "会员号", "会员姓名",
 														"卡余额", "欠费", "总次数",
@@ -1838,7 +1855,7 @@
 														}
 													}
 												},
-												pager : null,
+//												pager : null,
 												colModel : [
 														{
 															name : "idx",
@@ -2283,44 +2300,41 @@
 		function queryFrm() {
 			var obj = $("#queryFrm").formobj();
 			$.shade.show();
-			$.post("${ctxPath}/user/userpart/query2.do", obj, function(data,
-					status) {
-				$.shade.hide();
-				$("#kaidanTable").jqGrid('resetSelection');
-				selectedKaidanRowId = null;
-				selectedUserpartRowId = null;
-				$("#myTable").jqGrid('clearGridData');
-				for (var i = 0; i <= data.length; i++) {
-					$("#myTable").jqGrid('addRowData', i + 1, data[i]);
-				}
-				$("#myTable").jqGrid("setSelection",1);
-				selectedUserpartRowId = 1;
-				var kd = $(
-						"#"
-						+ selectedUserpartRowId,
-						$("#myTable")).data(
-						"rawData");
-				/*if (kd.flag2 || !guazhang_flag) {
-				 toastr.warning("已结账信息不能修改！");
-				 } else {*/
-				if ("${organId}" != kd.organId) {
-					toastr
-							.warning("非本公司会员信息不能修改！");
-				} else {
-					clearUserpart();
-					$("#userpart").fillform(kd);
-					images = kd.images;
-					for (var i = 0; i < images.length; i++) {
-						$("#img" + i)
-								.attr(
-										"src",
-										_ossImageHost
-										+ images[i]);
-					}
-					$("#membersort").disable();
-					editUser = true;
-				}
-			});
+            $("#kaidanTable").jqGrid('resetSelection');
+            selectedKaidanRowId = null;
+            selectedUserpartRowId = null;
+            $("#myTable").reloadGrid({data : obj});
+            $.shade.hide();
+           // $("#myTable").jqGrid("setSelection",1);
+            selectedUserpartRowId = 1;
+            var kd = $(
+                "#"
+                + selectedUserpartRowId,
+                $("#myTable")).data(
+                "rawData");
+			/*if (kd.flag2 || !guazhang_flag) {
+			 toastr.warning("已结账信息不能修改！");
+			 } else {*/
+            if(typeof(kd)=="undefined"){
+                return;
+            }
+            if ("${organId}" != kd.organId) {
+                toastr
+                    .warning("非本公司会员信息不能修改！");
+            } else {
+                clearUserpart();
+                $("#userpart").fillform(kd);
+                images = kd.images;
+                for (var i = 0; i < images.length; i++) {
+                    $("#img" + i)
+                        .attr(
+                            "src",
+                            _ossImageHost
+                            + images[i]);
+                }
+                $("#membersort").disable();
+                editUser = true;
+            }
 		}
 		function clearUserpart() {
 			editUser = false;

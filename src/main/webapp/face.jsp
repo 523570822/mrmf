@@ -82,7 +82,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   data: json123,
                   success: function(data){
                       console.info(data);
-                      $("#dataTime").html("code:"+data.code+"</br> message"+data.message+"</br> data:"+data.data)
+                      $("#dataTime").html("code:"+data.code+"</br> message"+data.message+"</br> data:"+JSON.parse(data.data))
                   },
 
 

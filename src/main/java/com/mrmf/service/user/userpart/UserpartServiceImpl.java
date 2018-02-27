@@ -52,7 +52,7 @@ public class UserpartServiceImpl implements UserpartService {
 	private OrganService organService;
 
 	@Override
-	public List<Userpart> queryByCondition(final String organId, final String condition) throws BaseException {
+	public FlipInfo<Userpart> queryByCondition(final String organId, final String condition, final Integer type, FlipInfo<Userpart> fpi) throws BaseException {
 		Organ organ = mongoTemplate.findById(organId, Organ.class);
 		if (organ == null) {
 			throw new BaseException("指定id的公司信息不存在");
@@ -75,20 +75,36 @@ public class UserpartServiceImpl implements UserpartService {
 		}
 		List<Criteria> cs = new ArrayList<Criteria>() {
 			{
+				String fields =null;
 				add(Criteria.where("organId").in(organIds));
 				add(Criteria.where("type").is(0));
 				add(Criteria.where("delete_flag").is(false));
-				Criteria c = new Criteria();
-				c.orOperator(Criteria.where("phone").regex(condition), Criteria.where("name").regex(condition),
-						Criteria.where("cardno").regex(condition), Criteria.where("id_2").regex(condition));
-				add(c);
+				//区分搜索条件
+				switch (type){
+					case 1:
+						fields="phone";
+						break;
+					case 2:
+						fields="name";
+						break;
+					case 3:
+						fields="cardno";
+						break;
+					case 4:
+						fields="id_2";
+						break;
+					default:
+						fields="phone";
+						break;
+				}
+				add(Criteria.where(fields).regex(condition));
 			}
 		};
 		Criteria criteria = new Criteria();
 		criteria.andOperator(cs.toArray(new Criteria[cs.size()]));
-		List<Userpart> userparts = mongoTemplate.find(Query.query(criteria), Userpart.class);
+		return mongoTemplate.findByPage(null,criteria,fpi, Userpart.class);
 //		return getDetails(mongoTemplate.find(Query.query(criteria), Userpart.class));
-		return userparts.size()>0?userparts:null;
+//		return userparts.size()>0?userparts:null;
 	}
 
 	public Userpart queryById(String id) throws BaseException {
@@ -208,13 +224,13 @@ public class UserpartServiceImpl implements UserpartService {
 		if (staff2s.size() > 0) {
 			List<Staff> staffs = mongoTemplate.find(Query.query(Criteria.where("_id").in(staff2s)), Staff.class);
 			for (Staff staff : staffs) {
-				staff1Map.put(staff.get_id(), staff);
+				staff2Map.put(staff.get_id(), staff);
 			}
 		}
 		if (staff3s.size() > 0) {
 			List<Staff> staffs = mongoTemplate.find(Query.query(Criteria.where("_id").in(staff3s)), Staff.class);
 			for (Staff staff : staffs) {
-				staff1Map.put(staff.get_id(), staff);
+				staff3Map.put(staff.get_id(), staff);
 			}
 		}
 		if (incardIds.size() > 0) {
@@ -325,7 +341,7 @@ public class UserpartServiceImpl implements UserpartService {
 					userpart.setNowMoney4(0);
 					userpart.setNowShengcishu(0);
 				} else if ("1003".equals(incard.getFlag1())) {// 1003:次数卡
-					BigDecimal de = new BigDecimal(incard.getDanci_money() * incard.getShengcishu());
+					BigDecimal de = new BigDecimal(incard.getMoney4());
 					userpart.setNowMoney4(de.setScale(0,BigDecimal.ROUND_UP).doubleValue());
 					// userpart.setShengcishu(userpart.getShengcishu() -
 					// userpart.getCishu());
@@ -529,7 +545,10 @@ public class UserpartServiceImpl implements UserpartService {
 				usercard.setUserId(user.get_id());
 				usercard.setOrganId(organ.get_id());
 				usercard.setCardno(userpart.getCardno());
-				usercard.setPasswd(userpart.getPasswd());
+				//当再次 保存密码不为null，再赋值
+				if(!StringUtils.isEmpty(userpart.getPasswd())){
+					usercard.setPasswd(userpart.getPasswd());
+				}
 
 				// 创建会员卡
 				Userincard userincard;
@@ -600,7 +619,6 @@ public class UserpartServiceImpl implements UserpartService {
 					userincard.setMoney4(0);
 					userpart.setMoney4(0);
 				}
-
 				mongoTemplate.save(userincard);
 				mongoTemplate.save(usercard);
 				mongoTemplate.save(user);
@@ -643,6 +661,7 @@ public class UserpartServiceImpl implements UserpartService {
                 if(userpart.getMiandan()){
                     userpart.setMiandanMoney(userpart.getMoney_cash());
                 }
+                userpart.setMoney_xiaofei(userpart.getMoney1());
 			} else if ("1002".equals(flag1)) { // 存钱打折卡
 				// 优先消费赠送金额
 				double song = incard.getSong_money(); // 赠送金额余额

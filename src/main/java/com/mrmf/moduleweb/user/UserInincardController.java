@@ -204,7 +204,10 @@ public class UserInincardController {
 		File outputExcel = new File(request.getSession().getServletContext()
 				.getRealPath("/WEB-INF/template/tmp/" + DataEntity.getLongUUID() + ".xls"));
 
-
+		// 18-1-12补丁  修改导出换算金额
+		for(Userinincard userinincard : list){
+			userinincard.setHuansuanMoney(userinincard.getShengcishu()*userinincard.getDanci_money());
+		}
 		Map dataSet = new HashMap();
 		dataSet.put("incard", JsonUtils.fromJson(JsonUtils.toJson(list), List.class));
 
@@ -277,9 +280,7 @@ public class UserInincardController {
 	 * @param inincardId
 	 * @param xiaocishu
 	 * @param xianjin
-	 * @param huaka
 	 * @param money_cash
-	 * @param money_yinhang_money
 	 * @param money3
 	 * @param passwd
 	 * @return

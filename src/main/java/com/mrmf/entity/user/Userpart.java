@@ -122,6 +122,8 @@ public class Userpart extends DataEntity {
 	private double nowSong_money;// 赠送金额
 	private int nowShengcishu; // 目前卡剩余次数
 	private double danci_money; // 次数卡单次款额
+	private String isZiKa;//是否子卡
+	private String str_cishu;//次数导出显示
 	private String miandanName;
 	private String guazhangName;
 	private String staff1Name;
@@ -129,6 +131,22 @@ public class Userpart extends DataEntity {
 	private String staff3Name;
 	private String deleteName;
 	private double songMoney;
+
+	public String getStr_cishu() {
+		return str_cishu;
+	}
+
+	public void setStr_cishu(String str_cishu) {
+		this.str_cishu = str_cishu;
+	}
+
+	public String getIsZiKa() {
+		return isZiKa;
+	}
+
+	public void setIsZiKa(String isZiKa) {
+		this.isZiKa = isZiKa;
+	}
 
 	public double getNowSongMoney() {
 		return nowSongMoney;

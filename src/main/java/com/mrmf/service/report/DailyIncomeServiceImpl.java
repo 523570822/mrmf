@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.alibaba.fastjson.JSON;
+import com.mrmf.entity.Staff;
+import com.mrmf.service.staff.StaffService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -27,6 +29,8 @@ public class DailyIncomeServiceImpl implements DailyIncomeService {
 	private EMongoTemplate mongoTemplate;
 	@Autowired
 	private WaimaiService waimaiService;
+	@Autowired
+	private StaffService staffService;
 	private static Logger logger = Logger.getLogger(DailyIncomeServiceImpl.class);
 	@Override
 	public List<Userpart> queryUser(String organId, Date startTime, Date endTime) throws BaseException {
@@ -48,7 +52,39 @@ public class DailyIncomeServiceImpl implements DailyIncomeService {
 
 		List<Userpart> resultList = queryBy(criterias, organId, startTime, endTime);
 
+		//18-1-12  导出补丁
+		for(Userpart userpart : resultList){
+			if("1003".equals(userpart.getUsersortType())){
+				userpart.setMoney_xiaofei(userpart.getDanci_money()*userpart.getCishu());
+				userpart.setStr_cishu(userpart.getCishu()+"");
+			}else {
+				userpart.setMoney_xiaofei(userpart.getMoney_xiaofei()-userpart.getMoney5());
+				userpart.setStr_cishu("");
+			}
+			if(userpart.getType()==11){
+				userpart.setIsZiKa("是");
+			}else {
+				userpart.setIsZiKa("否");
+			}
+			List<Staff> staffList = staffService.findAll(organId);
+			List<String> staffIdList = new ArrayList<>();
+			for(Staff staff : staffList){
+				staffIdList.add(staff.get_id());
+			}
+			if(!staffIdList.contains(userpart.getStaffId1())){
+				userpart.setStaffId1("");
+				userpart.setStaff1Name("无");
+			}
+			if(!staffIdList.contains(userpart.getStaffId2())){
+				userpart.setStaffId2("");
+				userpart.setStaff2Name("无");
+			}
+			if(!staffIdList.contains(userpart.getStaffId3())){
+				userpart.setStaffId3("");
+				userpart.setStaff3Name("无");
+			}
 
+		}
 
 //			for (int i = 0; i <resultList.size() ; i++) {
 //                try {
@@ -92,7 +128,7 @@ public class DailyIncomeServiceImpl implements DailyIncomeService {
 	@Override
 	public List<Userpart> queryUserCardXufei(String organId, Date startTime, Date endTime) throws BaseException {
 		List<Criteria> criterias = new ArrayList<>();
-		criterias.add(Criteria.where("type").is(3));
+		criterias.add(Criteria.where("type").in(3,4));
 
 		List<Userpart> resultList = queryBy(criterias, organId, startTime, endTime);
 		return resultList;

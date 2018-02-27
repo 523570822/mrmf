@@ -57,6 +57,9 @@
 						<div class="jqGrid_wrapper">
 							<table id="myTable"></table>
 						</div>
+						<div class="jqGrid_wrapper" style="float:right">
+							余额合计:<span id="amount" style="font-size: 16px"></span>元
+						</div>
 						<div class="jqGrid_wrapper" style="margin-top: 10px">
 							<table id="myTable2"></table>
 						</div>
@@ -74,6 +77,8 @@
 		$()
 				.ready(
 						function() {
+						    //计算合计金额
+                            amount();
 							$("#download")
 									.click(
 											function() {
@@ -130,6 +135,7 @@
 												//window.location.href = _ctxPath + "/user/userpart/download.do?"+encodeURIComponent(downloadstr);
 											});
 							$("#searchForm").submit(function() {
+                                amount();
 								var o = $("#searchForm").formobj();
 								searchCriteria = {};
 								for ( var key in o) {
@@ -189,7 +195,7 @@
 															width : 80
 														},
 														{
-															name : "maindan",
+															name : "miandan",
 															index : "miandan",
 															width : 60,
 															formatter : function(
@@ -396,6 +402,14 @@
 				}
 			});
 		}
+		function amount() {
+            var o = $("#searchForm").formobj();
+            //合计开始
+            $.post(_ctxPath + "/user/userpart/amount.do",o,function (data) {
+                $("#amount").html(data.data);
+            });
+            //合计结束
+        }
 	</script>
 </body>
 </html>

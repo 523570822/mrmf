@@ -18,6 +18,7 @@ sudo systemctl restart tomcat  启动Tomcat
 cd /root/learngit/rxm
 git pull origin rxm_login  --force ;//强制更新本地仓库
 rm -rf /root/learngit/rxm/target/*     //部署前先删除
+rm -rf /opt/tomcat/webapps/mrmf/*     //
 
 mvn -X install -Dmaven.test.skip=true ; //通过maven自动编译代码
 rsync -rtlvz  /root/learngit/rxm/target/mrmf/*  /opt/tomcat/webapps/mrmf ;   简化后 拷贝编译后的代码到指定tomcat服务器中

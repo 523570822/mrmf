@@ -146,15 +146,14 @@
 															align : "center",
 															width : 100,
 															formatter:function(cellvalue,options,rowObject) {
-															    return cellvalue;
-														/*		if (cellvalue) {
+																if (cellvalue) {
 																	return cellvalue
 																			.substring(
 																					0,
 																					10);
 																} else {
 																	return "";
-																}*/
+																}
 															}
 														},
 														{

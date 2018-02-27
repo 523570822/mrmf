@@ -165,8 +165,9 @@
     $()
         .ready(
             function() {
-                var wmyj = 0;
-                var mdwmyj = 0;
+                $.ajaxSetup({
+                    async : false
+                });
                 $("#download")
                     .click(
                         function() {
@@ -223,6 +224,11 @@
                 $("#startTime").val(new Date().format());
 
                 function loadAll() {
+                    //外卖业绩  免单外卖业绩  外卖人数  外卖划卡业绩
+                    var wmyj =0;
+                    var mdwmyj=0;
+                    var wmrs=0;
+                    var wmhkyj=0;
                     var startTime = $("#startTime").val()
                         .parseDate();
                     var endTime = $("#endTime").val().parseDate();
@@ -272,11 +278,15 @@
                                         if(d.miandan){
                                             mdwmyj += d.money1;
                                         }
+                                        if(d.isCard){
+                                            wmhkyj += d.money1;
+										}
                                         waimaiYejiTotal += d.money1;
                                         if (!ks
                                                 .contains(d.kaidanId)) {
                                             ks
                                                 .push(d.kaidanId);
+                                           wmrs+=1;
                                         }
                                     }
                                 }
@@ -310,15 +320,31 @@
                                         if(!d.miandan){
                                             xjyj += d.money2;
                                             if(d.usersortType==1003){
-                                                skyj += d.danci_money;
-                                                zje += d.danci_money;
-                                                zhkyj += d.danci_money;
-                                            }else {
-                                                zhkyj += d.money_xiaofei;
-                                                skyj += d.money_xiaofei;
-                                                zje += d.money2
-                                                    + d.money_xiaofei;
-                                            }
+                                                if(d.type==0){
+                                                    zje += d.money2;
+												}else {
+                                                    skyj += d.danci_money;
+                                                    zhkyj += d.danci_money;
+												}
+                                            }else if(d.usersortType==1002){
+                                                zhkyj += d.money_xiaofei-d.money5;
+                                                skyj += d.money_xiaofei-d.money5;
+                                                if(d.type==0){
+                                                    zje += d.money2
+                                                        + d.money_xiaofei-d.money5;
+												}
+                                            }else if(d.usersortType==1001){
+                                                zhkyj += d.money_xiaofei-d.money5;
+                                                skyj += d.money_xiaofei-d.money5;
+                                               if(d.type==0){
+                                                   zje += d.money1 -d.money5;
+											   }
+											}else {//非会员消费   续费，补欠费计算
+                                                if(d.type==0||d.type==4||d.type==3){
+                                                    zje += d.money1 -d.money5;
+
+                                                }
+											}
                                             zrs++;
                                             if (d.dian1
                                                 || d.dian2
@@ -363,7 +389,7 @@
                                                     if(d.usersortType == "1003"){
                                                         smallsorts[d.smallsort] += d.danci_money;
                                                     }else {
-                                                        smallsorts[d.smallsort] += d.money_xiaofei;
+                                                        smallsorts[d.smallsort] += d.money_xiaofei-d.money5;
                                                     }
                                                     smallsortsCount[d.smallsort]++;
                                                 }
@@ -388,19 +414,29 @@
                                             xkkje += d.money2;
                                             xkkks++;
                                         }
-                                        if (d.type == 3) { // 会员卡续费
+                                        if ((d.type == 3)||(d.type==4)) { // 会员卡续费
                                             xkje += d.money2;
                                             xkks++;
                                         }
                                     }
                                 }
-								skyj =skyj + wmyj;
+                                //增加外卖人数和业绩 非会员外卖 加入到现金,业绩中
+                                zrs = zrs+wmrs;
+                                nvklj = nvklj+wmrs;
+                                fqnvk = fqnvk+wmrs;
+                                fzdnvk = fzdnvk+wmrs;
+                                zhkyj += wmhkyj;
+                                ldyj +=wmyj;
+								skyj =skyj + wmhkyj;
                                 mdyj = mdyj + mdwmyj;
+                                xjyj =xjyj+wmyj-wmhkyj;
+                                zje =zje+wmyj-wmhkyj;
                                 xjyj = xjyj.toFixed(2);
                                 skyj = skyj.toFixed(2);
                                 zje = zje.toFixed(2);
                                 ldyj = ldyj.toFixed(2);
                                 zrs = zrs.toFixed(2);
+
                                 mdyj = mdyj.toFixed(2);
                                 xjlj = xjyj;
                                 sklj = skyj;
@@ -421,7 +457,7 @@
                                 $("#qnvk").text(qnvk);
                                 $("#fqnank").text(fqnank);
                                 $("#fqnvk").text(fqnvk);
-                                $("#zhkyj").text(zhkyj);
+                                $("#zhkyj").text(zhkyj.toFixed(2));
                                 $("#ldyj").text(ldyj);
                                 $("#ldyjlj").text(ldyj);
                                 $("#xjlj").text(xjlj);

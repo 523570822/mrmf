@@ -48,8 +48,8 @@
 										新增</button>
 								</div>
 								<div class="col-sm-1">
-									<button id="twoCode" class="btn btn-danger" type="button">
-										扫码</button>
+									<%--<button id="twoCode" class="btn btn-danger" type="button">--%>
+										<%--扫码</button>--%>
 								</div>
 							</div>
 						</form>

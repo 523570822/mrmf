@@ -1,3 +1,4 @@
+
 package com.mrmf.entity.user;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;

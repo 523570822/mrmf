@@ -37,6 +37,12 @@ public class StageMent extends DataEntity {
 
 
     public String getStatus() {
+
+        if (status == null || "".equals(status)) {
+            this.status ="1";
+        }else {
+            this.status = status;
+        }
         return status;
     }
 

@@ -420,7 +420,8 @@
 									var m5 = $("#money5").val();
 									if (m5 == "")
 										m5 = "0";
-									$("#" + yeji).val(m1 - parseFloat(m5)); // 业绩 = m1 - 抹零
+									var ygyj = m1 - parseFloat(m5);
+									$("#" + yeji).val(ygyj.toFixed(2)); // 业绩 = m1 - 抹零
 
 									// 计算提成
 									var s = fillmaps.staffs[$("#" + staffId)
@@ -567,7 +568,7 @@
 									if (!up.flag2 && up.guazhang_flag
 											&& !up.miandan) { // 未交款并挂账的计入总金额，并且非免单的
 										xiaocishu += up.cishu;
-										xiaofei += up.money_xiaofei + up.money1
+										xiaofei += up.money_xiaofei +
 												- up.money5;
 									}
 								}
@@ -587,7 +588,7 @@
 								if (fillmaps.incard.flag1 == "1003") { // 次数卡
 									$("#xiaocishu").val(xiaocishu);
 								} else if (fillmaps.incard.flag1 == "1001") { //单纯打折卡
-									//$("#xianjin").val(xiaofei);
+									$("#xianjin").val(xiaofei);
 								} else if (fillmaps.incard.flag1 == "1002") { //存钱打折卡
 									var m4 = parseFloat($("#money4").val())
 											+ xiaofei; // 卡余额

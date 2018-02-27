@@ -1,10 +1,10 @@
 package com.mrmf.service.report;
 
-import java.util.Date;
-import java.util.List;
-
 import com.mrmf.entity.user.Userpart;
 import com.osg.framework.BaseException;
+
+import java.util.Date;
+import java.util.List;
 
 public interface ColligateService {
 

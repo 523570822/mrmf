@@ -21,7 +21,9 @@
 <html>
 <head>
 	<base href="<%=basePath%>">
-	<script src="/moduleweb/resources/js/chosen.jquery.js" type="text/javascript"></script>
+	<script src="moduleweb/resources/js/chosen.jquery.js" type="text/javascript"></script>
+
+    <link href="moduleweb/resources/css/chosen/chosen.css" type="text/css" rel="stylesheet" />
 
 
 <title></title>
@@ -41,11 +43,11 @@
 					<div class="ibox-title">
 						<h5>
 							<a
-								href="${ctxPath}/stage/toQuerySort.do"
+								href="${ctxPath}/video/toQueryVideo.do"
 								class="btn-link"> <i class="fa fa-angle-double-left"></i>返回
 							</a>
 							<c:if test="${ffstageCategoryFees._id == null}">
-								新建视频1
+								新建视频
 							</c:if>
 							<c:if test="${ffstageCategoryFees._id != null}">视频管理<small>修改视频信息。</small>
 							</c:if>
@@ -63,30 +65,45 @@
 							<input type="hidden"
 								   id="createTime" name="createTime">
 							<div class="form-group">
-								<label class="col-sm-2 control-label">分类名称</label>
+								<label class="col-sm-2 control-label">视频名称</label>
 								<div class="col-sm-10">
 									<input id="name" name="name" type="text" class="form-control"
 										minlength="2" maxlength="50" required>
 								</div>
 							</div>
+
 							<div class="form-group">
-								<label class="col-sm-2 control-label">城市</label>
+						<%--		<label class="col-sm-2 control-label">店铺选择</label>
 								<div class="col-sm-10">
-									<select class="form-control" id="city" name="city"
-											<c:if test="${sessionScope.isOrganAdmin}">disabled</c:if>>
+								&lt;%&ndash;	<select class="form-control" id="city" name="city"
+											<c:if test="${sessionScope.isOrganAdmin}">disabled</c:if>>&ndash;%&gt;
+
+
+                                        <select id="city" name="city" data-placeholder="Choose a Country" class="chzn-select" multiple style="width:350px;"tabindex="4">
 										<option value="">请选择</option>
 									</select>
-								</div>
+								</div>--%>
+
+                            <label class="col-sm-2 control-label"> 店铺名称</label>
+                            <div class="col-sm-10">
+                                <select id="organId" name="organId" data-placeholder="请选择" class="chosen-select" multiple  style="width:450px;"tabindex="4">
+
+                                    <c:forEach items="${organlist}" var="organ" varStatus="row">
+
+                                        <%-- <c:when test="${file.fid eq obj.service.docUrl}">
+                                             <option value="${file._id}" selected="selected">${file.name }</option>
+                                         </c:when>
+                                         <c:otherwise>
+                                             <option value="${file._id}">${file.name}</option>
+                                         </c:otherwise>--%>
+                                        <option value="${organ._id}">${organ.name}(${organ.address})</option>
+
+
+                                    </c:forEach>
+                                </select>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">区域</label>
-								<div class="col-sm-10">
-									<select class="form-control" id="district" name="district"
-											<c:if test="${sessionScope.isOrganAdmin}">disabled</c:if>>
-										<option value="">请选择</option>
-									</select>
-								</div>
-							</div>
+
+
 							<%--<div class="form-group">
 								<label class="col-sm-2 control-label">助记符</label>
 								<div class="col-sm-10">
@@ -96,13 +113,7 @@
 							</div>--%>
 
 
-							<div class="form-group">
-								<label class="col-sm-2 control-label">单日镜台（租金）</label>
-								<div class="col-sm-10">
-									<input  id="leaseMoney" name="leaseMoney" type="number" class="form-control"
-									 required>
-								</div>
-							</div>
+
 
 
                             <div class="form-group">
@@ -167,6 +178,19 @@
 
         var layerId,addressComponents;
 		$().ready(function() {
+
+            var config = {
+                '.chosen-select': {
+                    search_contains:true
+                }
+
+            }
+            for (var selector in config) {
+                $(selector).chosen(config[selector]);
+            }
+
+
+
 
             $("#platRentSharing").knob({
             //    max: 940,
@@ -288,72 +312,8 @@
 
 
 
-            $
-                .post(
-                    '${ctxPath}/weixin/s/queryCity.do',
-                    {},
-                    function(data, status) {
-                        console.info(fillmaps);
-                        var c = $("#city")[0];
-                        for (var i = 0; i < data.length; i++) {
-                            var d = data[i];
-                            var option = new Option(
-                                d.name, d.name);
-                            option.tmp = d._id;
-                            c.options[c.options.length] = option;
-                            if (fillmaps
-                                && fillmaps.stageCategoryFees
-                                && fillmaps.stageCategoryFees.city == d.name) {
-                                option.selected = true;
-                                $(c).trigger('change');
-                            }
-                        }
-                    });
-            $("#city")
-                .change(
-                    function() {
-                        var t = $("#city")[0];
-                        var v = t.options[t.selectedIndex];
-                        if (v.tmp) {
-                            $
-                                .post(
-                                    '${ctxPath}/weixin/s/queryDistrict.do',
-                                    {
-                                        cityId : v.tmp
-                                    },
-                                    function(
-                                        data,
-                                        status) {
-                                        var c = $("#district")[0],ds=[];
-                                        c.options.length = 1;
-                                        for (var i = 0; i < data.length; i++) {
-                                            var d = data[i];
-                                            var option = new Option(
-                                                d.name,
-                                                d.name);
-                                            option.tmp = d._id;
-                                            c.options[c.options.length] = option;
-                                            if (fillmaps
-                                                && fillmaps.stageCategoryFees
-                                                && fillmaps.stageCategoryFees.district == d.name) {
-                                                option.selected = true;
-                                                $(
-                                                    c)
-                                                    .trigger(
-                                                        'change');
-                                            }else if(addressComponents && addressComponents.district == d.name){
-                                                option.selected = true;
-                                                $(
-                                                    c)
-                                                    .trigger(
-                                                        'change');
-                                            }
-                                        }
-                                    });
-                        } else {
-                            $("#district")[0].options.length = 1;
-                        }
-                    });
+
+
 
 						});
 	</script>
