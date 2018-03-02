@@ -571,4 +571,18 @@ public class OrganServiceImpl implements OrganService {
 		List<Organ> organList = mongoTemplate.findAll( Organ.class);
 		return organList;
 	}
+
+	@Override
+	public List<Organ> queryCity(String city) {
+		Criteria criteria = Criteria.where("city").is(city);
+
+		criteria.regex("");
+
+
+		Query query = Query.query(criteria);
+		List<Organ> organList = mongoTemplate.find(query, Organ.class);
+
+		return null;
+	}
+
 }

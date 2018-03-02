@@ -18,18 +18,21 @@ public interface OrganService {
 
 	/**
 	 * 查询公司列表
-	 * 
+	 *
 	 * @param fpi
 	 * @return
 	 * @throws BaseException
 	 */
 	public FlipInfo<Organ> query(FlipInfo<Organ> fpi) throws BaseException;
+
 	/**
 	 * 验证预存款项
+	 *
 	 * @return
 	 * @throws BaseException
 	 */
 	public ReturnStatus sysCharge(String _id, double charge) throws Exception;
+
 	/**
 	 * 查询店铺平台卡充值历史记录
 	 *
@@ -38,7 +41,8 @@ public interface OrganService {
 	 * @throws BaseException
 	 */
 	public FlipInfo<Prestore> sysQueryChargeHis(FlipInfo<Prestore> fpi) throws BaseException;
-/**
+
+	/**
 	 * 查询公司商城集合
 	 *
 	 * @param fpi
@@ -49,7 +53,7 @@ public interface OrganService {
 
 	/**
 	 * 查询公司基本信息
-	 * 
+	 *
 	 * @param organId
 	 * @return
 	 * @throws BaseException
@@ -58,7 +62,7 @@ public interface OrganService {
 
 	/**
 	 * 根据id查询公司基本信息
-	 * 
+	 *
 	 * @param organIds
 	 * @return
 	 * @throws BaseException
@@ -67,7 +71,7 @@ public interface OrganService {
 
 	/**
 	 * 根据父机构id查询子机构列表
-	 * 
+	 *
 	 * @param parentId
 	 * @return
 	 * @throws BaseException
@@ -76,7 +80,7 @@ public interface OrganService {
 
 	/**
 	 * 根据管理员账号查询公司基本信息
-	 * 
+	 *
 	 * @param adminId
 	 * @return
 	 * @throws BaseException
@@ -85,7 +89,7 @@ public interface OrganService {
 
 	/**
 	 * 指定公司增加信任ip列表
-	 * 
+	 *
 	 * @param organId
 	 * @param ip
 	 * @return
@@ -94,7 +98,7 @@ public interface OrganService {
 
 	/**
 	 * 新增/修改公司信息
-	 * 
+	 *
 	 * @param organ
 	 * @return
 	 */
@@ -102,7 +106,7 @@ public interface OrganService {
 
 	/**
 	 * 启用公司
-	 * 
+	 *
 	 * @param organId
 	 * @return
 	 */
@@ -110,7 +114,7 @@ public interface OrganService {
 
 	/**
 	 * 禁用公司
-	 * 
+	 *
 	 * @param organId
 	 * @return
 	 */
@@ -118,7 +122,7 @@ public interface OrganService {
 
 	/**
 	 * 更改公司繁忙状态
-	 * 
+	 *
 	 * @param state
 	 * @return
 	 */
@@ -126,7 +130,7 @@ public interface OrganService {
 
 	/**
 	 * 更改会员卡通用公司列表
-	 * 
+	 *
 	 * @param organId
 	 * @param cardOrganIds
 	 * @return
@@ -135,7 +139,7 @@ public interface OrganService {
 
 	/**
 	 * 查询指定机构的伙伴机构列表，如其他子公司、总部等（不含本机构）
-	 * 
+	 *
 	 * @param organId
 	 * @return
 	 * @throws BaseException
@@ -144,7 +148,7 @@ public interface OrganService {
 
 	/**
 	 * 获取公司参数设置对象
-	 * 
+	 *
 	 * @param organId
 	 * @return
 	 */
@@ -152,7 +156,7 @@ public interface OrganService {
 
 	/**
 	 * 更新公司参数设置
-	 * 
+	 *
 	 * @param setting
 	 * @return
 	 */
@@ -160,7 +164,7 @@ public interface OrganService {
 
 	/**
 	 * 更新提成流水设置
-	 * 
+	 *
 	 * @param settingId
 	 * @param tichengLiushui
 	 * @return
@@ -169,7 +173,7 @@ public interface OrganService {
 
 	/**
 	 * 查询当前账号可管理的店铺id列表
-	 * 
+	 *
 	 * @param account
 	 * @return
 	 * @throws BaseException
@@ -182,7 +186,7 @@ public interface OrganService {
 
 	/**
 	 * 获取公司管理员手机号短信验证码
-	 * 
+	 *
 	 * @param phone
 	 * @return
 	 */
@@ -190,7 +194,7 @@ public interface OrganService {
 
 	/**
 	 * 短信验证码验证，验证通过后绑定微信号为公司管理员
-	 * 
+	 *
 	 * @param openId
 	 * @param unionId
 	 * @param phone
@@ -202,13 +206,19 @@ public interface OrganService {
 
 	/**
 	 * 根据总公司ID获取子公司列表
-	 * 
+	 *
 	 * @param parentId
 	 * @return
 	 */
 	public List<Organ> queryOrganListByParentId(String parentId);
-/**
- *查询所有店铺
- */
-public List<Organ>  queryOrganList();
+
+	/**
+	 * 查询所有店铺
+	 */
+	public List<Organ> queryOrganList();
+
+	/**
+	 * 测试查询符合条件的地址
+	 */
+	public List<Organ> queryCity(String city);
 }

@@ -114,6 +114,8 @@
 	src="${ctxPath}/moduleweb/resources/plugins/suggest/bootstrap-suggest.min.js">
 	
 </script>
+
+
 <script
 	src="${ctxPath}/moduleweb/resources/plugins/fullcalendar/fullcalendar.min.js">
 	
