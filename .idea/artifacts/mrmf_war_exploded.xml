@@ -89,7 +89,7 @@
           <element id="library" level="project" name="Maven: jline:jline:0.9.94" />
           <element id="library" level="project" name="Maven: net.sf.jopt-simple:jopt-simple:3.2" />
           <element id="library" level="project" name="Maven: com.101tec:zkclient:0.3" />
-          <element id="library" level="project" name="Maven: org.apache.kafka:kafka-clients:1.0.0" />
+          <element id="library" level="project" name="Maven: org.apache.kafka:kafka-clients:1.0.1" />
           <element id="library" level="project" name="Maven: org.lz4:lz4-java:1.4" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.7.4" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.7.4" />
